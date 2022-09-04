@@ -1,0 +1,45 @@
+{
+	"$schema": "https://turborepo.org/schema.json",
+	"pipeline": {
+		"build": {
+			"dependsOn": [
+				"^test",
+				"^build"
+			],
+			"outputs": [
+				"dist/**",
+				".next/**"
+			]
+		},
+		"web#build": {
+			"outputs": [
+				".next/**"
+			],
+			"dependsOn": [
+				"$DATABASE_URL",
+				"$GOOGLE_CLIENT_ID",
+				"$GOOGLE_SECRET",
+				"$NEXTAUTH_URL",
+				"$NEXTAUTH_SECRET"
+			]
+		},
+		"lint": {
+			"outputs": []
+		},
+		"type-check": {
+			"outputs": []
+		},
+		"clean": {
+			"outputs": []
+		},
+		"test": {
+			"outputs": []
+		},
+		"test:ci": {
+			"outputs": []
+		},
+		"dev": {
+			"cache": false
+		}
+	}
+}

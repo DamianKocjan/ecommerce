@@ -1,0 +1,14 @@
+import React from "react";
+import { cva, cx } from "class-variance-authority";
+import type { VariantProps } from "class-variance-authority";
+
+const {{camelCase name}} = cva(["{{dashCase name}}"], {
+	variants: {},
+	defaultVariants: {},
+});
+
+export type {{properCase name}}Props = VariantProps<typeof {{camelCase name}}> & { className: string };
+
+export const {{properCase name}}: React.FC<{{properCase name}}Props> = ({ className, ...props }) => (
+	<div className={{append '' '{'}}cx(className, {{camelCase name}}()){{append '' '}'}} {...props} />
+);

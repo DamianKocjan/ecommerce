@@ -1,0 +1,49 @@
+{
+	"name": "ecommerce",
+	"version": "0.0.0",
+	"private": true,
+	"workspaces": [
+		"apps/*",
+		"packages/*"
+	],
+	"scripts": {
+		"dx": "run-s env:dev dev",
+		"postinstall": "cd lib/e2e && npm install",
+		"build": "turbo run build",
+		"dev": "turbo run dev --parallel",
+		"db:seed": "cd packages/prisma && npm run seed",
+		"db:studio": "cd packages/prisma && npm run studio",
+		"test": "turbo run test",
+		"env:clear": "node scripts/createEnv/clear.cjs",
+		"env:dev": "node scripts/createEnv/dev.cjs",
+		"test:e2e": "cd lib/e2e && npm run test:e2e",
+		"lint": "turbo run lint",
+		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
+		"prepare": "husky install",
+		"new": "plop"
+	},
+	"devDependencies": {
+		"envfile": "^6.17.0",
+		"husky": "^7.0.4",
+		"lint-staged": "^12.4.1",
+		"npm-run-all": "^4.1.5",
+		"plop": "^3.1.1",
+		"prettier": "latest",
+		"turbo": "latest"
+	},
+	"engines": {
+		"npm": ">=7.0.0",
+		"node": ">=14.0.0"
+	},
+	"lint-staged": {
+		"apps/**/*.{js,ts,jsx,tsx}": [
+			"eslint --fix"
+		],
+		"packages/ui/**/*.{js,ts,jsx,tsx}": [
+			"eslint --fix"
+		],
+		"*.json": [
+			"prettier --write"
+		]
+	}
+}

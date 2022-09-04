@@ -1,0 +1,9 @@
+{
+	"extends": "@ecommerce/config/tsconfig/base.json",
+	"compilerOptions": {
+		"lib": ["DOM"],
+		"typeRoots": ["./next-auth.d.ts"]
+	},
+	"include": ["**/*.ts", "**/*.tsx"],
+	"exclude": ["node_modules"]
+}
