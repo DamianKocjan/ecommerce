@@ -7,8 +7,8 @@
 	"scripts": {
 		"storybook": "start-storybook -p 6006 --no-open",
 		"build-storybook": "build-storybook",
-		"type-check": "tsc --pretty --noEmit",
-		"lint": "eslint ."
+		"lint": "eslint .",
+		"type-check": "tsc --pretty --noEmit"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.17.5",

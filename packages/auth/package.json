@@ -9,7 +9,8 @@
 		"./nextjs/server": "./nextjs/server"
 	},
 	"scripts": {
-		"lint": "eslint ."
+		"lint": "eslint .",
+		"type-check": "tsc --pretty --noEmit"
 	},
 	"devDependencies": {
 		"@ecommerce/config": "*",

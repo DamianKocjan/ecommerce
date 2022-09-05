@@ -15,7 +15,8 @@
 		"db-generate": "prisma generate",
 		"db-studio": "prisma studio",
 		"db-format": "prisma format",
-		"lint": "eslint ."
+		"lint": "eslint .",
+		"type-check": "tsc --pretty --noEmit"
 	},
 	"devDependencies": {
 		"@ecommerce/config": "*",

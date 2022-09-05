@@ -18,6 +18,7 @@
 		"env:dev": "node scripts/createEnv/dev.cjs",
 		"test:e2e": "cd lib/e2e && npm run test:e2e",
 		"lint": "turbo run lint",
+		"type-check": "turbo run type-check",
 		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
 		"prepare": "husky install",
 		"new": "plop"
