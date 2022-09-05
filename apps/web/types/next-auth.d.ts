@@ -1,5 +1,4 @@
 import { User } from "@ecommerce/prisma";
-import "next-auth";
 
 declare module "next-auth" {
 	/**

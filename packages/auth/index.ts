@@ -54,22 +54,19 @@ export const nextAuthOptions: NextAuthOptions = {
 	adapter: PrismaAdapter(prisma),
 	providers,
 	callbacks: {
-		// async signIn({ user, account, profile, email, credentials }) {
-		// 	console.log("SIGN_IN", { user, account, profile, email, credentials });
-		// 	return true;
-		// },
-		// async redirect({ url, baseUrl }) {
-		// 	console.log("REDIRECT", { url, baseUrl });
-		// 	return baseUrl;
-		// },
-		async session({ session, user, token }) {
-			// console.log("SESSION", { session, user, token });
-			return { ...session, userId: user.id };
+		async session({ session, user }) {
+			if (!user.email) {
+				throw new Error("No user found.");
+			}
+
+			const dbUser = await prisma.user.findUnique({
+				where: { email: user.email },
+			});
+
+			session.user = dbUser;
+
+			return session;
 		},
-		// async jwt({ token, user, account, profile, isNewUser }) {
-		// 	console.log("JWT", { token, user, account, profile, isNewUser });
-		// 	return token;
-		// },
 	},
 	secret: process.env.NEXTAUTH_SECRET,
 };

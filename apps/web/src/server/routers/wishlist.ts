@@ -16,7 +16,7 @@ export const wishlistRouter = createProtectedRouter()
 			const wishlist = await ctx.prisma.wishlist.findFirst({
 				where: {
 					productId: input.productId,
-					userId: ctx.session?.userId,
+					userId: ctx.session.user?.id,
 				},
 			});
 			return wishlist?.id ?? null;
@@ -31,7 +31,7 @@ export const wishlistRouter = createProtectedRouter()
 				data: {
 					user: {
 						connect: {
-							id: ctx.session?.userId,
+							id: ctx.session.user?.id,
 						},
 					},
 					product: {
@@ -57,7 +57,7 @@ export const wishlistRouter = createProtectedRouter()
 
 			if (!wishlist) {
 				throw new trpc.TRPCError({ code: "NOT_FOUND" });
-			} else if (wishlist.userId !== ctx.session?.userId) {
+			} else if (wishlist.userId !== ctx.session.user?.id) {
 				throw new trpc.TRPCError({ code: "UNAUTHORIZED" });
 			}
 
@@ -84,7 +84,7 @@ export const wishlistRouter = createProtectedRouter()
 						lte: now,
 					},
 				},
-				userId: ctx.session?.userId,
+				userId: ctx.session.user?.id,
 			};
 			const orderBy = getOrderBy(input.sortBy);
 
