@@ -20,6 +20,8 @@ const main = async () => {
 
 	let file = {};
 
+	file.IS_DEV = true;
+
 	file.DATABASE_URL = `postgres://${inputs.POSTGRES_USER}:${inputs.POSTGRES_PASSWORD}@${inputs.POSTGRES_HOST}:${inputs.POSTGRES_PORT}/${inputs.POSTGRES_DB}?schema=public`;
 	await writeFile("./packages/prisma/.env", stringify(file));
 
@@ -27,6 +29,8 @@ const main = async () => {
 	file.NEXTAUTH_SECRET = inputs.NEXTAUTH_SECRET;
 	file.GOOGLE_CLIENT_ID = inputs.GOOGLE_CLIENT_ID;
 	file.GOOGLE_CLIENT_SECRET = inputs.GOOGLE_CLIENT_SECRET;
+	file.AWS_S3_IAM_ACCESS = inputs.AWS_S3_IAM_ACCESS;
+	file.AWS_S3_IAM_SECRET = inputs.AWS_S3_IAM_SECRET;
 
 	await writeFile("./apps/web/.env", stringify(file));
 };
