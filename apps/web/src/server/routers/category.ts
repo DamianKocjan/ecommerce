@@ -1,4 +1,3 @@
-import { type Prisma } from "@ecommerce/prisma";
 import { z } from "zod";
 import { createRouter } from "../createRouter";
 
@@ -8,11 +7,6 @@ export const categoryRouter = createRouter().query("categories", {
 		parentCategory: z.string().nullish(),
 	}),
 	async resolve({ ctx, input }) {
-		const select: Prisma.CategorySelect = {
-			name: true,
-			slug: true,
-		};
-
 		const categories = await ctx.prisma.category.findMany({
 			where: input.category
 				? {
@@ -23,7 +17,10 @@ export const categoryRouter = createRouter().query("categories", {
 				: {
 						parentCategoryId: null,
 				  },
-			select,
+			select: {
+				name: true,
+				slug: true,
+			},
 		});
 
 		const category = input.category
@@ -31,7 +28,10 @@ export const categoryRouter = createRouter().query("categories", {
 					where: {
 						slug: input.category,
 					},
-					select,
+					select: {
+						name: true,
+						slug: true,
+					},
 			  })
 			: null;
 
@@ -40,7 +40,10 @@ export const categoryRouter = createRouter().query("categories", {
 					where: {
 						slug: input.parentCategory,
 					},
-					select,
+					select: {
+						name: true,
+						slug: true,
+					},
 			  })
 			: null;
 
