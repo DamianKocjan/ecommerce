@@ -14,7 +14,7 @@ export function Wishlist() {
 			? Number(window.localStorage.getItem("perPage")) || PER_PAGE[0]
 			: PER_PAGE[0]
 	);
-	const [cursor, setCursor] = useState<string | undefined>(undefined);
+	const [cursor, setCursor] = useState<Cursor | undefined>(undefined);
 
 	const handlePerPageChange = useCallback((value: number) => {
 		setPerPage(value);
@@ -22,7 +22,7 @@ export function Wishlist() {
 	}, []);
 
 	const wishlisted = trpc.useQuery(
-		["wishlistedProducts", { perPage, cursor }],
+		["wishlistedProducts", { perPage, cursor: cursor as string }],
 		{
 			refetchOnWindowFocus: false,
 		}
@@ -42,11 +42,7 @@ export function Wishlist() {
 				<ListFooter
 					handlePerPageChange={handlePerPageChange}
 					perPage={perPage}
-					setCursor={
-						setCursor as React.Dispatch<
-							React.SetStateAction<Cursor | undefined>
-						>
-					}
+					setCursor={setCursor}
 					nextCursor={wishlisted.data?.nextCursor}
 					prevCursor={wishlisted.data?.prevCursor}
 				/>
