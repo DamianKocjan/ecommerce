@@ -1,6 +1,11 @@
 import { useFilter } from "@/features/filter";
-import React from "react";
-import { Filter } from "../Filter";
+import React, { useCallback } from "react";
+import {
+	FilterListbox,
+	FilterListBoxButton,
+	FilterListboxOption,
+	FilterListboxOptions,
+} from "./Listbox";
 
 const OPTIONS = [
 	{
@@ -22,14 +27,31 @@ const OPTIONS = [
 ];
 
 export const SortByFilter: React.FC = () => {
-	const filter = useFilter();
+	const { filters, setFilter } = useFilter();
+
+	// TODO: type this
+	const handleChange = useCallback(
+		(val: unknown) => {
+			setFilter("sortBy", val);
+		},
+		[setFilter]
+	);
 
 	return (
-		<Filter
-			label="Order by"
-			filterKey="sortBy"
-			options={OPTIONS}
-			selected={[filter.filters.sortBy || "popularity"]}
-		/>
+		<FilterListbox
+			onChange={handleChange}
+			value={filters?.sortBy || "popularity"}
+		>
+			<FilterListBoxButton label="Order by" />
+			<FilterListboxOptions>
+				{OPTIONS.map((option) => (
+					<FilterListboxOption
+						key={option.key}
+						label={option.value}
+						value={option.key}
+					/>
+				))}
+			</FilterListboxOptions>
+		</FilterListbox>
 	);
 };

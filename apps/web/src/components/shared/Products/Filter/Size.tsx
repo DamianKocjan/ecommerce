@@ -1,8 +1,14 @@
 import { useFilter } from "@/features/filter";
 import { trpc } from "@/utils/trpc";
 import { useRouter } from "next/router";
-import React from "react";
-import { Filter } from "../Filter";
+import React, { useCallback } from "react";
+import {
+	FilterListbox,
+	FilterListBoxButton,
+	FilterListboxOption,
+	FilterListboxOptions,
+	FilterListboxOptionsLoader,
+} from "./Listbox";
 
 export const SizeFilter: React.FC = () => {
 	const router = useRouter();
@@ -16,27 +22,32 @@ export const SizeFilter: React.FC = () => {
 		],
 		{ refetchOnWindowFocus: false }
 	);
-	const filter = useFilter();
+	const { filters, setFilter } = useFilter();
 
-	// console.log(sizes.data, filter.filters.size?.[0], sizes.data?.[0]?.key);
+	// TODO: type this
+	const handleChange = useCallback(
+		(val: unknown) => {
+			setFilter("size", val);
+		},
+		[setFilter]
+	);
 
-	return sizes.isLoading ? (
-		<Filter
-			label="Size"
-			filterKey="size"
-			options={[]}
-			selected={filter.filters.size?.[0] ? [filter.filters.size?.[0]] : []}
-			showSelectedOption
-			multiSelect
-		/>
-	) : (
-		<Filter
-			label="Size"
-			filterKey="size"
-			options={sizes.data || []}
-			selected={filter.filters.size?.[0] ? [filter.filters.size?.[0]] : []}
-			// showSelectedOption
-			multiSelect
-		/>
+	return (
+		<FilterListbox onChange={handleChange} value={filters?.size || []} multiple>
+			<FilterListBoxButton label="Size" />
+			<FilterListboxOptions>
+				{sizes.isLoading ? (
+					<FilterListboxOptionsLoader />
+				) : (
+					sizes.data?.map((size) => (
+						<FilterListboxOption
+							key={size.key}
+							label={size.value}
+							value={size.key}
+						/>
+					))
+				)}
+			</FilterListboxOptions>
+		</FilterListbox>
 	);
 };
