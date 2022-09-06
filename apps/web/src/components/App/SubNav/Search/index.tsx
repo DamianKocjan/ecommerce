@@ -1,7 +1,7 @@
 import MediaQuery from "@/components/shared/hooks/useMediaQuery";
 import React from "react";
-import DesktopSearch from "./Desktop";
-import MobileSearch from "./Mobile";
+import { DesktopSearch } from "./Desktop";
+import { MobileSearch } from "./Mobile";
 
 export const Search: React.FC = () => {
 	return (

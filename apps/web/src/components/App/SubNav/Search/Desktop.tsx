@@ -3,10 +3,12 @@ import { useRouter } from "next/router";
 import { MagnifyingGlass as SearchIcon } from "phosphor-react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
-const DesktopSearch: React.FC = () => {
+export const DesktopSearch: React.FC = () => {
 	const [search, setSearch] = useState("");
 	const searchInputRef = useRef<HTMLInputElement>(null);
 	const router = useRouter();
+	const slug = router.query["slug"] as string;
+	const query = router.query["q"] as string;
 
 	useEffect(() => {
 		document.addEventListener("keydown", handleShortcutFocusInput);
@@ -17,8 +19,8 @@ const DesktopSearch: React.FC = () => {
 	}, []);
 
 	useEffect(() => {
-		if (router.query["q"]) {
-			setSearch(decodeURIComponent(router.query["q"] as string));
+		if (query) {
+			setSearch(decodeURIComponent(query));
 		} else {
 			setSearch("");
 		}
@@ -47,18 +49,17 @@ const DesktopSearch: React.FC = () => {
 		(e: React.FormEvent<HTMLFormElement>) => {
 			e.preventDefault();
 			const searchParsed = search.trim();
-
 			const path = router.asPath;
+			const encodedSearch = encodeURIComponent(searchParsed);
+
 			if (path.includes("/c/")) {
 				if (path.includes("?q=")) {
-					const slug = router.query["slug"];
-
-					router.push(`/c/${slug}?q=${encodeURIComponent(searchParsed)}`);
+					router.push(`/c/${slug}?q=${encodedSearch}`);
 				} else {
-					router.push(`${path}?q=${encodeURIComponent(searchParsed)}`);
+					router.push(`${path}?q=${encodedSearch}`);
 				}
 			} else {
-				router.push(`/catalog/?q=${encodeURIComponent(searchParsed)}`);
+				router.push(`/catalog/?q=${encodedSearch}`);
 			}
 		},
 		[search, router]
@@ -96,5 +97,3 @@ const DesktopSearch: React.FC = () => {
 		</form>
 	);
 };
-
-export default DesktopSearch;
