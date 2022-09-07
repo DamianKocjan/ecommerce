@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useCallback, useMemo, useState } from "react";
 import { Categories } from "../shared/Categories";
 import { Container } from "../shared/Container";
+import { Empty } from "../shared/Products/Empty";
 import { Filters } from "../shared/Products/Filters";
 import { ProductsList } from "../shared/Products/List";
 import { ListFooter } from "../shared/Products/ListFooter";
@@ -63,21 +64,27 @@ export function Category({ previousUrl }: { previousUrl: string }) {
 				<Categories parentCategory={category} previousUrl={previousUrl} />
 				<div className="w-3/4">
 					<Filters />
-					<ProductsList
-						isLoading={products.isLoading}
-						products={products.data?.items}
-					/>
-					<ListFooter
-						handlePerPageChange={handlePerPageChange}
-						perPage={perPage}
-						setCursor={
-							setCursor as React.Dispatch<
-								React.SetStateAction<Cursor | undefined>
-							>
-						}
-						nextCursor={products.data?.nextCursor}
-						prevCursor={products.data?.prevCursor}
-					/>
+					{!products.isLoading && products.data?.items.length === 0 ? (
+						<Empty />
+					) : (
+						<>
+							<ProductsList
+								isLoading={products.isLoading}
+								products={products.data?.items}
+							/>
+							<ListFooter
+								handlePerPageChange={handlePerPageChange}
+								perPage={perPage}
+								setCursor={
+									setCursor as React.Dispatch<
+										React.SetStateAction<Cursor | undefined>
+									>
+								}
+								nextCursor={products.data?.nextCursor}
+								prevCursor={products.data?.prevCursor}
+							/>
+						</>
+					)}
 				</div>
 			</div>
 		</Container>
