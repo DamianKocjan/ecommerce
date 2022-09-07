@@ -31,7 +31,7 @@ export const sizeRouter = createRouter().query("sizes", {
 		}
 
 		return (sizes || []).map(({ id, name }) => ({
-			key: id.toString(),
+			key: id,
 			value: name,
 		}));
 	},

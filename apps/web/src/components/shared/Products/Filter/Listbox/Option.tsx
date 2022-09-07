@@ -3,10 +3,11 @@ import { Check } from "phosphor-react";
 import React from "react";
 
 export interface FilterListboxOptionProps {
-	value: string;
+	value: string | number;
 	label: string;
 }
 
+// FIXME: text on the right side is cut off
 export const FilterListboxOption: React.FC<FilterListboxOptionProps> = ({
 	value,
 	label,

@@ -1,43 +1,34 @@
+import type { Season } from "@ecommerce/prisma";
 import create from "zustand";
 
 export type Filters = keyof FilterState["filters"];
-
-export const SortBy = {
-	popularity: "Popularity",
-	priceLowToHigh: "Price low to high",
-	priceHighToLow: "Price high to low",
-	sales: "Sales",
-} as const;
-
-export const Seasons = {
-	spring: "Spring",
-	summer: "Summer",
-	fall: "Fall",
-	winter: "Winter",
-	all: "All",
-} as const;
+export type SortBy =
+	| "popularity"
+	| "priceLowToHigh"
+	| "priceHighToLow"
+	| "sales";
 
 export interface FilterState {
 	filters: {
-		sortBy?: keyof typeof SortBy;
-		size?: string[];
-		brand?: string[];
-		color?: string[];
+		sortBy?: SortBy;
+		sizes?: number[];
+		brands?: number[];
+		colors?: number[];
 		price?: {
 			min?: number;
 			max?: number;
 			onSaleRequired?: boolean | false;
 		};
-		material?: string[];
+		materials?: number[];
 		multipack?: boolean;
-		pattern?: string[];
-		cut?: string[];
-		collectionType?: string;
-		season?: keyof typeof Seasons;
+		patterns?: number[];
+		cuts?: number[];
+		collectionType?: number;
+		season?: Season;
 		delivery?: boolean;
-		category?: string;
 	};
 	setFilter<T = string>(key: Filters, value?: T): void;
+	resetFilters(): void;
 }
 
 export const useFilter = create<FilterState>((set) => ({
@@ -51,5 +42,10 @@ export const useFilter = create<FilterState>((set) => ({
 				...state.filters,
 				[key]: value,
 			},
+		})),
+	resetFilters: () =>
+		set((state) => ({
+			...state,
+			filters: {},
 		})),
 }));

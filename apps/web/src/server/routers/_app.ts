@@ -2,7 +2,13 @@ import * as trpc from "@trpc/server";
 import superjson from "superjson";
 import { z } from "zod";
 import { TrpcRouterContextType } from "../context";
+import { brandRouter } from "./brand";
 import { categoryRouter } from "./category";
+import { collectionRouter } from "./collection";
+import { colorRouter } from "./color";
+import { cutRouter } from "./cut";
+import { materialRouter } from "./material";
+import { patternRouter } from "./pattern";
 import { productRouter } from "./product";
 import { sizeRouter } from "./size";
 import { wishlistRouter } from "./wishlist";
@@ -26,7 +32,13 @@ export const appRouter = trpc
 			};
 		},
 	})
+	.merge(brandRouter)
 	.merge(categoryRouter)
+	.merge(collectionRouter)
+	.merge(colorRouter)
+	.merge(cutRouter)
+	.merge(materialRouter)
+	.merge(patternRouter)
 	.merge(productRouter)
 	.merge(sizeRouter)
 	.merge(wishlistRouter);

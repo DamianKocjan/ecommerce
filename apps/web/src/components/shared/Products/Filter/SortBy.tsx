@@ -1,4 +1,4 @@
-import { useFilter } from "@/features/filter";
+import { SortBy, useFilter } from "@/features/filter";
 import React, { useCallback } from "react";
 import {
 	FilterListbox,
@@ -7,7 +7,10 @@ import {
 	FilterListboxOptions,
 } from "./Listbox";
 
-const OPTIONS = [
+const OPTIONS: {
+	key: SortBy;
+	value: string;
+}[] = [
 	{
 		key: "popularity",
 		value: "Popularity",

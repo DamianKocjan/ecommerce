@@ -117,8 +117,7 @@ model Color {
   updatedAt DateTime @updatedAt
 
   // Relations
-  product   Product? @relation(fields: [productId], references: [id])
-  productId Int?
+  products Product[]
 
   // Attributes
   @@map("colors")
@@ -133,8 +132,7 @@ model Material {
   updatedAt DateTime @updatedAt
 
   // Relations
-  product   Product? @relation(fields: [productId], references: [id])
-  productId Int?
+  products Product[]
 
   // Attributes
   @@map("materials")
@@ -149,8 +147,7 @@ model Pattern {
   updatedAt DateTime @updatedAt
 
   // Relations
-  product   Product? @relation(fields: [productId], references: [id])
-  productId Int?
+  products Product[]
 
   // Attributes
   @@map("patterns")
@@ -165,8 +162,7 @@ model Cut {
   updatedAt DateTime @updatedAt
 
   // Relations
-  product   Product? @relation(fields: [productId], references: [id])
-  productId Int?
+  products Product[]
 
   // Attributes
   @@map("cuts")
@@ -182,8 +178,7 @@ model Collection {
   updatedAt DateTime @updatedAt
 
   // Relations
-  product   Product? @relation(fields: [productId], references: [id])
-  productId Int?
+  products Product[]
 
   // Attributes
   @@map("collections")
@@ -212,7 +207,7 @@ model DeliveryOption {
   updatedAt DateTime @updatedAt
 
   // Relations
-  product Product[]
+  products Product[]
 
   // Attributes
   @@map("deliveryOptions")
@@ -228,7 +223,7 @@ model Size {
 
   // Relations
   forCategories Category[]
-  product       Product[]
+  products      Product[]
 
   // Attributes
   @@map("sizes")

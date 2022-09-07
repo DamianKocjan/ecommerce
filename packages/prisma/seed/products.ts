@@ -14,6 +14,7 @@ export async function seedProducts(prisma: PrismaClient): Promise<void> {
 	const manufacturers = await prisma.manufacturer.findMany();
 	const categories = await prisma.category.findMany();
 	const sizes = await prisma.size.findMany();
+	const colors = await prisma.color.findMany();
 
 	for (let i = 0; i < NUMBER_OF_PRODUCTS; i++) {
 		// FIXME: Improve offset calculation
@@ -25,6 +26,10 @@ export async function seedProducts(prisma: PrismaClient): Promise<void> {
 				categoryOffset + Math.floor(Math.random() * MAX_NUMBER_OF_CATEGORIES)
 			)
 			.map((category) => ({ id: category.id }));
+
+		const colorsForProduct = colors
+			.slice(0, Math.floor(Math.random() * colors.length) + 1)
+			.map((color) => ({ id: color.id }));
 
 		await prisma.product.create({
 			data: {
@@ -41,6 +46,9 @@ export async function seedProducts(prisma: PrismaClient): Promise<void> {
 					connect: categoriesForProduct,
 				},
 				sizeId: randomElement(sizes).id,
+				colors: {
+					connect: colorsForProduct,
+				},
 			},
 		});
 	}

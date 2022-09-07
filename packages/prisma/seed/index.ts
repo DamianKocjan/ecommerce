@@ -1,5 +1,6 @@
 import { prisma } from "..";
 import { seedCategories } from "./categories";
+import { seedColors } from "./color";
 import { seedManufacturers } from "./manafacturers";
 import { seedProducts } from "./products";
 import { seedSizes } from "./size";
@@ -28,6 +29,7 @@ export async function main() {
 
 	seedManufacturers(prisma)
 		.then(() => seedSizes(prisma))
+		.then(() => seedColors(prisma))
 		.then(() => seedCategories(prisma))
 		.then(() => seedProducts(prisma));
 }

@@ -26,9 +26,9 @@ export const productPaginationWithFiltersSchema = {
 	category: z.string().nullish(),
 	q: z.string().nullish(),
 	sortBy: z.string().nullish(),
-	size: z.array(z.number()).nullish(),
-	brand: z.array(z.number()).nullish(),
-	color: z.array(z.number()).nullish(),
+	sizes: z.array(z.number()).nullish(),
+	brands: z.array(z.number()).nullish(),
+	colors: z.array(z.number()).nullish(),
 	price: z
 		.object({
 			min: z.number().nullish(),
@@ -36,10 +36,10 @@ export const productPaginationWithFiltersSchema = {
 			onSaleRequired: z.boolean().nullish(),
 		})
 		.nullish(),
-	material: z.array(z.number()).nullish(),
+	materials: z.array(z.number()).nullish(),
 	multipack: z.boolean().nullish(),
-	pattern: z.array(z.number()).nullish(),
-	cut: z.array(z.number()).nullish(),
+	patterns: z.array(z.number()).nullish(),
+	cuts: z.array(z.number()).nullish(),
 	collectionType: z.number().nullish(),
 	season: z.nativeEnum(Season).nullish(),
 	delivery: z.boolean().nullish(),
@@ -59,57 +59,57 @@ export function productPaginationWithFilters<T extends z.infer<typeof obj>>(
 					mode: "insensitive",
 			  }
 			: undefined,
-		size: input.size
+		size: input.sizes
 			? {
 					is: {
 						id: {
-							in: input.size,
+							in: input.sizes,
 						},
 					},
 			  }
 			: undefined,
-		manufacturer: input.brand
+		manufacturer: input.brands
 			? {
 					is: {
 						id: {
-							in: input.brand,
+							in: input.brands,
 						},
 					},
 			  }
 			: undefined,
-		colors: input.color
+		colors: input.colors
 			? {
 					some: {
 						id: {
-							in: input.color,
+							in: input.colors,
 						},
 					},
 			  }
 			: undefined,
-		materials: input.material
+		materials: input.materials
 			? {
 					some: {
 						id: {
-							in: input.material,
+							in: input.materials,
 						},
 					},
 			  }
 			: undefined,
 		multipack: input.multipack || undefined,
-		patterns: input.pattern
+		patterns: input.patterns
 			? {
 					some: {
 						id: {
-							in: input.pattern,
+							in: input.patterns,
 						},
 					},
 			  }
 			: undefined,
-		cuts: input.cut
+		cuts: input.cuts
 			? {
 					some: {
 						id: {
-							in: input.cut,
+							in: input.cuts,
 						},
 					},
 			  }

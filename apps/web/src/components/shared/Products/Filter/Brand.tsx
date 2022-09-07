@@ -1,6 +1,5 @@
 import { useFilter } from "@/features/filter";
 import { trpc } from "@/utils/trpc";
-import { useRouter } from "next/router";
 import React, { useCallback } from "react";
 import {
 	FilterListbox,
@@ -10,24 +9,14 @@ import {
 	FilterListboxOptionsLoader,
 } from "./Listbox";
 
-export const SizeFilter: React.FC = () => {
-	const router = useRouter();
-	const slug = router.query["slug"] as string;
-	const sizes = trpc.useQuery(
-		[
-			"sizes",
-			{
-				category: slug || null,
-			},
-		],
-		{ refetchOnWindowFocus: false }
-	);
+export const BrandFilter: React.FC = () => {
+	const brands = trpc.useQuery(["brands"], { refetchOnWindowFocus: false });
 	const { filters, setFilter } = useFilter();
 
 	// TODO: type this
 	const handleChange = useCallback(
 		(val: unknown) => {
-			setFilter("sizes", val);
+			setFilter("brands", val);
 		},
 		[setFilter]
 	);
@@ -35,19 +24,19 @@ export const SizeFilter: React.FC = () => {
 	return (
 		<FilterListbox
 			onChange={handleChange}
-			value={filters?.sizes || []}
+			value={filters?.brands || []}
 			multiple
 		>
-			<FilterListBoxButton label="Size" />
+			<FilterListBoxButton label="Brand" />
 			<FilterListboxOptions>
-				{sizes.isLoading ? (
+				{brands.isLoading ? (
 					<FilterListboxOptionsLoader />
 				) : (
-					sizes.data?.map((size) => (
+					brands.data?.map((brand) => (
 						<FilterListboxOption
-							key={size.key}
-							label={size.value}
-							value={size.key}
+							key={brand.key}
+							label={brand.value}
+							value={brand.key}
 						/>
 					))
 				)}
