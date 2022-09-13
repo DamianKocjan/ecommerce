@@ -1,7 +1,7 @@
 import { useFilter } from "@/features/filter";
 import { trpc } from "@/utils/trpc";
 import { useRouter } from "next/router";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import {
 	FilterListbox,
 	FilterListBoxButton,
@@ -28,9 +28,48 @@ export const SizeFilter: React.FC = () => {
 	const handleChange = useCallback(
 		(val: unknown) => {
 			setFilter("sizes", val);
+
+			if ((val as string[]).length === 0) {
+				const query = { ...router.query };
+				delete query.sizes;
+
+				router.push(
+					{
+						query,
+					},
+					undefined,
+					{ shallow: true }
+				);
+				return;
+			}
+
+			router.push(
+				{
+					query: {
+						...router.query,
+						sizes: `[${(val as string[]).join(".")}]`,
+					},
+				},
+				undefined,
+				{ shallow: true }
+			);
 		},
-		[setFilter]
+		[setFilter, router]
 	);
+
+	useEffect(() => {
+		const sizes = router.query["sizes"] as string;
+		if (sizes && sizes.includes("[") && sizes.includes("]")) {
+			setFilter(
+				"sizes",
+				sizes
+					.slice(1, -1)
+					.split(".")
+					.map((s) => Number(s))
+					.filter((s) => s !== 0)
+			);
+		}
+	}, [router.query]);
 
 	return (
 		<FilterListbox

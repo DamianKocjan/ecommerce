@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { createRouter } from "../createRouter";
+import { PRODUCTS_PER_PAGE } from "../helpers/constants";
 import {
 	getOrderBy,
 	productPaginationWithFilters,
@@ -64,63 +65,54 @@ export const productRouter = createRouter()
 	.query("inifityProducts", {
 		input: z.object({
 			...productPaginationWithFiltersSchema,
-			cursor: z.number().nullish(),
+			page: z.number().nullish(),
 		}),
 		async resolve({ ctx, input }) {
-			const { cursor, perPage } = input;
+			let { page, perPage } = input;
+
+			if (!page) {
+				page = PRODUCTS_PER_PAGE;
+			}
 
 			const where = productPaginationWithFilters(input);
 			const orderBy = getOrderBy(input.sortBy);
 
-			const items = await ctx.prisma.product.findMany({
-				take: perPage + 1,
-				where,
-				cursor: cursor ? { id: cursor } : undefined,
-				orderBy,
-				select: {
-					id: true,
-					slug: true,
-					title: true,
-					description: true,
-					price: true,
-					discount: true,
-					manufacturer: {
-						select: {
-							id: true,
-							name: true,
-						},
-					},
-				},
-			});
-
-			let nextCursor: typeof cursor | undefined = undefined;
-			if (items.length > perPage) {
-				const nextItem = items.pop();
-				nextCursor = nextItem!.id;
-			}
-			// TODO: get previous cursor
-			let prevCursor: typeof cursor | undefined = undefined;
-			if (cursor) {
-				prevCursor = cursor;
-
-				const prevItem = await ctx.prisma.product.findFirst({
-					where: {
-						...where,
-						id: {
-							lt: cursor,
-						},
-					},
+			const skip = page > 0 ? perPage * (page - 1) : 0;
+			const [total, data] = await Promise.all([
+				ctx.prisma.product.count({ where }),
+				ctx.prisma.product.findMany({
+					take: perPage,
+					skip,
+					where,
 					orderBy,
-				});
-				if (prevItem) {
-					prevCursor = prevItem.id;
-				}
-			}
+					select: {
+						id: true,
+						slug: true,
+						title: true,
+						description: true,
+						price: true,
+						discount: true,
+						manufacturer: {
+							select: {
+								id: true,
+								name: true,
+							},
+						},
+					},
+				}),
+			]);
+			const lastPage = Math.ceil(total / perPage);
 
 			return {
-				items,
-				nextCursor,
-				prevCursor,
+				data,
+				meta: {
+					total,
+					lastPage,
+					currentPage: page,
+					perPage,
+					prev: page > 1 ? page - 1 : null,
+					next: page < lastPage ? page + 1 : null,
+				},
 			};
 		},
 	});

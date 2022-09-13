@@ -8,20 +8,33 @@ import { Empty } from "../shared/Products/Empty";
 import { Filters } from "../shared/Products/Filters";
 import { ProductsList } from "../shared/Products/List";
 import { ListFooter } from "../shared/Products/ListFooter";
-import { type Cursor } from "../shared/Products/ListFooter/Pagination";
 import { PER_PAGE } from "../shared/Products/ListFooter/PerPage";
 
 export function Category({ previousUrl }: { previousUrl: string }) {
 	const router = useRouter();
 	const category = router.query["slug"] as string;
 	const query = router.query["q"] as string;
+	const queryPage = router.query["page"] as string;
 
 	const [perPage, setPerPage] = useState(
 		typeof window !== "undefined"
 			? Number(window.localStorage.getItem("perPage")) || PER_PAGE[0]
 			: PER_PAGE[0]
 	);
-	const [cursor, setCursor] = useState<number | undefined>(undefined);
+	const [page, setPage] = useState<number | undefined>(
+		queryPage ? parseInt(queryPage as string, 10) : undefined
+	);
+
+	const handleSetPage = useCallback((page: number | undefined) => {
+		setPage(page);
+		router.push(
+			{
+				query: { ...router.query, page },
+			},
+			undefined,
+			{ shallow: true }
+		);
+	}, []);
 
 	const handlePerPageChange = useCallback((value: number) => {
 		setPerPage(value);
@@ -49,7 +62,7 @@ export function Category({ previousUrl }: { previousUrl: string }) {
 				category: category || null,
 				q: query || null,
 				perPage,
-				cursor,
+				page,
 				...parsedFilters,
 			},
 		],
@@ -64,24 +77,21 @@ export function Category({ previousUrl }: { previousUrl: string }) {
 				<Categories parentCategory={category} previousUrl={previousUrl} />
 				<div className="w-3/4">
 					<Filters />
-					{!products.isLoading && products.data?.items.length === 0 ? (
+					{!products.isLoading && products.data?.data.length === 0 ? (
 						<Empty />
 					) : (
 						<>
 							<ProductsList
 								isLoading={products.isLoading}
-								products={products.data?.items}
+								products={products.data?.data}
 							/>
 							<ListFooter
 								handlePerPageChange={handlePerPageChange}
 								perPage={perPage}
-								setCursor={
-									setCursor as React.Dispatch<
-										React.SetStateAction<Cursor | undefined>
-									>
-								}
-								nextCursor={products.data?.nextCursor}
-								prevCursor={products.data?.prevCursor}
+								setPage={handleSetPage}
+								currentPage={products.data?.meta.currentPage}
+								nextPage={products.data?.meta.next}
+								previousPage={products.data?.meta.prev}
 							/>
 						</>
 					)}

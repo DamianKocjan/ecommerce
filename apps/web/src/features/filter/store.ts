@@ -14,11 +14,9 @@ export interface FilterState {
 		sizes?: number[];
 		brands?: number[];
 		colors?: number[];
-		price?: {
-			min?: number;
-			max?: number;
-			onSaleRequired?: boolean | false;
-		};
+		priceMin?: number;
+		priceMax?: number;
+		onSaleRequired?: boolean;
 		materials?: number[];
 		multipack?: boolean;
 		patterns?: number[];

@@ -1,6 +1,7 @@
 import { useFilter } from "@/features/filter";
 import { trpc } from "@/utils/trpc";
-import React, { useCallback } from "react";
+import { useRouter } from "next/router";
+import React, { useCallback, useEffect } from "react";
 import {
 	FilterListbox,
 	FilterListBoxButton,
@@ -12,14 +13,54 @@ import {
 export const BrandFilter: React.FC = () => {
 	const brands = trpc.useQuery(["brands"], { refetchOnWindowFocus: false });
 	const { filters, setFilter } = useFilter();
+	const router = useRouter();
 
 	// TODO: type this
 	const handleChange = useCallback(
 		(val: unknown) => {
 			setFilter("brands", val);
+
+			if ((val as string[]).length === 0) {
+				const query = { ...router.query };
+				delete query.brands;
+
+				router.push(
+					{
+						query,
+					},
+					undefined,
+					{ shallow: true }
+				);
+				return;
+			}
+
+			router.push(
+				{
+					query: {
+						...router.query,
+						brands: `[${(val as string[]).join(".")}]`,
+					},
+				},
+				undefined,
+				{ shallow: true }
+			);
 		},
-		[setFilter]
+		[setFilter, router]
 	);
+
+	useEffect(() => {
+		const brands = router.query["brands"] as string;
+		if (brands && brands.includes("[") && brands.includes("]")) {
+			setFilter(
+				"brands",
+				brands
+					.slice(1, -1)
+					.split(".")
+					.map((b) => Number(b))
+					.filter((b) => b !== 0)
+			);
+		}
+	}, [router.query]);
 
 	return (
 		<FilterListbox

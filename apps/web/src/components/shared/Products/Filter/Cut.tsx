@@ -1,6 +1,7 @@
 import { useFilter } from "@/features/filter";
 import { trpc } from "@/utils/trpc";
-import React, { useCallback } from "react";
+import { useRouter } from "next/router";
+import React, { useCallback, useEffect } from "react";
 import {
 	FilterListbox,
 	FilterListBoxButton,
@@ -14,14 +15,54 @@ export const CutFilter: React.FC = () => {
 		refetchOnWindowFocus: false,
 	});
 	const { filters, setFilter } = useFilter();
+	const router = useRouter();
 
 	// TODO: type this
 	const handleChange = useCallback(
 		(val: unknown) => {
 			setFilter("cuts", val);
+
+			if ((val as string[]).length === 0) {
+				const query = { ...router.query };
+				delete query.cuts;
+
+				router.push(
+					{
+						query,
+					},
+					undefined,
+					{ shallow: true }
+				);
+				return;
+			}
+
+			router.push(
+				{
+					query: {
+						...router.query,
+						cuts: `[${(val as string[]).join(".")}]`,
+					},
+				},
+				undefined,
+				{ shallow: true }
+			);
 		},
-		[setFilter]
+		[setFilter, router]
 	);
+
+	useEffect(() => {
+		const cuts = router.query["cuts"] as string;
+		if (cuts && cuts.includes("[") && cuts.includes("]")) {
+			setFilter(
+				"cuts",
+				cuts
+					.slice(1, -1)
+					.split(".")
+					.map((c) => Number(c))
+					.filter((c) => c !== 0)
+			);
+		}
+	}, [router.query]);
 
 	return (
 		<FilterListbox onChange={handleChange} value={filters?.cuts || []} multiple>

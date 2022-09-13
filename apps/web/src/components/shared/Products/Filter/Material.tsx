@@ -1,6 +1,7 @@
 import { useFilter } from "@/features/filter";
 import { trpc } from "@/utils/trpc";
-import React, { useCallback } from "react";
+import { useRouter } from "next/router";
+import React, { useCallback, useEffect } from "react";
 import {
 	FilterListbox,
 	FilterListBoxButton,
@@ -14,14 +15,54 @@ export const MaterialFilter: React.FC = () => {
 		refetchOnWindowFocus: false,
 	});
 	const { filters, setFilter } = useFilter();
+	const router = useRouter();
 
 	// TODO: type this
 	const handleChange = useCallback(
 		(val: unknown) => {
 			setFilter("materials", val);
+
+			if ((val as string[]).length === 0) {
+				const query = { ...router.query };
+				delete query.materials;
+
+				router.push(
+					{
+						query,
+					},
+					undefined,
+					{ shallow: true }
+				);
+				return;
+			}
+
+			router.push(
+				{
+					query: {
+						...router.query,
+						materials: `[${(val as string[]).join(".")}]`,
+					},
+				},
+				undefined,
+				{ shallow: true }
+			);
 		},
-		[setFilter]
+		[setFilter, router]
 	);
+
+	useEffect(() => {
+		const materials = router.query["materials"] as string;
+		if (materials && materials.includes("[") && materials.includes("]")) {
+			setFilter(
+				"materials",
+				materials
+					.slice(1, -1)
+					.split(".")
+					.map((m) => Number(m))
+					.filter((m) => m !== 0)
+			);
+		}
+	}, [router.query]);
 
 	return (
 		<FilterListbox

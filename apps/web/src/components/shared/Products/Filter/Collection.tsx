@@ -1,6 +1,7 @@
 import { useFilter } from "@/features/filter";
 import { trpc } from "@/utils/trpc";
-import React, { useCallback } from "react";
+import { useRouter } from "next/router";
+import React, { useCallback, useEffect } from "react";
 import {
 	FilterListbox,
 	FilterListBoxButton,
@@ -14,14 +15,32 @@ export const CollectionFilter: React.FC = () => {
 		refetchOnWindowFocus: false,
 	});
 	const { filters, setFilter } = useFilter();
+	const router = useRouter();
 
 	// TODO: type this
 	const handleChange = useCallback(
 		(val: unknown) => {
 			setFilter("collectionType", val);
+			router.push(
+				{
+					query: {
+						...router.query,
+						collectionType: val as string,
+					},
+				},
+				undefined,
+				{ shallow: true }
+			);
 		},
-		[setFilter]
+		[setFilter, router]
 	);
+
+	useEffect(() => {
+		const collectionType = router.query["collectionType"];
+		if (collectionType) {
+			setFilter("collectionType", collectionType);
+		}
+	}, [router.query]);
 
 	return (
 		<FilterListbox onChange={handleChange} value={filters?.collectionType}>

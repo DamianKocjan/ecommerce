@@ -1,5 +1,6 @@
 import { SortBy, useFilter } from "@/features/filter";
-import React, { useCallback } from "react";
+import { useRouter } from "next/router";
+import React, { useCallback, useEffect } from "react";
 import {
 	FilterListbox,
 	FilterListBoxButton,
@@ -31,14 +32,37 @@ const OPTIONS: {
 
 export const SortByFilter: React.FC = () => {
 	const { filters, setFilter } = useFilter();
+	const router = useRouter();
 
 	// TODO: type this
 	const handleChange = useCallback(
 		(val: unknown) => {
 			setFilter("sortBy", val);
+			router.push(
+				{
+					query: {
+						...router.query,
+						sortBy: val as string,
+					},
+				},
+				undefined,
+				{ shallow: true }
+			);
 		},
-		[setFilter]
+		[setFilter, router]
 	);
+
+	useEffect(() => {
+		const sortBy = router.query["sortBy"];
+		if (
+			sortBy &&
+			["popularity", "priceLowToHigh", "priceHighToLow", "sales"].includes(
+				sortBy as string
+			)
+		) {
+			setFilter("sortBy", sortBy);
+		}
+	}, [router.query]);
 
 	return (
 		<FilterListbox
