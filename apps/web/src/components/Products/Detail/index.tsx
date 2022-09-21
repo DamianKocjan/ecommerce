@@ -1,5 +1,5 @@
 import { Container } from "@/components/shared/Container";
-import type { Product } from "types/models";
+import { type Product } from "@ecommerce/prisma";
 
 export interface ProductDetailProps {
 	product: Product;

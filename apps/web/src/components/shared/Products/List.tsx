@@ -1,9 +1,9 @@
+import { type Manufacturer, type Product } from "@ecommerce/prisma";
 import { ProductCardShimmer } from "@ecommerce/ui";
-import type { Product } from "types/models";
 import { ProductCard } from "./Card";
 
 export interface ProductsListProps {
-	products: Product[] | undefined;
+	products: (Product & { manufacturer: Manufacturer })[] | undefined;
 	isLoading: boolean;
 }
 

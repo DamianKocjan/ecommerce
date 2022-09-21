@@ -1,13 +1,13 @@
+import { type Manufacturer, type Product } from "@ecommerce/prisma";
 import { PrettyImage } from "@ecommerce/ui";
 import Link from "next/link";
 import React, { useMemo } from "react";
-import type { Product } from "types/models";
 import { AddToBagIconButton } from "../Bag";
 import { useCurrencyFormatter } from "../formatters";
 import { WishlistIconButton } from "../Wishlist";
 
 export interface ProductCardProps {
-	product: Product;
+	product: Product & { manufacturer: Manufacturer };
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
