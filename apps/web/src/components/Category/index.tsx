@@ -25,16 +25,19 @@ export function Category({ previousUrl }: { previousUrl: string }) {
 		queryPage ? parseInt(queryPage as string, 10) : undefined
 	);
 
-	const handleSetPage = useCallback((page: number | undefined) => {
-		setPage(page);
-		router.push(
-			{
-				query: { ...router.query, page },
-			},
-			undefined,
-			{ shallow: true }
-		);
-	}, []);
+	const handleSetPage = useCallback(
+		(page: number | undefined) => {
+			setPage(page);
+			router.push(
+				{
+					query: { ...router.query, page },
+				},
+				undefined,
+				{ shallow: true }
+			);
+		},
+		[router]
+	);
 
 	const handlePerPageChange = useCallback((value: number) => {
 		setPerPage(value);
