@@ -1,10 +1,10 @@
 import { useFilter } from "@/features/filter";
 import { trpc } from "@/utils/trpc";
+import { EmptyState } from "@ecommerce/ui";
 import { useRouter } from "next/router";
 import { useCallback, useMemo, useState } from "react";
 import { Categories } from "../shared/Categories";
 import { Container } from "../shared/Container";
-import { Empty } from "../shared/Products/Empty";
 import { Filters } from "../shared/Products/Filters";
 import { ProductsList } from "../shared/Products/List";
 import { ListFooter } from "../shared/Products/ListFooter";
@@ -78,7 +78,10 @@ export function Category({ previousUrl }: { previousUrl: string }) {
 				<div className="w-3/4">
 					<Filters />
 					{!products.isLoading && products.data?.data.length === 0 ? (
-						<Empty />
+						<EmptyState
+							title="No products found"
+							description="Please try another search or browse the categories."
+						/>
 					) : (
 						<>
 							<ProductsList

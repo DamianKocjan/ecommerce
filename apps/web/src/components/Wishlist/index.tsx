@@ -1,10 +1,9 @@
 import { useFilter } from "@/features/filter";
 import { trpc } from "@/utils/trpc";
-import { PrettyContainer } from "@ecommerce/ui";
+import { EmptyState, PrettyContainer } from "@ecommerce/ui";
 import { useRouter } from "next/router";
 import { useCallback, useMemo, useState } from "react";
 import { Container } from "../shared/Container";
-import { Empty } from "../shared/Products/Empty";
 import { Filters } from "../shared/Products/Filters";
 import { ProductsList } from "../shared/Products/List";
 import { ListFooter } from "../shared/Products/ListFooter";
@@ -77,7 +76,10 @@ export function Wishlist() {
 			<div className="my-2 mx-4">
 				<Filters />
 				{!wishlisted.isLoading && wishlisted.data?.data.length === 0 ? (
-					<Empty />
+					<EmptyState
+						title="No wishlisted products found"
+						description="Wishlist some products and they will appear there!"
+					/>
 				) : (
 					<>
 						<ProductsList
