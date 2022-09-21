@@ -57,7 +57,7 @@ export function Category({ previousUrl }: { previousUrl: string }) {
 
 	const products = trpc.useQuery(
 		[
-			"inifityProducts",
+			"products",
 			{
 				category: category || null,
 				q: query || null,

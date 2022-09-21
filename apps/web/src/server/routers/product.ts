@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { createRouter } from "../createRouter";
-import { PRODUCTS_PER_PAGE } from "../helpers/constants";
 import {
 	getOrderBy,
 	productPaginationWithFilters,
@@ -10,71 +9,26 @@ import {
 export const productRouter = createRouter()
 	.query("products", {
 		input: z.object({
-			category: z.string().nullish(),
-			q: z.string().nullish(),
-		}),
-		async resolve({ ctx, input }) {
-			return await ctx.prisma.product.findMany({
-				where: {
-					categories: input.category
-						? {
-								some: {
-									slug: input.category,
-								},
-						  }
-						: undefined,
-					title: {
-						contains: input.q || undefined,
-					},
-					activatiedAt: {
-						lte: new Date(),
-					},
-				},
-				select: {
-					id: true,
-					slug: true,
-					title: true,
-					description: true,
-					price: true,
-					discount: true,
-					manufacturer: {
-						select: {
-							id: true,
-							name: true,
-						},
-					},
-				},
-			});
-		},
-	})
-	.query("product", {
-		input: z.object({
-			slug: z.string(),
-		}),
-		async resolve({ ctx, input }) {
-			return await ctx.prisma.product.findFirstOrThrow({
-				where: {
-					slug: input.slug,
-					activatiedAt: {
-						lte: new Date(),
-					},
-				},
-			});
-		},
-	})
-	.query("inifityProducts", {
-		input: z.object({
 			...productPaginationWithFiltersSchema,
-			page: z.number().nullish(),
+			category: z.string().nullish(),
 		}),
 		async resolve({ ctx, input }) {
 			let { page, perPage } = input;
 
 			if (!page) {
-				page = PRODUCTS_PER_PAGE;
+				page = 0;
 			}
 
-			const where = productPaginationWithFilters(input);
+			const where = {
+				...productPaginationWithFilters(input),
+				categories: input.category
+					? {
+							some: {
+								slug: input.category,
+							},
+					  }
+					: undefined,
+			};
 			const orderBy = getOrderBy(input.sortBy);
 
 			const skip = page > 0 ? perPage * (page - 1) : 0;
@@ -114,5 +68,20 @@ export const productRouter = createRouter()
 					next: page < lastPage ? page + 1 : null,
 				},
 			};
+		},
+	})
+	.query("product", {
+		input: z.object({
+			slug: z.string(),
+		}),
+		async resolve({ ctx, input }) {
+			return await ctx.prisma.product.findFirstOrThrow({
+				where: {
+					slug: input.slug,
+					activatiedAt: {
+						lte: new Date(),
+					},
+				},
+			});
 		},
 	});

@@ -1,3 +1,4 @@
+import { type Prisma } from "@ecommerce/prisma";
 import * as trpc from "@trpc/server";
 import { z } from "zod";
 import { createProtectedRouter } from "../createProtectedRouter";
@@ -69,82 +70,65 @@ export const wishlistRouter = createProtectedRouter()
 		},
 	})
 	.query("wishlistedProducts", {
-		input: z.object({
-			...productPaginationWithFiltersSchema,
-			cursor: z.string().nullish(),
-		}),
+		input: z.object(productPaginationWithFiltersSchema),
 		async resolve({ ctx, input }) {
-			const { cursor, perPage } = input;
+			let { page, perPage } = input;
 
-			const now = new Date();
+			if (!page) {
+				page = 0;
+			}
+
 			const where = {
-				product: {
-					...productPaginationWithFilters(input),
-					activatiedAt: {
-						lte: now,
-					},
-				},
+				product: productPaginationWithFilters(input),
 				userId: ctx.session.user?.id,
 			};
 			const orderBy = getOrderBy(input.sortBy);
 
-			const items = await ctx.prisma.wishlist.findMany({
-				where,
-				orderBy,
-				cursor: cursor ? { id: cursor } : undefined,
-				take: perPage + 1,
-				select: {
-					id: true,
-					product: {
-						select: {
-							id: true,
-							slug: true,
-							title: true,
-							description: true,
-							price: true,
-							discount: true,
-							manufacturer: {
-								select: {
-									id: true,
-									name: true,
+			const skip = page > 0 ? perPage * (page - 1) : 0;
+			const [total, data] = await Promise.all([
+				ctx.prisma.wishlist.count({ where }),
+				ctx.prisma.wishlist.findMany({
+					take: perPage,
+					skip,
+					where,
+					orderBy: {
+						product: {
+							...orderBy,
+						} as Prisma.ProductOrderByWithRelationInput,
+					},
+					select: {
+						id: true,
+						product: {
+							select: {
+								id: true,
+								slug: true,
+								title: true,
+								description: true,
+								price: true,
+								discount: true,
+								manufacturer: {
+									select: {
+										id: true,
+										name: true,
+									},
 								},
 							},
 						},
 					},
-				},
-			});
-
-			let nextCursor: typeof cursor | undefined = undefined;
-			if (items.length > perPage) {
-				const nextItem = items.pop();
-				nextCursor = nextItem!.id;
-			}
-			// TODO: calculate previus cursor
-			let prevCursor: typeof cursor | undefined = undefined;
-			if (cursor) {
-				prevCursor = cursor;
-
-				const prevItem = await ctx.prisma.wishlist.findFirst({
-					where: {
-						...where,
-						id: {
-							lt: cursor,
-						},
-					},
-					orderBy,
-					select: {
-						id: true,
-					},
-				});
-				if (prevItem) {
-					prevCursor = prevItem.id;
-				}
-			}
+				}),
+			]);
+			const lastPage = Math.ceil(total / perPage);
 
 			return {
-				items,
-				nextCursor,
-				prevCursor,
+				data,
+				meta: {
+					total,
+					lastPage,
+					currentPage: page,
+					perPage,
+					prev: page > 1 ? page - 1 : null,
+					next: page < lastPage ? page + 1 : null,
+				},
 			};
 		},
 	});

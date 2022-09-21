@@ -23,19 +23,14 @@ export function getOrderBy(
 }
 
 export const productPaginationWithFiltersSchema = {
-	category: z.string().nullish(),
 	q: z.string().nullish(),
 	sortBy: z.string().nullish(),
 	sizes: z.array(z.number()).nullish(),
 	brands: z.array(z.number()).nullish(),
 	colors: z.array(z.number()).nullish(),
-	price: z
-		.object({
-			min: z.number().nullish(),
-			max: z.number().nullish(),
-			onSaleRequired: z.boolean().nullish(),
-		})
-		.nullish(),
+	priceMin: z.number().nullish(),
+	priceMax: z.number().nullish(),
+	onSaleRequired: z.boolean().nullish(),
 	materials: z.array(z.number()).nullish(),
 	multipack: z.boolean().nullish(),
 	patterns: z.array(z.number()).nullish(),
@@ -44,7 +39,7 @@ export const productPaginationWithFiltersSchema = {
 	season: z.nativeEnum(Season).nullish(),
 	delivery: z.boolean().nullish(),
 	perPage: z.number(),
-	// cursor: z.number().nullish(),
+	page: z.number().nullish(),
 };
 
 const obj = z.object(productPaginationWithFiltersSchema);
@@ -129,12 +124,5 @@ export function productPaginationWithFilters<T extends z.infer<typeof obj>>(
 						equals: input.season,
 				  }
 				: undefined,
-		categories: input.category
-			? {
-					some: {
-						slug: input.category,
-					},
-			  }
-			: undefined,
 	};
 }
