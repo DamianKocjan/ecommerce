@@ -82,8 +82,12 @@ export const Categories: React.FC<CategoriesProps> = ({
 						</Link>
 					</li>
 				)}
-				{categories.data?.categories.map((category) => (
-					<CategoryListItem key={category.slug} category={category} />
+				{categories.data?.categories.map(({ name, slug }) => (
+					<CategoryListItem
+						key={`subcategory-${slug}`}
+						name={name}
+						slug={slug}
+					/>
 				))}
 			</ul>
 		</div>
