@@ -6,6 +6,7 @@
 	/* Apply basic global styles to the body: */
 	body {
 		/* @apply bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans antialiased; */
+		@apply scroll-smooth antialiased;
 	}
 
 	/* Remove trailing margin from forms for some browsers: */
@@ -23,7 +24,54 @@
 	#nprogress {
 		@apply pointer-events-none z-50;
 	}
-	#nprogress .bar {
-		@apply bg-brand-500 fixed z-50 top-0 left-0 w-full h-0.5;
+
+	[role="bar"] {
+		@apply bg-teal-400 fixed z-50 top-0 left-0 w-full h-0.5;
+	}
+}
+
+@layer components {
+	.rating {
+		@apply flex items-center flex-row-reverse;
+	}
+
+	.rating .rating__star {
+		@apply flex items-center justify-center cursor-pointer;
+	}
+
+	.rating.disabled .rating__star {
+		@apply cursor-default;
+	}
+
+	.rating .rating__star svg {
+		@apply h-5 w-5 flex-shrink-0;
+	}
+
+	.rating:not(.disabled) .rating__star:hover ~ .rating__star svg {
+		@apply text-teal-500;
+	}
+
+	.rating:not(.disabled) .rating__star:hover ~ .rating__star-empty svg {
+		@apply text-teal-400;
+	}
+
+	.rating:not(.disabled) .rating__star:hover svg {
+		@apply text-teal-400;
+	}
+
+	.rating:not(.disabled) .rating__star:not(.rating__star-empty):hover svg {
+		@apply text-teal-500;
+	}
+
+	.rating .rating__star-empty svg {
+		@apply text-gray-500;
+	}
+
+	.rating .rating__star-full svg {
+		@apply text-black;
+	}
+
+	.rating .rating__star-half svg {
+		@apply text-black;
 	}
 }
