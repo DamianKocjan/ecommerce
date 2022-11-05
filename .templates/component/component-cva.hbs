@@ -1,5 +1,5 @@
 import React from "react";
-import { cva, cx } from "class-variance-authority";
+import { cva } from "class-variance-authority";
 import type { VariantProps } from "class-variance-authority";
 
 const {{camelCase name}} = cva("", {
@@ -7,8 +7,10 @@ const {{camelCase name}} = cva("", {
 	defaultVariants: {},
 });
 
-export type {{properCase name}}Props = VariantProps<typeof {{camelCase name}}> & { className: string };
+export type {{properCase name}}Props = VariantProps<typeof {{camelCase name}}> & {
+	className?: string;
+};
 
 export const {{properCase name}}: React.FC<{{properCase name}}Props> = ({ className, ...props }) => (
-	<div className={{append '' '{'}}cx(className, {{camelCase name}}()){{append '' '}'}} {...props} />
+	<div className={{append '' '{'}}{{camelCase name}}({ class: className }){{append '' '}'}} {...props} />
 );
