@@ -84,4 +84,27 @@ export const productRouter = createRouter()
 				},
 			});
 		},
+	})
+	.query("bagProducts", {
+		input: z.object({
+			products: z.array(z.string()),
+		}),
+		async resolve({ ctx, input }) {
+			return await ctx.prisma.product.findMany({
+				where: {
+					slug: {
+						in: input.products,
+					},
+				},
+				select: {
+					slug: true,
+					title: true,
+					colors: {
+						select: {
+							name: true,
+						},
+					},
+				},
+			});
+		},
 	});

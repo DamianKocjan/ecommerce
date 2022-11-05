@@ -67,11 +67,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 					<div className="flex space-x-4">
 						<BuyButton
 							disabled={!inStock}
-							product={{ id: 1, price, quantity: 1 }}
+							product={{ slug: "1", price, quantity: 1 }}
 						/>
-						<AddToBagButton productId={1} />
+						<AddToBagButton product="1" />
 					</div>
-					<IconButton type="button" aria-label="Like">
+					<IconButton type="button" intent="secondary" aria-label="Like">
 						<svg width="20" height="20" fill="currentColor" aria-hidden="true">
 							<path
 								fillRule="evenodd"

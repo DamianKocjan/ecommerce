@@ -1,6 +1,7 @@
 import { type Manufacturer, type Product } from "@ecommerce/prisma";
 import { PrettyImage } from "@ecommerce/ui";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useMemo } from "react";
 import { AddToBagIconButton } from "../Bag";
 import { useCurrencyFormatter } from "../formatters";
@@ -12,6 +13,7 @@ export interface ProductCardProps {
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 	const currencyFormater = useCurrencyFormatter();
+	const router = useRouter();
 
 	const price = useMemo(
 		() => currencyFormater.format(product.price),
@@ -25,7 +27,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 				alt={`${product.title} image`}
 				className="h-64"
 			/>
-			<Link href={`/c/${product.manufacturer.id}`}>
+			<Link href={`${router.asPath}?brands=[${product.manufacturer.id}]`}>
 				{product.manufacturer.name}
 			</Link>
 			<h3>
@@ -35,7 +37,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 				<p>{price}</p>
 				<div className="flex-1" />
 				<WishlistIconButton productId={product.id} />
-				<AddToBagIconButton productId={product.id} />
+				<AddToBagIconButton product={product.slug} />
 			</div>
 		</div>
 	);

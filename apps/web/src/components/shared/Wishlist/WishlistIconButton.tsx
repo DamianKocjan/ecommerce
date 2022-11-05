@@ -30,7 +30,9 @@ export const WishlistIconButton: React.FC<WishlistIconButtonProps> = ({
 
 	return (
 		<IconButton
+			intent="secondary"
 			className={`hover:animate-wiggle group ${additionalClasses}`}
+			type="button"
 			onClick={handleToggleWishlist}
 			onMouseUp={handleMouseUp}
 		>

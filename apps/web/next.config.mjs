@@ -9,7 +9,12 @@ const withTM = transpileModule([
 export default withTM({
 	reactStrictMode: true,
 	images: {
-		domains: ["tailwindcss.com", "tailwindui.com", "images.unsplash.com"],
+		domains: [
+			"tailwindcss.com",
+			"tailwindui.com",
+			"images.unsplash.com",
+			"source.unsplash.com",
+		],
 	},
 	experimental: {
 		images: {

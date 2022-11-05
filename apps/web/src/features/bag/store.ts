@@ -2,26 +2,26 @@ import create from "zustand";
 import { persist } from "zustand/middleware";
 
 interface BagState {
-	content: number[];
-	addToBag: (productId: number) => void;
+	products: string[];
+	addToBag: (product: string) => void;
 	clearBag: () => void;
-	removeFromBag: (productId: number) => void;
+	removeFromBag: (product: string) => void;
 }
 
 export const useBag = create(
 	persist<BagState>(
 		(set) => ({
-			content: [],
-			addToBag: (productId) =>
+			products: [],
+			addToBag: (product) =>
 				set((state) => ({
 					...state,
-					content: [...new Set([...state.content, productId])],
+					products: [...new Set([...state.products, product])],
 				})),
-			clearBag: () => set((state) => ({ ...state, content: [] })),
-			removeFromBag: (productId) =>
+			clearBag: () => set((state) => ({ ...state, products: [] })),
+			removeFromBag: (product) =>
 				set((state) => ({
 					...state,
-					content: state.content.filter((prodId) => prodId !== productId),
+					products: state.products.filter((prod) => prod !== product),
 				})),
 		}),
 		{ name: "cart" }

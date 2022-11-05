@@ -1,6 +1,7 @@
 import { Nav } from "@/components/App/Nav";
 import { NProgress } from "@/components/App/NProgress";
 import { SubNav } from "@/components/App/SubNav";
+import { Session } from "@ecommerce/auth";
 import {
 	SessionProvider,
 	signIn,
@@ -20,7 +21,9 @@ import "../styles/globals.css";
 function AppCore({
 	Component,
 	pageProps: { session, ...pageProps },
-}: AppProps) {
+}: AppProps<{
+	session: Session | null;
+}>) {
 	// Quick fix for type error
 	const ReactComponent = Component as unknown as React.FC;
 

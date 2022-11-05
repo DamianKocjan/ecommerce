@@ -24,6 +24,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
 					name: true,
 				},
 			},
+			colors: {
+				select: {
+					name: true,
+				},
+			},
 		},
 	});
 

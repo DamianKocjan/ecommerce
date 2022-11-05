@@ -4,16 +4,16 @@ import React from "react";
 import { useBag } from "./useBag";
 
 export interface AddToBagIconButtonProps {
-	productId: number;
+	product: string;
 }
 
 export const AddToBagIconButton: React.FC<AddToBagIconButtonProps> = ({
-	productId,
+	product,
 }) => {
-	const { handleToggleBag, isInBag } = useBag(productId);
+	const { handleToggleBag, isInBag } = useBag(product);
 
 	return (
-		<IconButton className="ml-2" onClick={handleToggleBag}>
+		<IconButton intent="secondary" className="ml-2" onClick={handleToggleBag}>
 			<span className="sr-only">Add to cart</span>
 			<ShoppingCartSimpleIcon
 				className="h-6 w-6"

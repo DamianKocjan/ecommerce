@@ -5,7 +5,7 @@ import { useCallback } from "react";
 export interface BuyButtonProps {
 	disabled: boolean;
 	product: {
-		id: number;
+		slug: string;
 		price: number;
 		quantity: number;
 	};
@@ -17,7 +17,7 @@ export const BuyButton: React.FC<BuyButtonProps> = ({ disabled, product }) => {
 	const handleAddToBag = useCallback(
 		(e: React.FormEvent<HTMLButtonElement>) => {
 			e.preventDefault();
-			addToBag(product.id);
+			addToBag(product.slug);
 		},
 		[addToBag, product]
 	);
