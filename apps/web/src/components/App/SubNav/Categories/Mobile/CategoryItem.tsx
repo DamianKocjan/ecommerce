@@ -35,7 +35,7 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({
 			<div onClick={handleCategoriesModalOpen} role="button">
 				<div>
 					<img
-						src="https://tailwindcss.com/_next/static/media/retro-shoe.ee965cd22237d00d4225236bbaf5edc1.jpg"
+						src="https://tailwindcss.com/_next/static/media/retro-shoe.24e25785.jpg"
 						alt={`${category.name} category image`}
 						className="object-cover"
 						loading="lazy"
@@ -65,6 +65,7 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({
 												<div className="flex items-center align-middle">
 													<IconButton
 														type="button"
+														intent="secondary"
 														className="mr-4"
 														onClick={handleCategoriesModalClose}
 													>
@@ -82,6 +83,7 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({
 												</div>
 												<IconButton
 													type="button"
+													intent="secondary"
 													className="absolute top-[-4px] right-0 mr-4"
 													onClick={handleCloseAllPanels}
 												>

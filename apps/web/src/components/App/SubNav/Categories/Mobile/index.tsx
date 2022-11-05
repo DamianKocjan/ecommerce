@@ -32,7 +32,11 @@ export const MobileCategories: React.FC<MobileCategoriesProps> = ({
 
 	return (
 		<>
-			<IconButton className="md:hidden" onClick={handleCategoriesModalOpen}>
+			<IconButton
+				intent="secondary"
+				className="md:hidden"
+				onClick={handleCategoriesModalOpen}
+			>
 				<span className="sr-only">Categories</span>
 				<DotsThreeVerticalIcon
 					className="block h-6 w-6 text-black"
@@ -73,6 +77,7 @@ export const MobileCategories: React.FC<MobileCategoriesProps> = ({
 												</Dialog.Title>
 												<IconButton
 													type="button"
+													intent="secondary"
 													className="absolute top-[-4px] right-0 mr-4"
 													onClick={handleCategoriesModalClose}
 												>

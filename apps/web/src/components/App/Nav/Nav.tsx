@@ -1,18 +1,17 @@
-import { useBag } from "@/features/bag";
 import { signIn, signOut, useSession } from "@ecommerce/auth/nextjs/client";
 import { Button, IconButton } from "@ecommerce/ui";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
 import {
-	Bag as BagIcon,
 	Heart as HeartIcon,
 	List as MenuIcon,
 	SignIn as SignInIcon,
 	User as UserIcon,
 	X as XIcon,
 } from "phosphor-react";
-import { Fragment, useCallback, useMemo } from "react";
-import { classNames } from "../shared/utils";
+import { Fragment, useCallback } from "react";
+import { classNames } from "../../shared/utils";
+import { BagButton } from "./BagButton";
 
 const NAVIGATION = [
 	{ name: "Home", href: "/" },
@@ -23,9 +22,6 @@ const NAVIGATION = [
 
 export const Nav: React.FC = () => {
 	const { data: session } = useSession();
-	const items = useBag((state) => state.content);
-
-	const numOfItems = useMemo(() => items.length, [items]);
 
 	const handleSignOut = useCallback(
 		(e: React.MouseEvent<HTMLButtonElement>) => {
@@ -101,7 +97,7 @@ export const Nav: React.FC = () => {
 									</a>
 								</Link>
 
-								<Link href="/cart">
+								{/* <Link href="/cart">
 									<a>
 										<IconButton
 											type="button"
@@ -129,7 +125,8 @@ export const Nav: React.FC = () => {
 											</Transition>
 										</IconButton>
 									</a>
-								</Link>
+								</Link> */}
+								<BagButton />
 
 								{/* Profile dropdown */}
 								{session ? (
