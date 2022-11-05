@@ -10,7 +10,7 @@
 		"@ecommerce/config": "*"
 	},
 	"dependencies": {
-		"@aws-sdk/client-s3": "3.135.0",
-		"@aws-sdk/s3-request-presigner": "3.135.0"
+		"@aws-sdk/client-s3": "3.186.0",
+		"@aws-sdk/s3-request-presigner": "3.186.0"
 	}
 }
