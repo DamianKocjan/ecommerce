@@ -5,6 +5,8 @@ export * from "./Button";
 export * from "./Card";
 export * from "./Chip";
 export * from "./EmptyState";
+export * from "./Flex";
+export * from "./Grid";
 export * from "./Heading";
 export * from "./IconButton";
 export * from "./PrettyContainer";

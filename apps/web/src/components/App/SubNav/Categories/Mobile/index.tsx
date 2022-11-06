@@ -1,4 +1,4 @@
-import { Button, IconButton } from "@ecommerce/ui";
+import { Button, Flex, Grid, IconButton } from "@ecommerce/ui";
 import { Dialog, Transition } from "@headlessui/react";
 import Link from "next/link";
 import {
@@ -59,7 +59,7 @@ export const MobileCategories: React.FC<MobileCategoriesProps> = ({
 
 					<div className="fixed inset-0 overflow-hidden">
 						<div className="absolute inset-0 overflow-hidden">
-							<div className="pointer-events-none fixed inset-y-0 left-0 flex max-w-full pr-10">
+							<Flex className="pointer-events-none fixed inset-y-0 left-0 max-w-full pr-10">
 								<Transition.Child
 									as={Fragment}
 									enter="transform transition ease-in-out duration-500 sm:duration-700"
@@ -70,7 +70,10 @@ export const MobileCategories: React.FC<MobileCategoriesProps> = ({
 									leaveTo="-translate-x-full"
 								>
 									<Dialog.Panel className="pointer-events-auto relative w-screen max-w-md">
-										<div className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl font-mono">
+										<Flex
+											direction="col"
+											className="h-full overflow-y-scroll bg-white py-6 shadow-xl font-mono"
+										>
 											<div className="px-4 sm:px-6 relative">
 												<Dialog.Title className="text-xl font-medium py-1 px-2 md:py-2 md:px-4 w-fit text-white bg-black border-b-2 border-solid border-teal-400">
 													Search by categories
@@ -86,7 +89,7 @@ export const MobileCategories: React.FC<MobileCategoriesProps> = ({
 												</IconButton>
 											</div>
 											<div className="relative mt-6 flex-1 px-4 sm:px-6">
-												<div className="flex flex-row justify-around">
+												<Flex justify="around">
 													<Link href="/c/women">
 														<Button intent="secondary" className="w-full">
 															Women
@@ -102,9 +105,9 @@ export const MobileCategories: React.FC<MobileCategoriesProps> = ({
 															Kids
 														</Button>
 													</Link>
-												</div>
+												</Flex>
 
-												<div className="grid grid-cols-2 gap-x-3 gap-y-5 my-4">
+												<Grid cols="2" className="gap-x-3 gap-y-5 my-4">
 													{categories.map((category, index) => (
 														<CategoryItem
 															category={category}
@@ -114,12 +117,12 @@ export const MobileCategories: React.FC<MobileCategoriesProps> = ({
 															key={index}
 														/>
 													))}
-												</div>
+												</Grid>
 											</div>
-										</div>
+										</Flex>
 									</Dialog.Panel>
 								</Transition.Child>
-							</div>
+							</Flex>
 						</div>
 					</div>
 				</Dialog>

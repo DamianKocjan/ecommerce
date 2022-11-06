@@ -1,4 +1,5 @@
 import { classNames } from "@/components/shared/utils";
+import { Flex, Grid } from "@ecommerce/ui";
 import { Tab } from "@headlessui/react";
 import React from "react";
 
@@ -8,14 +9,17 @@ export interface ImageGalleryProps {
 
 export const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
 	return (
-		<Tab.Group as="div" className="flex flex-col-reverse">
+		<Tab.Group as={Flex} direction="col-reverse">
 			{/* Image selector */}
 			<div className="hidden mt-6 w-full max-w-2xl mx-auto sm:block lg:max-w-none">
-				<Tab.List className="grid grid-cols-4 gap-6">
+				<Tab.List as={Grid} cols="4" className="gap-6">
 					{images?.map((image) => (
 						<Tab
 							key={image.id}
-							className="relative h-24 bg-white flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring focus:ring-offset-4 focus:ring-opacity-50"
+							as={Flex}
+							items="center"
+							justify="center"
+							className="relative h-24 bg-white text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring focus:ring-offset-4 focus:ring-opacity-50"
 						>
 							{({ selected }) => (
 								<>

@@ -1,3 +1,4 @@
+import { Flex } from "@ecommerce/ui";
 import { Listbox } from "@headlessui/react";
 import { FunnelSimple } from "phosphor-react";
 import React from "react";
@@ -17,9 +18,13 @@ export const FilterListBoxButton: React.FC<FilterListBoxButtonProps> = ({
 				{label}
 				{selectedOptionText}
 			</span>
-			<span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-1">
+			<Flex
+				as="span"
+				items="center"
+				className="pointer-events-none absolute inset-y-0 right-0 pr-1"
+			>
 				<FunnelSimple className="h-5 w-5 text-white" aria-hidden="true" />
-			</span>
+			</Flex>
 		</Listbox.Button>
 	);
 };

@@ -1,3 +1,4 @@
+import { Flex } from "@ecommerce/ui";
 import { forwardRef } from "react";
 import { LooseAutocomplete } from "../types";
 
@@ -20,9 +21,13 @@ export const SizeInput = forwardRef<HTMLInputElement, SizeInputProps>(
 					ref={ref}
 					{...props}
 				/>
-				<div className="relative w-10 h-10 flex items-center justify-center text-black peer-checked:bg-black peer-checked:text-white before:absolute before:z-[-1] before:top-0.5 before:left-0.5 before:w-full before:h-full peer-checked:before:bg-teal-400">
+				<Flex
+					items="center"
+					justify="center"
+					className="relative w-10 h-10 text-black peer-checked:bg-black peer-checked:text-white before:absolute before:z-[-1] before:top-0.5 before:left-0.5 before:w-full before:h-full peer-checked:before:bg-teal-400"
+				>
 					{size}
-				</div>
+				</Flex>
 			</label>
 		);
 	}

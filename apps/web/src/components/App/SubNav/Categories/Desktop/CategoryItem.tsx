@@ -1,3 +1,4 @@
+import { Flex } from "@ecommerce/ui";
 import { Transition } from "@headlessui/react";
 import Link from "next/link";
 import { useCallback, useLayoutEffect, useRef, useState } from "react";
@@ -72,8 +73,8 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({
 					// width: `${width.current}px`,
 				}}
 			>
-				<div className="flex p-4 relative before:absolute before:z-[-1] before:top-1 before:left-1 before:w-full before:h-full text-white bg-black before:bg-teal-400">
-					<div className="flex w-3/4">
+				<Flex className="p-4 relative before:absolute before:z-[-1] before:top-1 before:left-1 before:w-full before:h-full text-white bg-black before:bg-teal-400">
+					<Flex className="w-3/4">
 						{columns.map(({ categories, subtitle }) => (
 							<div key={subtitle} className="w-full">
 								<h3 className="text-lg hover:underline underline-offset-4 decoration-teal-400 decoration-2 mb-4">
@@ -91,14 +92,14 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({
 								</ul>
 							</div>
 						))}
-					</div>
+					</Flex>
 					<img
 						src={image}
 						alt=""
 						className="block w-1/4 h-full object-cover"
 						loading="lazy"
 					/>
-				</div>
+				</Flex>
 			</Transition>
 		</li>
 	);

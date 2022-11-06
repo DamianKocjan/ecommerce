@@ -1,5 +1,5 @@
 import { signIn, signOut, useSession } from "@ecommerce/auth/nextjs/client";
-import { Button, IconButton } from "@ecommerce/ui";
+import { Button, Flex, IconButton } from "@ecommerce/ui";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
 import {
@@ -41,8 +41,11 @@ export const Nav: React.FC = () => {
 			{({ open }) => (
 				<>
 					<div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-						<div className="relative flex items-center justify-between h-16">
-							<div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+						<Flex items="center" justify="between" className="relative h-16">
+							<Flex
+								items="center"
+								className="absolute inset-y-0 left-0 sm:hidden"
+							>
 								{/* Mobile menu button*/}
 								<Disclosure.Button
 									className="hover:text-white text-gray-300"
@@ -55,10 +58,10 @@ export const Nav: React.FC = () => {
 										<MenuIcon className="block h-6 w-6" aria-hidden="true" />
 									)}
 								</Disclosure.Button>
-							</div>
-							<div className="flex items-center justify-center">
+							</Flex>
+							<Flex items="center" justify="center">
 								<div className="hidden sm:block sm:ml-6">
-									<div className="flex space-x-4">
+									<Flex className="space-x-4">
 										{NAVIGATION.map((item) => (
 											<Link key={item.name} href={item.href}>
 												<a>
@@ -71,9 +74,9 @@ export const Nav: React.FC = () => {
 												</a>
 											</Link>
 										))}
-									</div>
+									</Flex>
 								</div>
-							</div>
+							</Flex>
 							{/* TODO: center logo */}
 							{/* <div className="hidden sm:flex-1 sm:flex sm:items-stretch sm:justify-start">
 								<img
@@ -84,7 +87,10 @@ export const Nav: React.FC = () => {
 									loading="lazy"
 								/>
 							</div> */}
-							<div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+							<Flex
+								items="center"
+								className="absolute inset-y-0 right-0 pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
+							>
 								<Link href="/wishlist">
 									<a>
 										<IconButton
@@ -213,12 +219,16 @@ export const Nav: React.FC = () => {
 										<SignInIcon className="h-6 w-6" aria-hidden="true" />
 									</IconButton>
 								)}
-							</div>
-						</div>
+							</Flex>
+						</Flex>
 					</div>
 
 					<Disclosure.Panel className="sm:hidden">
-						<div className="px-2 pt-2 pb-3 space-y-1 flex flex-row items-stretch">
+						<Flex
+							direction="row"
+							items="stretch"
+							className="px-2 pt-2 pb-3 space-y-1"
+						>
 							{NAVIGATION.map((item) => (
 								<Disclosure.Button key={item.name} as={Link} href={item.href}>
 									<Button
@@ -229,7 +239,7 @@ export const Nav: React.FC = () => {
 									</Button>
 								</Disclosure.Button>
 							))}
-						</div>
+						</Flex>
 					</Disclosure.Panel>
 				</>
 			)}

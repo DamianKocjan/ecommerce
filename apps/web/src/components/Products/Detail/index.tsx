@@ -1,5 +1,6 @@
 import { Container } from "@/components/shared/Container";
 import { type Product } from "@ecommerce/prisma";
+import { Grid } from "@ecommerce/ui";
 import { useState } from "react";
 import { ProductDescription } from "./Description";
 import { ImageGallery } from "./ImageGallery";
@@ -66,7 +67,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
 	return (
 		<Container title={product?.title}>
 			<div className="py-4">
-				<div className="lg:grid lg:grid-cols-2 lg:gap-x-8 lg:items-start">
+				<Grid media="lg" className="lg:grid-cols-2 lg:gap-x-8 lg:items-start">
 					{/* Image gallery */}
 					<ImageGallery images={product?.images} />
 
@@ -76,7 +77,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
 						selectedColor={selectedColor}
 						setSelectedColor={setSelectedColor}
 					/>
-				</div>
+				</Grid>
 
 				{/* Description */}
 				<ProductDescription description={product.description} />

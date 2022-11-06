@@ -1,3 +1,4 @@
+import { Flex } from "@ecommerce/ui";
 import { CaretLeft, CaretRight } from "phosphor-react";
 import React from "react";
 
@@ -16,8 +17,8 @@ export const Pagination: React.FC<PaginationProps> = ({
 	nextPage,
 }) => {
 	return (
-		<div className="flex justify-between items-center">
-			<div className="flex items-center">
+		<Flex items="center" justify="between">
+			<Flex items="center">
 				<button
 					className="px-3 py-2 rounded-l-lg text-gray-900 hover:text-teal-600 disabled:text-neutral-600 disabled:hover:text-neutral-600 focus:outline-none focus:shadow-outline"
 					onClick={() => onChange(previousPage!)}
@@ -35,7 +36,7 @@ export const Pagination: React.FC<PaginationProps> = ({
 					<span className="sr-only">Next page</span>
 					<CaretRight className="h-5 w-5" weight="bold" />
 				</button>
-			</div>
-		</div>
+			</Flex>
+		</Flex>
 	);
 };

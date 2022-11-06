@@ -1,3 +1,4 @@
+import { Flex } from "@ecommerce/ui";
 import { CategoryItem, CategoryItemProps } from "./CategoryItem";
 
 export interface DesktopCategoriesProps {
@@ -10,7 +11,14 @@ export const DesktopCategories: React.FC<DesktopCategoriesProps> = ({
 	categories,
 }) => {
 	return (
-		<ul className="items-center justify-between flex-wrap md:flex-nowrap hidden md:flex">
+		<Flex
+			as="ul"
+			media="md"
+			items="center"
+			justify="between"
+			wrap="wrap"
+			className="md:flex-nowrap hidden"
+		>
 			{categories.map(({ name, href, columns, image }, index) => (
 				<CategoryItem
 					key={index}
@@ -20,6 +28,6 @@ export const DesktopCategories: React.FC<DesktopCategoriesProps> = ({
 					image={image}
 				/>
 			))}
-		</ul>
+		</Flex>
 	);
 };

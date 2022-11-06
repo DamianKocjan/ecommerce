@@ -1,3 +1,4 @@
+import { Flex } from "@ecommerce/ui";
 import { useRouter } from "next/router";
 import { Categories } from "../shared/Categories";
 import { Container } from "../shared/Container";
@@ -8,13 +9,13 @@ export function Products() {
 
 	return (
 		<Container title="Products">
-			<div className="flex gap-4 py-4">
+			<Flex className="gap-4 py-4">
 				<Categories />
 				<div className="w-3/4">
 					<Filters />
 					{/* <ProductsList products={products} /> */}
 				</div>
-			</div>
+			</Flex>
 		</Container>
 	);
 }

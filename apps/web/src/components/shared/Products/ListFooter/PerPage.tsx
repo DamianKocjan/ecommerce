@@ -1,3 +1,4 @@
+import { Flex } from "@ecommerce/ui";
 import { Listbox } from "@headlessui/react";
 import { Check } from "phosphor-react";
 import React from "react";
@@ -39,9 +40,13 @@ export const PerPage: React.FC<PerPageProps> = ({ onChange, value }) => {
 										{option}
 									</span>
 									{selected ? (
-										<span className="absolute inset-y-0 left-0 flex items-center pl-3 text-teal-600">
+										<Flex
+											as="span"
+											items="center"
+											className="absolute inset-y-0 left-0 pl-3 text-teal-600"
+										>
 											<Check className="h-5 w-5" aria-hidden="true" />
-										</span>
+										</Flex>
 									) : null}
 								</>
 							)}

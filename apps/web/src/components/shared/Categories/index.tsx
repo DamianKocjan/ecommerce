@@ -1,5 +1,5 @@
 import { trpc } from "@/utils/trpc";
-import { Heading, Spinner } from "@ecommerce/ui";
+import { Flex, Heading, Spinner } from "@ecommerce/ui";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ArrowLeft as ArrowLeftIcon } from "phosphor-react";
@@ -53,10 +53,10 @@ export const Categories: React.FC<CategoriesProps> = ({
 		return (
 			<div className="w-1/4">
 				<Heading className="text-3xl">Categories</Heading>
-				<div className="flex w-full my-4 ml-2">
+				<Flex className="w-full my-4 ml-2">
 					<Spinner className="text-teal-500" />
 					Loading categories...
-				</div>
+				</Flex>
 			</div>
 		);
 	}
@@ -68,10 +68,10 @@ export const Categories: React.FC<CategoriesProps> = ({
 				{previousCategorySlug !== null && categories.data?.parentCategory && (
 					<li className="text-xl text-neutral-500 font-semibold hover:text-black hover:underline underline-offset-[3px] decoration-teal-400 decoration-2">
 						<Link href={`/c/${categories.data.parentCategory.slug}`}>
-							<a className="flex items-center">
+							<Flex as="a" items="center">
 								<ArrowLeftIcon className="w-5 h-5 mr-2" />
 								{categories.data.parentCategory.name}
-							</a>
+							</Flex>
 						</Link>
 					</li>
 				)}

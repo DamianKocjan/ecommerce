@@ -1,5 +1,5 @@
 import { type Manufacturer, type Product } from "@ecommerce/prisma";
-import { ProductCardShimmer } from "@ecommerce/ui";
+import { Grid, ProductCardShimmer } from "@ecommerce/ui";
 import { ProductCard } from "./Card";
 
 export interface ProductsListProps {
@@ -12,7 +12,10 @@ export const ProductsList: React.FC<ProductsListProps> = ({
 	isLoading,
 }) => {
 	return (
-		<div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:gap-x-8 py-4 sm:px-2">
+		<Grid
+			cols="1"
+			className="gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:gap-x-8 py-4 sm:px-2"
+		>
 			{isLoading
 				? Array.from({ length: 6 }).map((_, i) => (
 						<ProductCardShimmer key={`product-shimmer-${i}`} />
@@ -20,6 +23,6 @@ export const ProductsList: React.FC<ProductsListProps> = ({
 				: products?.map((product) => (
 						<ProductCard key={product.slug} product={product} />
 				  ))}
-		</div>
+		</Grid>
 	);
 };

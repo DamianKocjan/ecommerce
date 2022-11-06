@@ -1,6 +1,6 @@
 import { useFilter } from "@/features/filter";
 import { trpc } from "@/utils/trpc";
-import { EmptyState } from "@ecommerce/ui";
+import { EmptyState, Flex } from "@ecommerce/ui";
 import { useRouter } from "next/router";
 import { useCallback, useMemo, useState } from "react";
 import { Categories } from "../shared/Categories";
@@ -76,7 +76,7 @@ export function Category({ previousUrl }: { previousUrl: string }) {
 
 	return (
 		<Container title="Products">
-			<div className="flex gap-4 py-4">
+			<Flex className="gap-4 py-4">
 				<Categories parentCategory={category} previousUrl={previousUrl} />
 				<div className="w-3/4">
 					<Filters />
@@ -102,7 +102,7 @@ export function Category({ previousUrl }: { previousUrl: string }) {
 						</>
 					)}
 				</div>
-			</div>
+			</Flex>
 		</Container>
 	);
 }

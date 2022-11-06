@@ -1,4 +1,5 @@
 import { classNames } from "@/components/shared/utils";
+import { Flex } from "@ecommerce/ui";
 import { Disclosure } from "@headlessui/react";
 import { Minus, Plus } from "phosphor-react";
 import React from "react";
@@ -23,7 +24,12 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ details }) => {
 						{({ open }) => (
 							<>
 								<h3>
-									<Disclosure.Button className="group relative w-full py-6 flex justify-between items-center text-left">
+									<Disclosure.Button
+										as={Flex}
+										items="center"
+										justify="between"
+										className="group relative w-full py-6 text-left"
+									>
 										<span
 											className={classNames(
 												open ? "text-teal-600" : "text-gray-900",
@@ -32,7 +38,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ details }) => {
 										>
 											{detail.name}
 										</span>
-										<span className="ml-6 flex items-center">
+										<Flex as="span" items="center" className="ml-6">
 											{open ? (
 												<Minus
 													className="block h-6 w-6 text-teal-400 group-hover:text-teal-500"
@@ -44,7 +50,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ details }) => {
 													aria-hidden="true"
 												/>
 											)}
-										</span>
+										</Flex>
 									</Disclosure.Button>
 								</h3>
 								<Disclosure.Panel as="div" className="pb-6 prose prose-sm">

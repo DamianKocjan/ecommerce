@@ -1,5 +1,5 @@
 import { type Manufacturer, type Product } from "@ecommerce/prisma";
-import { PrettyImage } from "@ecommerce/ui";
+import { Flex, PrettyImage } from "@ecommerce/ui";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useMemo } from "react";
@@ -21,7 +21,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 	);
 
 	return (
-		<div className="flex flex-col space-y-2 font-display">
+		<Flex direction="col" className="space-y-2 font-display">
 			<PrettyImage
 				src="https://tailwindcss.com/_next/static/media/beach-house-interior-1.bc69273a536a51bb58092b2896b92e3a.jpg"
 				alt={`${product.title} image`}
@@ -33,12 +33,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 			<h3>
 				<Link href={`/products/${product.slug}`}>{product.title}</Link>
 			</h3>
-			<div className="flex items-center w-full">
+			<Flex items="center" className="w-full">
 				<p>{price}</p>
 				<div className="flex-1" />
 				<WishlistIconButton productId={product.id} />
 				<AddToBagIconButton product={product.slug} />
-			</div>
-		</div>
+			</Flex>
+		</Flex>
 	);
 };

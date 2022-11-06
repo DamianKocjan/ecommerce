@@ -1,4 +1,4 @@
-import { IconButton } from "@ecommerce/ui";
+import { Flex, Grid, IconButton } from "@ecommerce/ui";
 import { Dialog, Transition } from "@headlessui/react";
 import { ArrowLeft as ArrowLeftIcon, X as XIcon } from "phosphor-react";
 import React, { Fragment, useCallback, useState } from "react";
@@ -49,7 +49,7 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({
 				<Dialog as="div" className="relative z-10" onClose={setOpen}>
 					<div className="fixed inset-0 overflow-hidden">
 						<div className="absolute inset-0 overflow-hidden">
-							<div className="pointer-events-none fixed inset-y-0 left-0 flex max-w-full pr-10">
+							<Flex className="pointer-events-none fixed inset-y-0 left-0 max-w-full pr-10">
 								<Transition.Child
 									as={Fragment}
 									enter="transform transition ease-in-out duration-500 sm:duration-700"
@@ -60,9 +60,12 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({
 									leaveTo="-translate-x-full"
 								>
 									<Dialog.Panel className="pointer-events-auto relative w-screen max-w-md">
-										<div className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl font-mono">
+										<Flex
+											direction="col"
+											className="h-full overflow-y-scroll bg-white py-6 shadow-xl font-mono"
+										>
 											<div className="px-4 sm:px-6 relative">
-												<div className="flex items-center align-middle">
+												<Flex items="center" className="align-middle">
 													<IconButton
 														type="button"
 														intent="secondary"
@@ -80,7 +83,7 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({
 													<Dialog.Title className="text-xl font-medium py-1 px-2 md:py-2 md:px-4 w-fit text-white bg-black border-b-2 border-solid border-teal-400">
 														{category.name}
 													</Dialog.Title>
-												</div>
+												</Flex>
 												<IconButton
 													type="button"
 													intent="secondary"
@@ -92,12 +95,12 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({
 												</IconButton>
 											</div>
 											<div className="relative mt-6 flex-1 px-4 sm:px-6">
-												<div className="grid grid-cols-2 gap-x-3 gap-y-5 my-4"></div>
+												<Grid cols="2" className="gap-x-3 gap-y-5 my-4"></Grid>
 											</div>
-										</div>
+										</Flex>
 									</Dialog.Panel>
 								</Transition.Child>
-							</div>
+							</Flex>
 						</div>
 					</div>
 				</Dialog>

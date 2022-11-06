@@ -1,6 +1,6 @@
 import { classNames } from "@/components/shared/utils";
 import { useSession } from "@ecommerce/auth/nextjs/client";
-import { Tooltip } from "@ecommerce/ui";
+import { Flex, Tooltip } from "@ecommerce/ui";
 import { Star, StarHalf } from "phosphor-react";
 import React, { useCallback, useMemo } from "react";
 
@@ -62,13 +62,13 @@ export const Rating: React.FC<RatingProps> = ({ rating }) => {
 	);
 
 	return (
-		<div className="flex items-center">
+		<Flex items="center">
 			<Tooltip title={rating.toString()}>
 				<div className={classNames("rating", !sessionData ? "disabled" : "")}>
 					{stars}
 				</div>
 			</Tooltip>
 			<p className="sr-only">{rating} out of 5 stars</p>
-		</div>
+		</Flex>
 	);
 };

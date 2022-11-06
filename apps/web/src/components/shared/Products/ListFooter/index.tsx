@@ -1,3 +1,4 @@
+import { Flex } from "@ecommerce/ui";
 import { Pagination } from "./Pagination";
 import { PerPage } from "./PerPage";
 
@@ -19,7 +20,7 @@ export const ListFooter: React.FC<ListFooterProps> = ({
 	nextPage,
 }) => {
 	return (
-		<div className="sm:pt-2 flex">
+		<Flex className="sm:pt-2">
 			<PerPage onChange={handlePerPageChange} value={perPage} />
 			<div className="flex-1" />
 			<Pagination
@@ -28,6 +29,6 @@ export const ListFooter: React.FC<ListFooterProps> = ({
 				previousPage={previousPage}
 				nextPage={nextPage}
 			/>
-		</div>
+		</Flex>
 	);
 };

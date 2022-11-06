@@ -1,4 +1,4 @@
-import { IconButton } from "@ecommerce/ui";
+import { Flex, IconButton } from "@ecommerce/ui";
 import { useRouter } from "next/router";
 import { MagnifyingGlass as SearchIcon } from "phosphor-react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
@@ -60,11 +60,13 @@ export const MobileSearch: React.FC = () => {
 	}, [searchInputRef]);
 
 	return (
-		<form
-			className="flex items-center justify-between"
+		<Flex
+			as="form"
+			items="center"
+			justify="between"
 			onSubmit={handleSearchSubmit}
 		>
-			<label className="flex items-center" htmlFor="search">
+			<Flex as="label" items="center" htmlFor="search">
 				{showOpenSearch ? (
 					<IconButton className="flex-none" onClick={handleFocusInput}>
 						<span className="sr-only">Search</span>
@@ -100,7 +102,7 @@ export const MobileSearch: React.FC = () => {
 						/>
 					</>
 				)}
-			</label>
-		</form>
+			</Flex>
+		</Flex>
 	);
 };

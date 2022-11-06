@@ -2,6 +2,7 @@ import { AddToBagButton } from "@/components/shared/Bag";
 import { useCurrencyFormatter } from "@/components/shared/formatters";
 import { WishlistIconButton } from "@/components/shared/Wishlist";
 import { Product } from "@ecommerce/prisma";
+import { Flex } from "@ecommerce/ui";
 import React, { useMemo } from "react";
 import { ProductColors } from "./Colors";
 import { ProductDetails } from "./Details";
@@ -60,11 +61,11 @@ export const ProductInfo: React.FC<ProductInfoProps> = ({
 					setSelectedColor={setSelectedColor}
 				/>
 
-				<div className="mt-10 flex sm:flex-col1">
+				<Flex className="mt-10 sm:flex-col1">
 					<AddToBagButton product={product.id.toString()} />
 
 					<WishlistIconButton productId={product.id} />
-				</div>
+				</Flex>
 			</form>
 
 			<ProductDetails details={product.details} />

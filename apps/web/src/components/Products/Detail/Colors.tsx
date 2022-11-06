@@ -1,4 +1,5 @@
 import { classNames } from "@/components/shared/utils";
+import { Flex } from "@ecommerce/ui";
 import { RadioGroup } from "@headlessui/react";
 import React from "react";
 
@@ -23,7 +24,7 @@ export const ProductColors: React.FC<ProductColorsProps> = ({
 				className="mt-2"
 			>
 				<RadioGroup.Label className="sr-only">Choose a color</RadioGroup.Label>
-				<div className="flex flex-wrap max-w-xs items-center gap-3">
+				<Flex items="center" wrap="wrap" className="max-w-xs gap-3">
 					{colors.map((color) => (
 						<RadioGroup.Option
 							key={color.name}
@@ -48,7 +49,7 @@ export const ProductColors: React.FC<ProductColorsProps> = ({
 							/>
 						</RadioGroup.Option>
 					))}
-				</div>
+				</Flex>
 			</RadioGroup>
 		</div>
 	);

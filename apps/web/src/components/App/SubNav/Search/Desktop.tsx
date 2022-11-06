@@ -1,4 +1,4 @@
-import { IconButton } from "@ecommerce/ui";
+import { Flex, IconButton } from "@ecommerce/ui";
 import { useRouter } from "next/router";
 import { MagnifyingGlass as SearchIcon } from "phosphor-react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
@@ -70,11 +70,13 @@ export const DesktopSearch: React.FC = () => {
 	}, [searchInputRef]);
 
 	return (
-		<form
-			className="flex items-center justify-between"
+		<Flex
+			as="form"
+			items="center"
+			justify="between"
 			onSubmit={handleSearchSubmit}
 		>
-			<label className="flex items-center" htmlFor="search">
+			<Flex as="label" items="center" htmlFor="search">
 				<IconButton
 					type="submit"
 					className="flex-none"
@@ -93,7 +95,7 @@ export const DesktopSearch: React.FC = () => {
 					value={search}
 					ref={searchInputRef}
 				/>
-			</label>
-		</form>
+			</Flex>
+		</Flex>
 	);
 };
