@@ -1,6 +1,6 @@
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import { ElementType } from "react";
+import { ElementType, forwardRef, Ref } from "react";
 import { PolymorphicProps } from "../types";
 
 const grid = cva("", {
@@ -70,18 +70,21 @@ const defaultElement = "div";
 export type GridProps<E extends ElementType = typeof defaultElement> =
 	PolymorphicProps<E> & VariantProps<typeof grid>;
 
-export function Grid<E extends ElementType>({
-	as,
-	className,
-	children,
-	cols,
-	flow,
-	items,
-	justify,
-	media,
-	rows,
-	...props
-}: GridProps<E>) {
+const FRefGrid = <E extends ElementType>(
+	{
+		as,
+		className,
+		children,
+		cols,
+		flow,
+		items,
+		justify,
+		media,
+		rows,
+		...props
+	}: GridProps<E>,
+	ref: Ref<any>
+) => {
 	const Tag = as ?? defaultElement;
 
 	return (
@@ -96,8 +99,13 @@ export function Grid<E extends ElementType>({
 				rows,
 			})}
 			{...props}
+			ref={ref}
 		>
 			{children}
 		</Tag>
 	);
-}
+};
+
+export const Grid = forwardRef(FRefGrid) as <E extends ElementType>(
+	props: GridProps<E> & { ref?: Ref<any> }
+) => React.ReactElement;

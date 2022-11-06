@@ -1,6 +1,6 @@
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import { ElementType } from "react";
+import { ElementType, forwardRef, Ref } from "react";
 import { PolymorphicProps } from "../types";
 
 const flex = cva("", {
@@ -51,17 +51,20 @@ const defaultElement = "div";
 export type FlexProps<E extends ElementType = typeof defaultElement> =
 	PolymorphicProps<E> & VariantProps<typeof flex>;
 
-export function Flex<E extends ElementType>({
-	as,
-	className,
-	children,
-	direction,
-	items,
-	justify,
-	media,
-	wrap,
-	...props
-}: FlexProps<E>) {
+const FRefFlex = <E extends ElementType>(
+	{
+		as,
+		className,
+		children,
+		direction,
+		items,
+		justify,
+		media,
+		wrap,
+		...props
+	}: FlexProps<E>,
+	ref: Ref<any>
+) => {
 	const Tag = as ?? defaultElement;
 
 	return (
@@ -75,8 +78,15 @@ export function Flex<E extends ElementType>({
 				wrap,
 			})}
 			{...props}
+			ref={ref}
 		>
 			{children}
 		</Tag>
 	);
-}
+};
+
+export const Flex = forwardRef(FRefFlex) as <
+	E extends ElementType = typeof defaultElement
+>(
+	props: FlexProps<E> & { ref?: Ref<any> }
+) => React.ReactElement;
