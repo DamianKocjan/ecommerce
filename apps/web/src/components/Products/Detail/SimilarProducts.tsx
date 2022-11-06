@@ -43,7 +43,7 @@ export const SimilarProducts: React.FC = () => {
 								className="w-full h-full object-center object-cover"
 							/>
 						</div>
-						<Flex justify="center" className="mt-4">
+						<Flex justify="between" className="mt-4">
 							<div>
 								<h3 className="text-sm text-white">
 									<a href={product.href}>

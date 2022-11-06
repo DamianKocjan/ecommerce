@@ -51,12 +51,12 @@ const grid = cva("", {
 			evenly: "justify-evenly",
 		},
 		media: {
-			sm: "sm:flex",
-			md: "md:flex",
-			lg: "lg:flex",
-			xl: "xl:flex",
-			"2xl": "2xl:flex",
-			all: "flex",
+			sm: "sm:grid",
+			md: "md:grid",
+			lg: "lg:grid",
+			xl: "xl:grid",
+			"2xl": "2xl:grid",
+			all: "grid",
 		},
 	},
 	defaultVariants: {
