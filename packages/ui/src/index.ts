@@ -15,3 +15,4 @@ export * from "./ProductCardShimmer";
 export * from "./Shimmer";
 export * from "./Spinner";
 export * from "./Tag";
+export * from "./Tooltip";

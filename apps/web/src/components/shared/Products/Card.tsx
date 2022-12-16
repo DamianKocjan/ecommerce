@@ -20,6 +20,34 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 		[currencyFormater, product.price]
 	);
 
+	const brands = useMemo(() => {
+		const brands = router.query["brands"] as string;
+		if (brands && brands.includes("[") && brands.includes("]")) {
+			let b = brands
+				.slice(1, -1)
+				.split(".")
+				.map((b) => Number(b))
+				.filter((b) => b !== 0);
+			b.push(product.manufacturer.id);
+
+			// remove duplicates
+			b = [...new Set(b)];
+
+			return b;
+		}
+		return [product.manufacturer.id];
+	}, [router.query, product.manufacturer.id]);
+
+	const path = useMemo(() => {
+		let path = router.asPath;
+
+		// remove brands query param (brands=[{number},]), if it exists
+		if (path.includes("?brands=")) {
+			path = path.replace(/\?brands=\[[0-9,]*\]/, "");
+		}
+		return path;
+	}, [router.asPath]);
+
 	return (
 		<Flex direction="col" className="space-y-2 font-display">
 			<PrettyImage
@@ -27,7 +55,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 				alt={`${product.title} image`}
 				className="h-64"
 			/>
-			<Link href={`${router.asPath}?brands=[${product.manufacturer.id}]`}>
+			<Link href={`${path}?brands=[${brands.join(",")}]`}>
 				{product.manufacturer.name}
 			</Link>
 			<h3>

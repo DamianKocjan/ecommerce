@@ -28,7 +28,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ details }) => {
 										as={Flex}
 										items="center"
 										justify="between"
-										className="group relative w-full py-6 text-left"
+										className="group relative w-full py-6 text-left cursor-pointer"
 									>
 										<span
 											className={classNames(
