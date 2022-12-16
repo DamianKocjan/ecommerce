@@ -139,18 +139,23 @@ export const BagButton: React.FC = () => {
 							</ul>
 						)}
 
-						<Button
-							intent="primary"
-							className="w-full disabled:cursor-not-allowed"
-							disabled={isLoading || isError || !data || !data.length}
-							title={
-								isLoading || isError || !data || !data.length
-									? "Bag is empty"
-									: "Checkout"
-							}
-						>
-							Checkout
-						</Button>
+						<Link href="/checkout">
+							<a>
+								<Button
+									intent="primary"
+									className="w-full disabled:cursor-not-allowed"
+									disabled={isLoading || isError || !data || !data.length}
+									title={
+										isLoading || isError || !data || !data.length
+											? "Bag is empty"
+											: "Checkout"
+									}
+									type="button"
+								>
+									Checkout
+								</Button>
+							</a>
+						</Link>
 
 						<p className="mt-6 text-center">
 							<Link
