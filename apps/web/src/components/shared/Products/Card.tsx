@@ -44,6 +44,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 		// remove brands query param (brands=[{number},]), if it exists
 		if (path.includes("?brands=")) {
 			path = path.replace(/\?brands=\[[0-9,]*\]/, "");
+		} else if (path.includes("&brands=")) {
+			path = path.replace(/\&brands=\[[0-9,]*\]/, "");
 		}
 		return path;
 	}, [router.asPath]);
@@ -55,7 +57,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 				alt={`${product.title} image`}
 				className="h-64"
 			/>
-			<Link href={`${path}?brands=[${brands.join(",")}]`}>
+			<Link
+				href={`${path}${path.includes("?") ? "&" : "?"}brands=[${brands.join(
+					","
+				)}]`}
+			>
 				{product.manufacturer.name}
 			</Link>
 			<h3>
