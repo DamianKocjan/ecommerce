@@ -229,23 +229,42 @@ model Size {
   @@map("sizes")
 }
 
-model Product {
-  id           Int       @id @default(autoincrement())
-  slug         String    @unique // This is the unique identifier for the product (e.g. "title-of-product-ID")
-  title        String    @unique
-  description  String
-  price        Decimal   @db.Decimal(8, 2)
-  discount     Decimal?  @db.Decimal(8, 2)
-  quantity     Int
-  activatiedAt DateTime?
-  multipack    Boolean   @default(false)
-  multipackQty Int       @default(1)
+model Image {
+  id  String @id @default(cuid())
+  url String
 
   // Timestamps
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   // Relations
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
+
+  // Attributes
+  @@map("images")
+}
+
+model Product {
+  id               Int       @id @default(autoincrement())
+  slug             String    @unique // This is the unique identifier for the product (e.g. "title-of-product-ID")
+  title            String    @unique
+  shortDescription String    @db.VarChar(250)
+  description      String
+  thumbnailImage   String
+  price            Decimal   @db.Decimal(8, 2)
+  discount         Decimal?  @db.Decimal(8, 2)
+  quantity         Int
+  activatiedAt     DateTime?
+  multipack        Boolean   @default(false)
+  multipackQty     Int       @default(1)
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  images           Image[]
   categories       Category[]
   coupons          Coupon[]
   orderItems       OrderItem[]
