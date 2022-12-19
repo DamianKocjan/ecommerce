@@ -1,3 +1,4 @@
+import { Flex } from "@ecommerce/ui";
 import Link from "next/link";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useToggleBetween } from "../shared/hooks/useToggleBetween";
@@ -64,9 +65,10 @@ export const SwiperBanner: React.FC = () => {
 	return (
 		<div className="bg-gray-50 w-full my-2">
 			<div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
-				<div className="flex items-center justify-between flex-1 w-full">
-					<div
-						className="w-0 flex-1 flex items-center overflow-hidden"
+				<Flex items="center" justify="between" className="flex-1">
+					<Flex
+						items="center"
+						className="w-0 flex-1 overflow-hidden"
 						onMouseEnter={handleOnMouseEnter}
 						onMouseLeave={handleOnMouseLeave}
 					>
@@ -76,8 +78,8 @@ export const SwiperBanner: React.FC = () => {
 						>
 							{value}
 						</p>
-					</div>
-				</div>
+					</Flex>
+				</Flex>
 			</div>
 		</div>
 	);
