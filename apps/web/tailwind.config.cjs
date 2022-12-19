@@ -38,6 +38,7 @@ module.exports = {
 			},
 			transitionProperty: {
 				abs: "top, right, bottom, left",
+				filter: "filter",
 			},
 			keyframes: {
 				wiggle: {
@@ -53,6 +54,14 @@ module.exports = {
 					"0%": { transform: "translateY(0)" },
 					"100%": { transform: "translateY(-5px)" },
 				},
+				strikeThrough: {
+					"0%": {
+						transform: "translateY(-1rem)",
+						opacity: 0.3,
+					},
+					"50%": { opacity: 1 },
+					"100%": { transform: "translateY(0)" },
+				},
 			},
 			animation: {
 				wiggle: "wiggle 1s ease-in-out infinite",
@@ -60,6 +69,7 @@ module.exports = {
 				// FIXME: stop `up` animation and end it when `shake` animation ends
 				upShake:
 					"up 75ms ease-in forwards, shake 300ms 75ms ease-in-out forwards",
+				strikeThrough: "strikeThrough 150ms ease-in-out forwards",
 			},
 		},
 	},
@@ -69,6 +79,8 @@ module.exports = {
 	plugins: [
 		require("@tailwindcss/aspect-ratio"),
 		require("@tailwindcss/forms"),
+		require("@tailwindcss/line-clamp"),
 		require("@tailwindcss/typography"),
+		require("tailwind-scrollbar")({ nocompatible: true }),
 	],
 };
