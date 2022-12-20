@@ -1,10 +1,12 @@
 import { useCurrencyFormatter } from "@/components/shared/formatters";
 import { Box, Flex, Grid, PrettyContainer } from "@ecommerce/ui";
+import Link from "next/link";
 import React from "react";
 
 const products = [
 	{
 		id: "1",
+		slug: "product-1",
 		name: "Product 1",
 		price: 100,
 		image: "https://source.unsplash.com/random",
@@ -13,6 +15,7 @@ const products = [
 	},
 	{
 		id: "2",
+		slug: "product-2",
 		name: "Product 2",
 		price: 200,
 		image: "https://source.unsplash.com/random",
@@ -47,10 +50,12 @@ export const SimilarProducts: React.FC = () => {
 							<Flex justify="between" className="mt-4">
 								<div>
 									<h3 className="text-sm text-white">
-										<a href={product.href}>
-											<span aria-hidden="true" className="absolute inset-0" />
-											{product.name}
-										</a>
+										<Link href={`/products/${product.slug}`}>
+											<a>
+												<span aria-hidden="true" className="absolute inset-0" />
+												{product.name}
+											</a>
+										</Link>
 									</h3>
 									<p className="mt-1 text-sm text-gray-500">{product.color}</p>
 								</div>
