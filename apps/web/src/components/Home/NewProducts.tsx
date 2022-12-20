@@ -50,7 +50,7 @@ export const NewProducts: React.FC = () => {
 
 	return (
 		<section className="mt-4">
-			<h3 className="text-6xl p-8 font-mono font-bold mb-2 relative group w-fit">
+			<h3 className="text-5xl lg:text-6xl p-8 font-mono font-semibold mb-2 relative group w-fit">
 				<Link href="/c/new">Latest products</Link>
 				<span className="h-2 w-full bg-black absolute bottom-4 left-16 scale-x-0 group-hover:animate-strikeThrough" />
 			</h3>

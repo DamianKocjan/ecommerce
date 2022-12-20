@@ -24,7 +24,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 						<img
 							src="https://d33wubrfki0l68.cloudfront.net/dd23708ebc4053551bb33e18b7174e73b6e1710b/dea24/static/images/wallpapers/shared-colors@2x.png"
 							alt={product.title}
-							className="w-auto h-48 object-cover"
+							className="w-auto h-36 sm:h-48 object-cover"
 						/>
 						<div className="absolute bottom-0 group-hover:bottom-1 transition-abs left-8 bg-black p-0.5 min-w-[3rem]">
 							<p className="font-bold font-mono text-center text-white">

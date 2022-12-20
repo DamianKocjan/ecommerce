@@ -16,7 +16,9 @@ export const Hero: React.FC = () => {
 				justify="center"
 				className="md:w-1/2 p-4"
 			>
-				<h2 className="text-7xl font-mono self-start">New collection</h2>
+				<h2 className="text-5xl md:text-6xl lg:text-7xl font-mono font-semibold self-start">
+					New collection
+				</h2>
 				<p className="mt-4 p-2 text-lg">
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
 					quod, voluptate, quia, voluptates quas voluptatibus quibusdam

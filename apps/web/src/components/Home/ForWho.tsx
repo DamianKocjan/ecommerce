@@ -5,7 +5,7 @@ import React from "react";
 export const ForWho: React.FC = () => {
 	return (
 		<section className="mt-16">
-			<h3 className="font-mono font-bold text-6xl p-8 sm:p-0">
+			<h3 className="font-mono font-semibold text-5xl lg:text-6xl p-8 sm:p-0">
 				For who are you buying?
 			</h3>
 			<Grid
