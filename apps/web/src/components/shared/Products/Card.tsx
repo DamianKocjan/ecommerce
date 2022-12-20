@@ -71,7 +71,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 				<p>{price}</p>
 				<div className="flex-1" />
 				<WishlistIconButton productId={product.id} />
-				<AddToBagIconButton product={product.slug} />
+				<AddToBagIconButton productSlug={product.slug} />
 			</Flex>
 		</Flex>
 	);

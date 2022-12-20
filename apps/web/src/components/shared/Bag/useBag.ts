@@ -1,22 +1,22 @@
 import { useBag as useBagStore } from "@/features/bag";
 import { useCallback, useMemo } from "react";
 
-export function useBag(product: string) {
+export function useBag(productSlug: string) {
 	const { addToBag, removeFromBag } = useBagStore();
 	const products = useBagStore((state) => state.products);
 
 	const isInBag = useMemo(
-		() => products.includes(product),
-		[products, product]
+		() => products.includes(productSlug),
+		[products, productSlug]
 	);
 
 	const handleToggleBag = useCallback(
 		(e: React.FormEvent<HTMLButtonElement>) => {
 			e.preventDefault();
 
-			isInBag ? removeFromBag(product) : addToBag(product);
+			isInBag ? removeFromBag(productSlug) : addToBag(productSlug);
 		},
-		[addToBag, isInBag, product, removeFromBag]
+		[addToBag, isInBag, productSlug, removeFromBag]
 	);
 
 	return {

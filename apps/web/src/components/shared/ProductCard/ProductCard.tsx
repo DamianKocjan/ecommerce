@@ -73,7 +73,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 							disabled={!inStock}
 							product={{ slug: "1", price, quantity: 1 }}
 						/>
-						<AddToBagButton product="1" />
+						<AddToBagButton productSlug="1" />
 					</Flex>
 					<IconButton type="button" intent="secondary" aria-label="Like">
 						<svg width="20" height="20" fill="currentColor" aria-hidden="true">

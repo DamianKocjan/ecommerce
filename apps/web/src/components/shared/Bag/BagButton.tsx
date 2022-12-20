@@ -2,11 +2,13 @@ import { Button } from "@ecommerce/ui";
 import { useBag } from "./useBag";
 
 export interface AddToBagButtonProps {
-	product: string;
+	productSlug: string;
 }
 
-export const AddToBagButton: React.FC<AddToBagButtonProps> = ({ product }) => {
-	const { handleToggleBag, isInBag } = useBag(product);
+export const AddToBagButton: React.FC<AddToBagButtonProps> = ({
+	productSlug,
+}) => {
+	const { handleToggleBag, isInBag } = useBag(productSlug);
 
 	return (
 		<Button intent="secondary" type="button" onClick={handleToggleBag}>

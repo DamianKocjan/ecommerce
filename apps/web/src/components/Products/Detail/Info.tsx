@@ -62,7 +62,7 @@ export const ProductInfo: React.FC<ProductInfoProps> = ({
 				/>
 
 				<Flex className="mt-10 sm:flex-col1">
-					<AddToBagButton product={product.slug} />
+					<AddToBagButton productSlug={product.slug} />
 
 					<WishlistIconButton productId={product.id} />
 				</Flex>
