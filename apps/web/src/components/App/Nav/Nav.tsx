@@ -1,17 +1,15 @@
-import { signIn, signOut, useSession } from "@ecommerce/auth/nextjs/client";
+import { signIn, useSession } from "@ecommerce/auth/nextjs/client";
 import { Button, Flex, IconButton } from "@ecommerce/ui";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { Disclosure } from "@headlessui/react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import {
 	Heart as HeartIcon,
 	List as MenuIcon,
 	SignIn as SignInIcon,
-	User as UserIcon,
 	X as XIcon,
 } from "phosphor-react";
-import { Fragment, useCallback } from "react";
-import { classNames } from "../../shared/utils";
-import { BagButton } from "./BagButton";
+import { useCallback } from "react";
 
 const NAVIGATION = [
 	{ name: "Home", href: "/" },
@@ -20,16 +18,22 @@ const NAVIGATION = [
 	{ name: "Kids", href: "/c/kids" },
 ];
 
+const AccountMenu = dynamic(
+	() => import("./AccountMenu").then((mod) => mod.AccountMenu),
+	{
+		ssr: false,
+	}
+);
+
+const BagButton = dynamic(
+	() => import("./BagButton").then((mod) => mod.BagButton),
+	{
+		ssr: false,
+	}
+);
+
 export const Nav: React.FC = () => {
 	const { data: session } = useSession();
-
-	const handleSignOut = useCallback(
-		(e: React.MouseEvent<HTMLButtonElement>) => {
-			e.preventDefault();
-			signOut();
-		},
-		[]
-	);
 
 	const handleSignIn = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
@@ -136,79 +140,7 @@ export const Nav: React.FC = () => {
 
 								{/* Profile dropdown */}
 								{session ? (
-									<Menu as="div" className="relative">
-										<div>
-											<Menu.Button
-												className="hover:text-white text-gray-300"
-												as={IconButton}
-											>
-												<span className="sr-only">Open user menu</span>
-												<UserIcon
-													className="block h-6 w-6"
-													aria-hidden="true"
-												/>
-											</Menu.Button>
-										</div>
-										<Transition
-											as={Fragment}
-											enter="transition ease-out duration-100"
-											enterFrom="transform opacity-0 scale-95"
-											enterTo="transform opacity-100 scale-100"
-											leave="transition ease-in duration-75"
-											leaveFrom="transform opacity-100 scale-100"
-											leaveTo="transform opacity-0 scale-95"
-										>
-											<Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 p-2 bg-black outline outline-2 outline-teal-400 focus:outline-0 text-white z-10">
-												<Menu.Item>
-													{({ active }) => (
-														<Link href="">
-															<a>
-																<Button
-																	intent="secondary"
-																	className={classNames(
-																		active ? "text-white" : "text-gray-300",
-																		"w-full mb-1 z-10"
-																	)}
-																>
-																	Your Profile
-																</Button>
-															</a>
-														</Link>
-													)}
-												</Menu.Item>
-												<Menu.Item>
-													{({ active }) => (
-														<Link href="">
-															<a>
-																<Button
-																	intent="secondary"
-																	className={classNames(
-																		active ? "text-white" : "text-gray-300",
-																		"w-full my-1"
-																	)}
-																>
-																	Settings
-																</Button>
-															</a>
-														</Link>
-													)}
-												</Menu.Item>
-												<Menu.Item>
-													{({ active }) => (
-														<Button
-															onClick={handleSignOut}
-															className={classNames(
-																active ? "text-black" : "text-gray-800",
-																"w-full mt-1"
-															)}
-														>
-															Sign out
-														</Button>
-													)}
-												</Menu.Item>
-											</Menu.Items>
-										</Transition>
-									</Menu>
+									<AccountMenu />
 								) : (
 									<IconButton
 										type="button"
