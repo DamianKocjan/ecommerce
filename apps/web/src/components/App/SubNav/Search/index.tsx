@@ -1,6 +1,6 @@
 import MediaQuery from "@/components/shared/hooks/useMediaQuery";
 import dynamic from "next/dynamic";
-import React, { Suspense } from "react";
+import React from "react";
 
 const DesktopSearch = dynamic(
 	() => import("./Desktop").then((mod) => mod.DesktopSearch),
@@ -18,13 +18,13 @@ const MobileSearch = dynamic(
 
 export const Search: React.FC = () => {
 	return (
-		<Suspense>
+		<>
 			<MediaQuery max="md">
 				<MobileSearch />
 			</MediaQuery>
 			<MediaQuery min="lg">
 				<DesktopSearch />
 			</MediaQuery>
-		</Suspense>
+		</>
 	);
 };
