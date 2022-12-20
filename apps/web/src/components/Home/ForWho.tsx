@@ -30,7 +30,6 @@ export const ForWho: React.FC = () => {
 				For who are you buying?
 			</h3>
 			<Grid
-				direction="col"
 				cols="1"
 				items="stretch"
 				justify="center"
