@@ -5,7 +5,9 @@ import React, { useCallback, useState } from "react";
 import { ProductCard } from "./ProductCard";
 
 export const NewProducts: React.FC = () => {
-	const { data } = trpc.useQuery(["newProducts", { perPage: 15 }]);
+	const { data } = trpc.useQuery(["newProducts", { perPage: 15 }], {
+		refetchOnWindowFocus: false,
+	});
 	const [startX, setStartX] = useState(0);
 	const [scrollLeft, setScrollLeft] = useState(0);
 	const [isMouseDown, setIsMouseDown] = useState(false);
