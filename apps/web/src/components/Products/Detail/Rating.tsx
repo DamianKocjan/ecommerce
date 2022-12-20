@@ -33,6 +33,7 @@ export const Rating: React.FC<RatingProps> = ({ rating }) => {
 				if (star <= rating) {
 					return (
 						<button
+							key={`product-rating-${star}`}
 							className="rating__star rating__star-full"
 							onClick={handleOnClick}
 						>
@@ -42,6 +43,7 @@ export const Rating: React.FC<RatingProps> = ({ rating }) => {
 				} else if (star - 0.5 <= rating) {
 					return (
 						<button
+							key={`product-rating-${star}`}
 							className="rating__star rating__star-half"
 							onClick={handleOnClick}
 						>
@@ -51,6 +53,7 @@ export const Rating: React.FC<RatingProps> = ({ rating }) => {
 				}
 				return (
 					<button
+						key={`product-rating-${star}`}
 						className="rating__star rating__star-empty"
 						onClick={handleOnClick}
 					>
