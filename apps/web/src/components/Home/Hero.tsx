@@ -7,6 +7,8 @@ export const Hero: React.FC = () => {
 			<div className="md:w-1/2 h-60 sm:h-96 md:h-[70vh]">
 				<img
 					src="https://tailwindcss.com/_next/static/media/retro-shoe.24e25785.jpg"
+					alt="New collection image"
+					loading="lazy"
 					className="w-full h-full object-cover"
 				/>
 			</div>

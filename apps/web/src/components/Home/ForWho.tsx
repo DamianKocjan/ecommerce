@@ -43,7 +43,8 @@ export const ForWho: React.FC = () => {
 							<article>
 								<img
 									src={imageSrc}
-									alt="women"
+									alt={title}
+									loading="lazy"
 									className="object-cover grayscale group-hover:grayscale-0 transition-filter last-of-type:sm:max-h-96 last-of-type:md:max-h-fit"
 								/>
 								<h4 className="text-4xl font-bold font-mono text-white py-2 relative w-fit">
