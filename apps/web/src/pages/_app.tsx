@@ -25,7 +25,9 @@ function AppCore({
 	session: Session | null;
 }>) {
 	// Quick fix for type error
-	const ReactComponent = Component as unknown as React.FC;
+	const ReactComponent = Component as unknown as React.FC & {
+		auth?: boolean;
+	};
 
 	return (
 		<ThemeProvider
@@ -49,7 +51,7 @@ function AppCore({
 				<SubNav />
 
 				<main>
-					{(ReactComponent as any).auth ? (
+					{ReactComponent.auth ? (
 						<Auth>
 							<ReactComponent {...pageProps} />
 						</Auth>
