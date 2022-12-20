@@ -1,5 +1,13 @@
 import { Flex } from "@ecommerce/ui";
-import { CategoryItem, CategoryItemProps } from "./CategoryItem";
+import dynamic from "next/dynamic";
+import { CategoryItemProps } from "./CategoryItem";
+
+const CategoryItem = dynamic(
+	() => import("./CategoryItem").then((mod) => mod.CategoryItem),
+	{
+		ssr: false,
+	}
+);
 
 export interface DesktopCategoriesProps {
 	categories: CategoryItemProps[];
