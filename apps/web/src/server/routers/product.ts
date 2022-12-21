@@ -97,9 +97,24 @@ export const productRouter = createRouter()
 					},
 				},
 				select: {
+					id: true,
 					slug: true,
 					title: true,
+					price: true,
+					// images: {
+					// 	select: {
+					// 		id: true,
+					// 		url: true,
+					// 	},
+					// },
+					quantity: true,
 					colors: {
+						select: {
+							id: true,
+							name: true,
+						},
+					},
+					size: {
 						select: {
 							name: true,
 						},
