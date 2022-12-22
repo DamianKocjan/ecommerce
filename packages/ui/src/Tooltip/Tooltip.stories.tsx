@@ -1,6 +1,6 @@
-import React from "react";
 import { ComponentMeta } from "@storybook/react";
 
+import { Button } from "../Button";
 import { Tooltip } from "./Tooltip";
 
 export default {
@@ -8,4 +8,8 @@ export default {
 	component: Tooltip,
 } as ComponentMeta<typeof Tooltip>;
 
-export const Template = () => <Tooltip />;
+export const Template = () => (
+	<Tooltip title="Tooltip">
+		<Button>Hello</Button>
+	</Tooltip>
+);

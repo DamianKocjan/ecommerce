@@ -1,4 +1,4 @@
-import { type Manufacturer, type Product } from "@ecommerce/prisma";
+import { InferQueryOutput } from "@/utils/trpc";
 import { Flex, PrettyImage } from "@ecommerce/ui";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -8,7 +8,7 @@ import { useCurrencyFormatter } from "../formatters";
 import { WishlistIconButton } from "../Wishlist";
 
 export interface ProductCardProps {
-	product: Product & { manufacturer: Manufacturer };
+	product: InferQueryOutput<"products">["data"][number];
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {

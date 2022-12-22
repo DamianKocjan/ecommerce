@@ -1,15 +1,10 @@
+import { InferQueryOutput } from "@/utils/trpc";
 import { Flex } from "@ecommerce/ui";
 import Link from "next/link";
 import React from "react";
 
 export interface ProductCardProps {
-	product: {
-		id: number;
-		slug: string;
-		title: string;
-		price: number;
-		image: string;
-	};
+	product: InferQueryOutput<"newProducts">["data"][number];
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {

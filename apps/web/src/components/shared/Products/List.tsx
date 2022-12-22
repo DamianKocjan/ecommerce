@@ -1,9 +1,9 @@
-import { type Manufacturer, type Product } from "@ecommerce/prisma";
+import { InferQueryOutput } from "@/utils/trpc";
 import { Grid, ProductCardShimmer } from "@ecommerce/ui";
 import { ProductCard } from "./Card";
 
 export interface ProductsListProps {
-	products: (Product & { manufacturer: Manufacturer })[] | undefined;
+	products: InferQueryOutput<"products">["data"] | undefined;
 	isLoading: boolean;
 }
 
