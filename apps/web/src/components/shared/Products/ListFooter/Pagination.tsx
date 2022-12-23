@@ -27,7 +27,9 @@ export const Pagination: React.FC<PaginationProps> = ({
 					<span className="sr-only">Previous page</span>
 					<CaretLeft className="h-5 w-5" weight="bold" />
 				</button>
-				<span className="text-gray-900 font-bold font-mono">{currentPage}</span>
+				<span className="text-gray-900 font-bold font-mono">
+					{currentPage || 1}
+				</span>
 				<button
 					className="px-3 py-2 rounded-r-lg text-gray-900 hover:text-teal-600 disabled:text-neutral-600 disabled:hover:text-neutral-600 focus:outline-none focus:shadow-outline"
 					onClick={() => onChange(nextPage!)}
