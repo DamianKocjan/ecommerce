@@ -1,3 +1,4 @@
+import { DecimalToNumber } from "@/utils/converters";
 import { z } from "zod";
 import { createRouter } from "../createRouter";
 import {
@@ -59,7 +60,7 @@ export const productRouter = createRouter()
 			const lastPage = Math.ceil(total / perPage);
 
 			return {
-				data,
+				data: data as unknown as DecimalToNumber<typeof data>,
 				meta: {
 					total,
 					lastPage,
@@ -76,7 +77,7 @@ export const productRouter = createRouter()
 			slug: z.string(),
 		}),
 		async resolve({ ctx, input }) {
-			return await ctx.prisma.product.findFirstOrThrow({
+			const data = await ctx.prisma.product.findFirstOrThrow({
 				where: {
 					slug: input.slug,
 					activatiedAt: {
@@ -92,6 +93,8 @@ export const productRouter = createRouter()
 					},
 				},
 			});
+
+			return data as unknown as DecimalToNumber<typeof data>;
 		},
 	})
 	.query("bagProducts", {
@@ -99,7 +102,7 @@ export const productRouter = createRouter()
 			products: z.array(z.string()),
 		}),
 		async resolve({ ctx, input }) {
-			return await ctx.prisma.product.findMany({
+			const data = await ctx.prisma.product.findMany({
 				where: {
 					slug: {
 						in: input.products,
@@ -130,6 +133,8 @@ export const productRouter = createRouter()
 					},
 				},
 			});
+
+			return data as unknown as DecimalToNumber<typeof data>;
 		},
 	})
 	.query("newProducts", {
@@ -180,7 +185,7 @@ export const productRouter = createRouter()
 			const lastPage = Math.ceil(total / perPage);
 
 			return {
-				data,
+				data: data as unknown as DecimalToNumber<typeof data>,
 				meta: {
 					total,
 					lastPage,

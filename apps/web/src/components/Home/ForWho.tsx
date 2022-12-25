@@ -38,7 +38,7 @@ export const ForWho: React.FC = () => {
 				{/* FIXME: fix last card max height on smaller screens */}
 				{/* FIXME: fix first two width on smaller screens */}
 				{FOR_WHO.map(({ title, imageSrc, href }) => (
-					<Link href={href}>
+					<Link href={href} key={`for-who-${title}`}>
 						<a className="group bg-black p-4 last-of-type:sm:col-span-2 last-of-type:sm:place-self-center last-of-type:lg:col-span-1">
 							<article>
 								<img

@@ -1,7 +1,7 @@
 import { AddToBagButton } from "@/components/shared/Bag";
 import { useCurrencyFormatter } from "@/components/shared/formatters";
 import { WishlistIconButton } from "@/components/shared/Wishlist";
-import { Product } from "@ecommerce/prisma";
+import { InferQueryOutput } from "@/utils/trpc";
 import { Flex } from "@ecommerce/ui";
 import React, { useMemo } from "react";
 import { ProductColors } from "./Colors";
@@ -9,7 +9,7 @@ import { ProductDetails } from "./Details";
 import { Rating } from "./Rating";
 
 export interface ProductInfoProps {
-	product: Product & { colors: { name: string }[] };
+	product: InferQueryOutput<"product">;
 	selectedColor: { name: string };
 	setSelectedColor: (color: { name: string }) => void;
 }
@@ -48,7 +48,7 @@ export const ProductInfo: React.FC<ProductInfoProps> = ({
 
 				<div
 					className="text-base text-gray-700 space-y-6"
-					dangerouslySetInnerHTML={{ __html: product.description }}
+					dangerouslySetInnerHTML={{ __html: product.shortDescription }}
 				/>
 			</div>
 

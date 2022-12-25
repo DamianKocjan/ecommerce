@@ -8,7 +8,16 @@ import { ProductInfo } from "./Info";
 import { SimilarProducts } from "./SimilarProducts";
 
 export interface ProductDetailProps {
-	product: Product & { colors: { name: string }[] };
+	product: Product & {
+		colors: {
+			id: number;
+			name: string;
+		}[];
+		manufacturer: {
+			id: number;
+			name: string;
+		};
+	};
 }
 
 export function ProductDetail({ product }: ProductDetailProps) {

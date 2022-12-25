@@ -1,5 +1,5 @@
 import { ProductDetail } from "@/components/Products/Detail";
-import { makeSerializable } from "@/utils/makeSerializable";
+import { convertDecimalToNumber } from "@/utils/converters";
 import { prisma } from "@ecommerce/prisma";
 import type { GetStaticPaths, GetStaticProps } from "next";
 
@@ -7,25 +7,20 @@ export default ProductDetail;
 
 export const getStaticProps: GetStaticProps = async (context) => {
 	const slug = context.params?.["slug"] as string;
-	const product = await prisma.product.findFirst({
+	let product = await prisma.product.findFirst({
 		where: {
 			slug,
 		},
-		select: {
-			id: true,
-			slug: true,
-			title: true,
-			description: true,
-			price: true,
-			discount: true,
-			manufacturer: {
+		include: {
+			colors: {
 				select: {
 					id: true,
 					name: true,
 				},
 			},
-			colors: {
+			manufacturer: {
 				select: {
+					id: true,
 					name: true,
 				},
 			},
@@ -34,7 +29,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 	return {
 		props: {
-			product: product ? makeSerializable(product) : null,
+			product: convertDecimalToNumber(product),
 		},
 		notFound: !product,
 	};
@@ -47,6 +42,7 @@ export const getStaticPaths: GetStaticPaths = async (_context) => {
 		},
 		where: {
 			activatiedAt: {
+				// TODO: check if this is correct
 				lte: new Date(),
 			},
 		},
