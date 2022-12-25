@@ -53,7 +53,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 	return (
 		<Flex direction="col" className="space-y-2 font-display">
 			<PrettyImage
-				src="https://tailwindcss.com/_next/static/media/beach-house-interior-1.bc69273a536a51bb58092b2896b92e3a.jpg"
+				src={product.thumbnailImage}
 				alt={`${product.title} image`}
 				className="h-64"
 			/>

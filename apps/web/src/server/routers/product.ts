@@ -44,6 +44,7 @@ export const productRouter = createRouter()
 						slug: true,
 						title: true,
 						description: true,
+						thumbnailImage: true,
 						price: true,
 						discount: true,
 						manufacturer: {
@@ -80,6 +81,14 @@ export const productRouter = createRouter()
 					slug: input.slug,
 					activatiedAt: {
 						lte: new Date(),
+					},
+				},
+				include: {
+					colors: {
+						select: {
+							id: true,
+							name: true,
+						},
 					},
 				},
 			});
@@ -156,6 +165,7 @@ export const productRouter = createRouter()
 						slug: true,
 						title: true,
 						description: true,
+						thumbnailImage: true,
 						price: true,
 						discount: true,
 						manufacturer: {

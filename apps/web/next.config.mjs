@@ -14,6 +14,7 @@ export default withTM({
 			"tailwindui.com",
 			"images.unsplash.com",
 			"source.unsplash.com",
+			"picsum.photos",
 		],
 	},
 	experimental: {

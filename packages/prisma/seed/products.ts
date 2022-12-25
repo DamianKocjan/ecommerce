@@ -34,7 +34,9 @@ export async function seedProducts(prisma: PrismaClient): Promise<void> {
 		await prisma.product.create({
 			data: {
 				title: `Product ${i}`,
+				shortDescription: `Product ${i} short description`,
 				description: `Product ${i} description`,
+				thumbnailImage: `https://picsum.photos/seed/${i}/800/600`,
 				price: randomInt(0, 100),
 				quantity: randomInt(0, 100),
 				slug: `product-${i}`,
