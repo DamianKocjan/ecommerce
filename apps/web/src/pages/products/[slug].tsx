@@ -1,13 +1,31 @@
 import { ProductDetail } from "@/components/Products/Detail";
-import { convertDecimalToNumber } from "@/utils/converters";
-import { prisma } from "@ecommerce/prisma";
-import type { GetStaticPaths, GetStaticProps } from "next";
+import { convertDecimalToNumber, DecimalToNumber } from "@/utils/converters";
+// import { getSession } from "@ecommerce/auth";
+import { prisma, Product } from "@ecommerce/prisma";
+import type { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 
 export default ProductDetail;
 
-export const getStaticProps: GetStaticProps = async (context) => {
+interface ProductDetailProps {
+	product: DecimalToNumber<
+		Product & {
+			colors: {
+				id: number;
+				name: string;
+			}[];
+			manufacturer: {
+				id: number;
+				name: string;
+			};
+		}
+	>;
+}
+
+export const getServersideProps = async (
+	context: GetServerSidePropsContext
+): Promise<GetServerSidePropsResult<ProductDetailProps>> => {
 	const slug = context.params?.["slug"] as string;
-	let product = await prisma.product.findFirst({
+	const product = await prisma.product.findFirst({
 		where: {
 			slug,
 		},
@@ -27,33 +45,46 @@ export const getStaticProps: GetStaticProps = async (context) => {
 		},
 	});
 
+	console.log({ product });
+
+	if (!product) {
+		return {
+			notFound: true,
+			redirect: {
+				destination: "/404",
+				permanent: false,
+			},
+		};
+	}
+
+	// const session = await getSession({
+	// 	req: context.req,
+	// 	res: context.res,
+	// });
+
+	// if (session && session.user) {
+	// 	try {
+	// 		await prisma.view.create({
+	// 			data: {
+	// 				user: {
+	// 					connect: {
+	// 						id: session.user.id,
+	// 					},
+	// 				},
+	// 				product: {
+	// 					connect: {
+	// 						id: product.id,
+	// 					},
+	// 				},
+	// 			},
+	// 		});
+	// 	} catch (error) {}
+	// }
+
 	return {
 		props: {
 			product: convertDecimalToNumber(product),
 		},
-		notFound: !product,
-	};
-};
-
-export const getStaticPaths: GetStaticPaths = async (_context) => {
-	const products = await prisma.product.findMany({
-		select: {
-			slug: true,
-		},
-		where: {
-			activatiedAt: {
-				// TODO: check if this is correct
-				lte: new Date(),
-			},
-		},
-	});
-
-	return {
-		paths: products?.map((product) => ({
-			params: {
-				slug: product.slug,
-			},
-		})),
-		fallback: false,
+		notFound: !!product,
 	};
 };

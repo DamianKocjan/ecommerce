@@ -1,6 +1,7 @@
 import { prisma } from "@ecommerce/prisma";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { type NextAuthOptions } from "next-auth";
+import { unstable_getServerSession } from "next-auth/next";
 import { type AppProviders } from "next-auth/providers";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
@@ -70,5 +71,9 @@ export const nextAuthOptions: NextAuthOptions = {
 	},
 	secret: process.env.NEXTAUTH_SECRET,
 };
+
+export async function getSession({ req, res }: any) {
+	return await unstable_getServerSession(req, res, nextAuthOptions);
+}
 
 export * from "next-auth";
