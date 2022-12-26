@@ -66,6 +66,7 @@ model User {
   sessions           Session[]
   orders             Order[]
   wishlistedProducts Wishlist[]
+  viewedProducts     View[]
 }
 
 model VerificationToken {
@@ -287,9 +288,28 @@ model Product {
   deliveryOptionId String
   deliveryOption   DeliveryOption @relation(fields: [deliveryOptionId], references: [id])
   wishlist         Wishlist[]
+  views            View[]
 
   // Attributes
   @@map("products")
+}
+
+model View {
+  id    String @id @default(cuid())
+  count Int    @default(0)
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  productId Int
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Attributes
+  @@map("views")
 }
 
 model Category {
