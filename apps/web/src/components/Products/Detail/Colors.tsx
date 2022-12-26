@@ -1,12 +1,16 @@
 import { classNames } from "@/components/shared/utils";
+import { InferQueryOutput } from "@/utils/trpc";
 import { Flex } from "@ecommerce/ui";
 import { RadioGroup } from "@headlessui/react";
 import React from "react";
 
+type Colors = InferQueryOutput<"product">["colors"];
+type Color = Colors[number];
+
 export interface ProductColorsProps {
-	colors: { name: string }[];
-	selectedColor: { name: string };
-	setSelectedColor: (color: { name: string }) => void;
+	colors: Colors;
+	selectedColor: Color;
+	setSelectedColor: (color: Color) => void;
 }
 
 export const ProductColors: React.FC<ProductColorsProps> = ({

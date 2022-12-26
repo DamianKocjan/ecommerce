@@ -1,4 +1,5 @@
 import { Container } from "@/components/shared/Container";
+import { DecimalToNumber } from "@/utils/converters";
 import { type Product } from "@ecommerce/prisma";
 import { Grid } from "@ecommerce/ui";
 import { useState } from "react";
@@ -8,7 +9,7 @@ import { ProductInfo } from "./Info";
 import { SimilarProducts } from "./SimilarProducts";
 
 export interface ProductDetailProps {
-	product: Product & {
+	product: DecimalToNumber<Product> & {
 		colors: {
 			id: number;
 			name: string;

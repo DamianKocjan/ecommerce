@@ -1,16 +1,16 @@
-import { InferQueryOutput } from "@/utils/trpc";
 import { Grid, ProductCardShimmer } from "@ecommerce/ui";
 import { ProductCard } from "./Card";
+import { Product } from "./types";
 
-export interface ProductsListProps {
-	products: InferQueryOutput<"products">["data"] | undefined;
+export interface ProductsListProps<T extends Product> {
+	products: T[] | undefined;
 	isLoading: boolean;
 }
 
-export const ProductsList: React.FC<ProductsListProps> = ({
+export function ProductsList<T extends Product>({
 	products,
 	isLoading,
-}) => {
+}: ProductsListProps<T>) {
 	return (
 		<Grid
 			cols="1"
@@ -25,4 +25,4 @@ export const ProductsList: React.FC<ProductsListProps> = ({
 				  ))}
 		</Grid>
 	);
-};
+}

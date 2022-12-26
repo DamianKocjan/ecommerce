@@ -1,3 +1,4 @@
+import { DecimalToNumber } from "@/utils/converters";
 import { type Prisma } from "@ecommerce/prisma";
 import * as trpc from "@trpc/server";
 import { z } from "zod";
@@ -104,6 +105,7 @@ export const wishlistRouter = createProtectedRouter()
 								slug: true,
 								title: true,
 								description: true,
+								thumbnailImage: true,
 								price: true,
 								discount: true,
 								manufacturer: {
@@ -120,7 +122,7 @@ export const wishlistRouter = createProtectedRouter()
 			const lastPage = Math.ceil(total / perPage);
 
 			return {
-				data,
+				data: data as unknown as DecimalToNumber<typeof data>,
 				meta: {
 					total,
 					lastPage,

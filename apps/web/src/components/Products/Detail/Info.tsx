@@ -8,10 +8,13 @@ import { ProductColors } from "./Colors";
 import { ProductDetails } from "./Details";
 import { Rating } from "./Rating";
 
+type Product = InferQueryOutput<"product">;
+type Color = Product["colors"][number];
+
 export interface ProductInfoProps {
-	product: InferQueryOutput<"product">;
-	selectedColor: { name: string };
-	setSelectedColor: (color: { name: string }) => void;
+	product: Product;
+	selectedColor: Color;
+	setSelectedColor: (color: Color) => void;
 }
 
 export const ProductInfo: React.FC<ProductInfoProps> = ({

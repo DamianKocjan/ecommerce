@@ -1,17 +1,19 @@
-import { InferQueryOutput } from "@/utils/trpc";
 import { Flex, PrettyImage } from "@ecommerce/ui";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { AddToBagIconButton } from "../Bag";
 import { useCurrencyFormatter } from "../formatters";
 import { WishlistIconButton } from "../Wishlist";
+import { Product } from "./types";
 
-export interface ProductCardProps {
-	product: InferQueryOutput<"products">["data"][number];
+export interface ProductCardProps<T extends Product> {
+	product: T;
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+export function ProductCard<T extends Product>({
+	product,
+}: ProductCardProps<T>) {
 	const currencyFormater = useCurrencyFormatter();
 	const router = useRouter();
 
@@ -75,4 +77,4 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 			</Flex>
 		</Flex>
 	);
-};
+}
