@@ -9,7 +9,7 @@ export const cutRouter = createRouter().query("cuts", {
 			},
 		});
 
-		return (cuts || []).map(({ id, name }) => ({
+		return cuts.map(({ id, name }) => ({
 			key: id,
 			value: name,
 		}));

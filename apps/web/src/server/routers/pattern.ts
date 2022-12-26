@@ -9,7 +9,7 @@ export const patternRouter = createRouter().query("patterns", {
 			},
 		});
 
-		return (patterns || []).map(({ id, name }) => ({
+		return patterns.map(({ id, name }) => ({
 			key: id,
 			value: name,
 		}));

@@ -6,7 +6,12 @@ export const sizeRouter = createRouter().query("sizes", {
 		category: z.string().nullish(),
 	}),
 	async resolve({ ctx, input }) {
-		let sizes = await ctx.prisma.size.findMany({
+		interface Size {
+			id: number;
+			name: string;
+		}
+
+		let sizes: Size[] = await ctx.prisma.size.findMany({
 			where: {
 				forCategories: input.category
 					? {
@@ -30,7 +35,7 @@ export const sizeRouter = createRouter().query("sizes", {
 			});
 		}
 
-		return (sizes || []).map(({ id, name }) => ({
+		return sizes.map(({ id, name }) => ({
 			key: id,
 			value: name,
 		}));

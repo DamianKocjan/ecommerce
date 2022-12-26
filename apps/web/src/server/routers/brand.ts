@@ -9,7 +9,7 @@ export const brandRouter = createRouter().query("brands", {
 			},
 		});
 
-		return (brands || []).map(({ id, name }) => ({
+		return brands.map(({ id, name }) => ({
 			key: id,
 			value: name,
 		}));

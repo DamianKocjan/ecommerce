@@ -9,7 +9,7 @@ export const materialRouter = createRouter().query("materials", {
 			},
 		});
 
-		return (materials || []).map(({ id, name }) => ({
+		return materials.map(({ id, name }) => ({
 			key: id,
 			value: name,
 		}));

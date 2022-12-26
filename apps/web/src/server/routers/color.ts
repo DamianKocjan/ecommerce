@@ -9,7 +9,7 @@ export const colorRouter = createRouter().query("colors", {
 			},
 		});
 
-		return (colors || []).map(({ id, name }) => ({
+		return colors.map(({ id, name }) => ({
 			key: id,
 			value: name,
 		}));

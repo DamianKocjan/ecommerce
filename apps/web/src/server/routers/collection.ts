@@ -9,7 +9,7 @@ export const collectionRouter = createRouter().query("collections", {
 			},
 		});
 
-		return (collections || []).map(({ id, name }) => ({
+		return collections.map(({ id, name }) => ({
 			key: id,
 			value: name,
 		}));
