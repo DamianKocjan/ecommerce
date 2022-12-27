@@ -18,7 +18,13 @@ export function convertDecimalToNumber<T>(obj: T): DecimalToNumber<T> {
 
 	if (obj instanceof Prisma.Decimal) {
 		result = obj.toNumber();
-	} else if (obj instanceof Date || obj === null || obj === undefined) {
+	} else if (
+		obj instanceof Date ||
+		typeof obj === "number" ||
+		typeof obj === "string" ||
+		obj === null ||
+		obj === undefined
+	) {
 		result = obj;
 	} else if (Array.isArray(obj)) {
 		result = obj.map((item) => convertDecimalToNumber(item));
