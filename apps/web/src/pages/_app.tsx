@@ -13,7 +13,6 @@ import { withTRPC } from "@trpc/next";
 import { DefaultSeo } from "next-seo";
 import { ThemeProvider } from "next-themes";
 import type { AppProps } from "next/app";
-import Head from "next/head";
 import superjson from "superjson";
 import { AppRouter } from "../server";
 import "../styles/globals.css";
@@ -36,14 +35,41 @@ function AppCore({
 			forcedTheme="light"
 		>
 			<SessionProvider session={session}>
-				<Head>
-					<meta name="viewport" content="width=device-width, initial-scale=1" />
-				</Head>
-
 				<DefaultSeo
+					additionalMetaTags={[
+						{
+							name: "viewport",
+							content: "width=device-width, initial-scale=1",
+						},
+					]}
 					defaultTitle="Ecommerce"
 					titleTemplate="%s | Ecommerce"
 					description="Ecommerce website"
+					canonical={
+						process.env.NEXT_PUBLIC_VERCEL_URL ?? "http://localhost:3000"
+					}
+					openGraph={{
+						type: "website",
+						locale: "en_IE",
+						url: process.env.NEXT_PUBLIC_VERCEL_URL ?? "http://localhost:3000",
+						site_name: "Ecommerce",
+						title: "Ecommerce",
+						description: "Ecommerce website",
+						images: [
+							// TODO: Add images
+							{
+								url: `${process.env.NEXT_PUBLIC_VERCEL_URL}/logo.png`,
+								width: 800,
+								height: 600,
+								alt: "Ecommerce",
+							},
+						],
+					}}
+					twitter={{
+						cardType: "summary",
+						handle: "@vercel",
+						site: "@vercel",
+					}}
 				/>
 
 				<NProgress />

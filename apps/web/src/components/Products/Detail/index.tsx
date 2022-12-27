@@ -2,6 +2,7 @@ import { Container } from "@/components/shared/Container";
 import { DecimalToNumber } from "@/utils/converters";
 import { type Product } from "@ecommerce/prisma";
 import { Grid } from "@ecommerce/ui";
+import { NextSeo } from "next-seo";
 import { useState } from "react";
 import { ProductDescription } from "./Description";
 import { ImageGallery } from "./ImageGallery";
@@ -75,7 +76,23 @@ export function ProductDetail({ product }: ProductDetailProps) {
 	];
 
 	return (
-		<Container title={product?.title}>
+		<Container title={product.title}>
+			<NextSeo
+				description={product.shortDescription}
+				openGraph={{
+					title: product.title,
+					description: product.shortDescription,
+					images: [
+						{
+							url: product.thumbnailImage,
+							width: 800,
+							height: 600,
+							alt: product.title,
+						},
+					],
+				}}
+			/>
+
 			<div className="py-4">
 				<Grid media="lg" className="lg:grid-cols-2 lg:gap-x-8 lg:items-start">
 					{/* Image gallery */}
