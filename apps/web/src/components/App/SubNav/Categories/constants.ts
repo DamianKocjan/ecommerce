@@ -22,43 +22,43 @@ export const DESKTOP_CATEGORIES: DesktopCategoryItemProps[] = [
 				categories: [
 					{
 						name: "Clothes",
-						href: "/clothes",
+						href: "/c/clothes",
 					},
 					{
 						name: "Footwear",
-						href: "/footwear",
+						href: "/c/footwear",
 					},
 					{
 						name: "Accessories",
-						href: "/accessories",
+						href: "/c/accessories",
 					},
 					{
 						name: "Dresses",
-						href: "/dresses",
+						href: "/c/dresses",
 					},
 					{
 						name: "T-shirts and tops",
-						href: "/t-shirts-and-tops",
+						href: "/c/t-shirts-and-tops",
 					},
 					{
 						name: "Pants",
-						href: "/pants",
+						href: "/c/pants",
 					},
 					{
 						name: "Sandals and flip-flops",
-						href: "/sandals-and-flip-flops",
+						href: "/c/sandals-and-flip-flops",
 					},
 					{
 						name: "Bags and backpacks",
-						href: "/bags-and-backpacks",
+						href: "/c/bags-and-backpacks",
 					},
 					{
 						name: "Sport",
-						href: "/sport",
+						href: "/c/sport",
 					},
 					{
 						name: "Beauty",
-						href: "/beauty",
+						href: "/c/beauty",
 					},
 				],
 			},
@@ -67,43 +67,43 @@ export const DESKTOP_CATEGORIES: DesktopCategoryItemProps[] = [
 				categories: [
 					{
 						name: "Clothes",
-						href: "/clothes",
+						href: "/c/clothes",
 					},
 					{
 						name: "Footwear",
-						href: "/footwear",
+						href: "/c/footwear",
 					},
 					{
 						name: "Accessories",
-						href: "/accessories",
+						href: "/c/accessories",
 					},
 					{
 						name: "T-shirts",
-						href: "/t-shirts",
+						href: "/c/t-shirts",
 					},
 					{
 						name: "Sweatshirts and sweaters",
-						href: "/sweatshirts-and-sweaters",
+						href: "/c/sweatshirts-and-sweaters",
 					},
 					{
 						name: "Pants",
-						href: "/pants",
+						href: "/c/pants",
 					},
 					{
 						name: "Sneakers",
-						href: "/sneakers",
+						href: "/c/sneakers",
 					},
 					{
 						name: "Summer shoes",
-						href: "/summer-shoes",
+						href: "/c/summer-shoes",
 					},
 					{
 						name: "Sport",
-						href: "/sport",
+						href: "/c/sport",
 					},
 					{
 						name: "Cosmetics",
-						href: "/cosmetics",
+						href: "/c/cosmetics",
 					},
 				],
 			},
@@ -112,43 +112,43 @@ export const DESKTOP_CATEGORIES: DesktopCategoryItemProps[] = [
 				categories: [
 					{
 						name: "Clothes",
-						href: "/clothes",
+						href: "/c/clothes",
 					},
 					{
 						name: "Footwear",
-						href: "/footwear",
+						href: "/c/footwear",
 					},
 					{
 						name: "Accessories",
-						href: "/accessories",
+						href: "/c/accessories",
 					},
 					{
 						name: "T-shirts",
-						href: "/t-shirts",
+						href: "/c/t-shirts",
 					},
 					{
 						name: "Sweatshirts and sweaters",
-						href: "/sweatshirts-and-sweaters",
+						href: "/c/sweatshirts-and-sweaters",
 					},
 					{
 						name: "Pants",
-						href: "/pants",
+						href: "/c/pants",
 					},
 					{
 						name: "Sneakers",
-						href: "/sneakers",
+						href: "/c/sneakers",
 					},
 					{
 						name: "Summer shoes",
-						href: "/summer-shoes",
+						href: "/c/summer-shoes",
 					},
 					{
 						name: "Sport",
-						href: "/sport",
+						href: "/c/sport",
 					},
 					{
 						name: "Cosmetics",
-						href: "/cosmetics",
+						href: "/c/cosmetics",
 					},
 				],
 			},
