@@ -104,5 +104,3 @@ export function Wishlist() {
 		</Container>
 	);
 }
-
-Wishlist.auth = true;

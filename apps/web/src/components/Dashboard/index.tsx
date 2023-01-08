@@ -5,5 +5,3 @@ export function Dashboard() {
 		</div>
 	);
 }
-
-Dashboard.auth = true;
