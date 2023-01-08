@@ -27,7 +27,7 @@ export const CutFilter: React.FC = () => {
 				const query = { ...router.query };
 				delete query.cuts;
 
-				router.push(
+				void router.push(
 					{
 						query,
 					},
@@ -37,7 +37,7 @@ export const CutFilter: React.FC = () => {
 				return;
 			}
 
-			router.push(
+			void router.push(
 				{
 					query: {
 						...router.query,

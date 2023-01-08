@@ -4,5 +4,8 @@
 	"license": "MIT",
 	"files": [
 		"./seed/categories.json"
-	]
+	],
+	"scripts": {
+		"lint": "eslint"
+	}
 }

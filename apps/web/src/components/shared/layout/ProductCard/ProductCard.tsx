@@ -61,7 +61,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 					<Flex className="space-x-3 text-sm font-medium">
 						{Array.from(sizes).map((size, i) => (
 							<SizeInput
-								key={`${size}-${i}`}
+								key={`${size.toString()}-${i}`}
 								size={size}
 								checked={i === selectedSize}
 								onChange={() => handleSizeChange(i)}

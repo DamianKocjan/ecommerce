@@ -44,7 +44,9 @@ const App: AppType<{ session: Session | null }> = ({
 						images: [
 							// TODO: Add images
 							{
-								url: `${process.env.NEXT_PUBLIC_VERCEL_URL}/logo.png`,
+								url: `${
+									process.env.NEXT_PUBLIC_VERCEL_URL ?? "http://localhost:3000"
+								}/logo.png`,
 								width: 800,
 								height: 600,
 								alt: "Ecommerce",

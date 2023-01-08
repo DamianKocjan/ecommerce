@@ -40,7 +40,7 @@ export const Nav: React.FC = () => {
 
 	const handleSignIn = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
-		signIn("google");
+		void signIn("google");
 	}, []);
 
 	return (

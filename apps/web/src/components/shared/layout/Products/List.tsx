@@ -20,10 +20,10 @@ export function ProductsList<T extends Product>({
 			{isLoading
 				? Array.from({ length: 6 }).map((_, i) => (
 						<ProductCardShimmer key={`product-shimmer-${i}`} />
-				  ))
+					))
 				: products?.map((product) => (
 						<ProductCard key={product.slug} product={product} />
-				  ))}
+					))}
 		</Grid>
 	);
 }

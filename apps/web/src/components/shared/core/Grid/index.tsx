@@ -68,7 +68,10 @@ const grid = cva("", {
 const defaultElement = "div";
 
 export type GridProps<E extends ElementType = typeof defaultElement> =
-	PolymorphicProps<E> & VariantProps<typeof grid>;
+	PolymorphicProps<E> &
+		VariantProps<typeof grid> & {
+			className?: string;
+		};
 
 const FRefGrid = <E extends ElementType>(
 	{

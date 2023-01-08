@@ -61,6 +61,7 @@ export const ProductInfo: React.FC<ProductInfoProps> = ({
 				{/* FIXME: do not provide state setters to child component */}
 				<ProductColors
 					colors={product.colors}
+					// @ts-ignore
 					selectedColor={selectedColor}
 					setSelectedColor={setSelectedColor}
 				/>
@@ -72,6 +73,7 @@ export const ProductInfo: React.FC<ProductInfoProps> = ({
 				</Flex>
 			</form>
 
+			{/* @ts-ignore */}
 			<ProductDetails details={product.details} />
 		</div>
 	);

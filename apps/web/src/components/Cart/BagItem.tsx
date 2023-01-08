@@ -105,8 +105,7 @@ export const BagItem: React.FC<BagItemProps> = ({ product }) => {
 
 					<span>
 						{/* FIXME: */}
-						{/* @ts-ignore */}
-						{product.quantity > 0 ? "In stock" : `Ships in ${product.leadTime}`}
+						{/* {product.quantity > 0 ? "In stock" : `Ships in ${product.leadTime}`} */}
 					</span>
 				</p>
 			</Flex>

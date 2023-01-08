@@ -39,7 +39,7 @@ export const SortByFilter: React.FC = () => {
 	const handleChange = useCallback(
 		(val: unknown) => {
 			setFilter("sortBy", val);
-			router.push(
+			void router.push(
 				{
 					query: {
 						...router.query,

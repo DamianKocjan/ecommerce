@@ -13,7 +13,10 @@ export const box = cva("", {
 const defaultElement = "div";
 
 export type BoxProps<E extends ElementType = typeof defaultElement> =
-	PolymorphicProps<E> & VariantProps<typeof box>;
+	PolymorphicProps<E> &
+		VariantProps<typeof box> & {
+			className?: string;
+		};
 
 export function Box<E extends ElementType>({
 	children,

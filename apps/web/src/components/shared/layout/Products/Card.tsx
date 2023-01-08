@@ -49,7 +49,7 @@ export function ProductCard<T extends Product>({
 		if (path.includes("?brands=")) {
 			path = path.replace(/\?brands=\[[0-9,]*\]/, "");
 		} else if (path.includes("&brands=")) {
-			path = path.replace(/\&brands=\[[0-9,]*\]/, "");
+			path = path.replace(/&brands=\[[0-9,]*\]/, "");
 		}
 		return path;
 	}, [router.asPath]);

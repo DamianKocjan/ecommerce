@@ -43,12 +43,12 @@ export const MobileSearch: React.FC = () => {
 
 			if (path.includes("/c/")) {
 				if (path.includes("?q=")) {
-					router.push(`/c/${slug}?q=${encodedSearch}`);
+					void router.push(`/c/${slug}?q=${encodedSearch}`);
 				} else {
-					router.push(`${path}?q=${encodedSearch}`);
+					void router.push(`${path}?q=${encodedSearch}`);
 				}
 			} else {
-				router.push(`/catalog/?q=${encodedSearch}`);
+				void router.push(`/catalog/?q=${encodedSearch}`);
 			}
 
 			setIsUserSubmit(false);

@@ -24,13 +24,13 @@ export function Catalog({ previousUrl }: { previousUrl?: string }) {
 			: PER_PAGE[0]!,
 	);
 	const [page, setPage] = useState<number | undefined>(
-		queryPage ? parseInt(queryPage as string, 10) : undefined,
+		queryPage ? parseInt(queryPage, 10) : undefined,
 	);
 
 	const handleSetPage = useCallback(
 		(page: number | undefined) => {
 			setPage(page);
-			router.push(
+			void router.push(
 				{
 					query: { ...router.query, page },
 				},

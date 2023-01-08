@@ -24,14 +24,14 @@ export function useWishlist(productId: number) {
 			removeFromWishlist.mutate(
 				{ id: isInWishlistQuery.data },
 				{
-					onSuccess: () => isInWishlistQuery.refetch(),
+					onSuccess: () => void isInWishlistQuery.refetch(),
 				},
 			);
 		} else {
 			addToWishlist.mutate(
 				{ productId },
 				{
-					onSuccess: () => isInWishlistQuery.refetch(),
+					onSuccess: () => void isInWishlistQuery.refetch(),
 				},
 			);
 		}
@@ -48,7 +48,7 @@ export function useWishlist(productId: number) {
 			return;
 		}
 
-		isInWishlistQuery.refetch();
+		void isInWishlistQuery.refetch();
 	}, [isInWishlistQuery, session]);
 
 	return {

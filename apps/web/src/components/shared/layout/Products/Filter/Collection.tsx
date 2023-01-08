@@ -22,7 +22,7 @@ export const CollectionFilter: React.FC = () => {
 	const handleChange = useCallback(
 		(val: unknown) => {
 			setFilter("collectionType", val);
-			router.push(
+			void router.push(
 				{
 					query: {
 						...router.query,

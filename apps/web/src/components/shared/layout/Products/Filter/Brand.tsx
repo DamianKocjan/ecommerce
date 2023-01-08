@@ -27,7 +27,7 @@ export const BrandFilter: React.FC = () => {
 				const query = { ...router.query };
 				delete query.brands;
 
-				router.push(
+				void router.push(
 					{
 						query,
 					},
@@ -37,7 +37,7 @@ export const BrandFilter: React.FC = () => {
 				return;
 			}
 
-			router.push(
+			void router.push(
 				{
 					query: {
 						...router.query,

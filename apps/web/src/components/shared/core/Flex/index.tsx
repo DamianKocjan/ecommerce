@@ -49,7 +49,10 @@ const flex = cva("", {
 const defaultElement = "div";
 
 export type FlexProps<E extends ElementType = typeof defaultElement> =
-	PolymorphicProps<E> & VariantProps<typeof flex>;
+	PolymorphicProps<E> &
+		VariantProps<typeof flex> & {
+			className?: string;
+		};
 
 const FRefFlex = <E extends ElementType>(
 	{

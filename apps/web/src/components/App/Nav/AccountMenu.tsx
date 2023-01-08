@@ -12,7 +12,7 @@ export const AccountMenu: React.FC = () => {
 	const handleSignOut = useCallback(
 		(e: React.MouseEvent<HTMLButtonElement>) => {
 			e.preventDefault();
-			signOut();
+			void signOut();
 		},
 		[],
 	);

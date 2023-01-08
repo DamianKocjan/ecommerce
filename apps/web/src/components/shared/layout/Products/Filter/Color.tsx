@@ -27,7 +27,7 @@ export const ColorFilter: React.FC = () => {
 				const query = { ...router.query };
 				delete query.colors;
 
-				router.push(
+				void router.push(
 					{
 						query,
 					},
@@ -37,7 +37,7 @@ export const ColorFilter: React.FC = () => {
 				return;
 			}
 
-			router.push(
+			void router.push(
 				{
 					query: {
 						...router.query,

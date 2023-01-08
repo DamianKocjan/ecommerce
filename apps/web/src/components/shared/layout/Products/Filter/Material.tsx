@@ -27,7 +27,7 @@ export const MaterialFilter: React.FC = () => {
 				const query = { ...router.query };
 				delete query.materials;
 
-				router.push(
+				void router.push(
 					{
 						query,
 					},
@@ -37,7 +37,7 @@ export const MaterialFilter: React.FC = () => {
 				return;
 			}
 
-			router.push(
+			void router.push(
 				{
 					query: {
 						...router.query,

@@ -23,8 +23,8 @@ interface ProductDetailProps {
 		createdAt: string;
 		updatedAt: string;
 		manufacturerId: number;
-		sizeId?: number;
-		season?: Season;
+		sizeId?: number | null;
+		season?: Season | null;
 		deliveryOptionId: string;
 		colors: {
 			id: number;
@@ -92,7 +92,9 @@ export async function getServerSideProps(
 					},
 				},
 			});
-		} catch (error) {}
+		} catch (error) {
+			/* empty */
+		}
 	}
 
 	return {
@@ -100,10 +102,10 @@ export async function getServerSideProps(
 			product: {
 				...product,
 				price: product.price.toNumber(),
-				discount: product.discount?.toNumber() ?? null,
+				discount: product.discount?.toNumber() || undefined,
 				createdAt: product.createdAt.toISOString(),
 				updatedAt: product.updatedAt.toISOString(),
-				activatiedAt: product.activatiedAt?.toISOString() ?? null,
+				activatiedAt: product.activatiedAt?.toISOString() || undefined,
 			},
 		},
 	};

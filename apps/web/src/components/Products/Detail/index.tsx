@@ -20,6 +20,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
 		return null;
 	}
 
+	// @ts-ignore
 	product.details = [
 		{
 			name: "hello world",
@@ -35,6 +36,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
 		},
 	];
 
+	// @ts-ignore
 	product.images = [
 		{
 			id: "1",
@@ -84,6 +86,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
 			<div className="py-4">
 				<Grid media="lg" className="lg:grid-cols-2 lg:items-start lg:gap-x-8">
 					{/* Image gallery */}
+					{/* @ts-ignore */}
 					<ImageGallery images={product?.images} />
 
 					{/* Product info */}

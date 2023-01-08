@@ -14,7 +14,7 @@ export const Rating: React.FC<RatingProps> = ({ rating }) => {
 	const { data: sessionData } = useSession();
 
 	const handleRateProduct = useCallback(
-		async (rating: number) => {
+		(rating: number) => {
 			if (!sessionData) {
 				return;
 			}
@@ -30,7 +30,7 @@ export const Rating: React.FC<RatingProps> = ({ rating }) => {
 		() =>
 			Array.from({ length: 5 }, (_, i) => {
 				const star = i + 1;
-				const handleOnClick = async () => await handleRateProduct(i + 1);
+				const handleOnClick = () => handleRateProduct(i + 1);
 
 				if (star <= rating) {
 					return (
