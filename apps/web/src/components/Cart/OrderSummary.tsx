@@ -1,8 +1,10 @@
-import { Button, Flex } from "@ecommerce/ui";
 import Link from "next/link";
 import { Question } from "phosphor-react";
 import React, { useMemo } from "react";
-import { useCurrencyFormatter } from "../shared/formatters";
+
+import { Button } from "../shared/core/Button";
+import { Flex } from "../shared/core/Flex";
+import { useCurrencyFormatter } from "../shared/hooks/useCurrencyFormatter";
 
 export interface OrderSummaryProps {
 	subtotal: number;
@@ -15,30 +17,30 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({ subtotal }) => {
 	const taxEstimate = useMemo(() => subtotal * 0.1, [subtotal]);
 	const total = useMemo(
 		() => subtotal + shippingEstimate + taxEstimate,
-		[subtotal, shippingEstimate, taxEstimate]
+		[subtotal, shippingEstimate, taxEstimate],
 	);
 
 	const subtotalPrice = useMemo(
 		() => currencyFormater.format(subtotal),
-		[currencyFormater, subtotal]
+		[currencyFormater, subtotal],
 	);
 	const shippingEstimatePrice = useMemo(
 		() => currencyFormater.format(shippingEstimate),
-		[currencyFormater, shippingEstimate]
+		[currencyFormater, shippingEstimate],
 	);
 	const taxEstimatePrice = useMemo(
 		() => currencyFormater.format(taxEstimate),
-		[currencyFormater, taxEstimate]
+		[currencyFormater, taxEstimate],
 	);
 	const totalPrice = useMemo(
 		() => currencyFormater.format(total),
-		[currencyFormater, total]
+		[currencyFormater, total],
 	);
 
 	return (
 		<section
 			aria-labelledby="summary-heading"
-			className="mt-16 bg-black px-4 py-6 sm:p-6 lg:p-8 lg:mt-0 lg:col-span-5"
+			className="mt-16 bg-black px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8"
 		>
 			<h2 id="summary-heading" className="text-lg font-medium text-gray-100">
 				Order summary
@@ -47,7 +49,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({ subtotal }) => {
 			<dl className="mt-6 space-y-4">
 				<Flex items="center" justify="between">
 					<dt className="text-sm text-gray-200">Subtotal</dt>
-					<dd className="text-sm font-medium font-mono text-gray-100">
+					<dd className="font-mono text-sm font-medium text-gray-100">
 						{subtotalPrice}
 					</dd>
 				</Flex>
@@ -58,7 +60,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({ subtotal }) => {
 				>
 					<Flex as="dt" items="center" className="text-sm text-gray-400">
 						<span>Shipping estimate</span>
-						<Link href="">
+						<Link href="" legacyBehavior>
 							<a className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">
 								<span className="sr-only">
 									Learn more about how shipping is calculated
@@ -67,7 +69,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({ subtotal }) => {
 							</a>
 						</Link>
 					</Flex>
-					<dd className="text-sm font-medium font-mono text-gray-100">
+					<dd className="font-mono text-sm font-medium text-gray-100">
 						{shippingEstimatePrice}
 					</dd>
 				</Flex>
@@ -78,7 +80,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({ subtotal }) => {
 				>
 					<Flex as="dt" className="text-sm text-gray-400">
 						<span>Tax estimate</span>
-						<Link href="">
+						<Link href="" legacyBehavior>
 							<a className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">
 								<span className="sr-only">
 									Learn more about how tax is calculated
@@ -87,7 +89,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({ subtotal }) => {
 							</a>
 						</Link>
 					</Flex>
-					<dd className="text-sm font-medium font-mono text-gray-100">
+					<dd className="font-mono text-sm font-medium text-gray-100">
 						{taxEstimatePrice}
 					</dd>
 				</Flex>
@@ -97,7 +99,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({ subtotal }) => {
 					className="border-t border-gray-400 pt-4"
 				>
 					<dt className="text-base font-medium text-gray-100">Order total</dt>
-					<dd className="text-base font-medium font-mono text-gray-100">
+					<dd className="font-mono text-base font-medium text-gray-100">
 						{totalPrice}
 					</dd>
 				</Flex>

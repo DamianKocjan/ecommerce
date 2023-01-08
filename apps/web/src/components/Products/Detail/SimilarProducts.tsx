@@ -1,7 +1,11 @@
-import { useCurrencyFormatter } from "@/components/shared/formatters";
-import { Box, Flex, Grid, PrettyContainer } from "@ecommerce/ui";
 import Link from "next/link";
 import React from "react";
+
+import { Box } from "../../shared/core/Box";
+import { Flex } from "../../shared/core/Flex";
+import { Grid } from "../../shared/core/Grid";
+import { PrettyContainer } from "../../shared/core/PrettyContainer";
+import { useCurrencyFormatter } from "../../shared/hooks/useCurrencyFormatter";
 
 const products = [
 	{
@@ -22,7 +26,7 @@ const products = [
 		href: "/products/2",
 		color: "red",
 	},
-];
+] as const;
 
 // TODO
 export const SimilarProducts: React.FC = () => {
@@ -36,21 +40,21 @@ export const SimilarProducts: React.FC = () => {
 				</h2>
 				<Grid
 					cols="1"
-					className="mt-6 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 pb-2"
+					className="mt-6 gap-y-10 gap-x-6 pb-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
 				>
 					{products.map((product) => (
 						<div key={product.id} className="group relative">
-							<div className="w-full min-h-80 bg-gray-100 aspect-w-1 aspect-h-1 overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
+							<div className="min-h-80 aspect-w-1 aspect-h-1 lg:aspect-none w-full overflow-hidden bg-gray-100 group-hover:opacity-75 lg:h-80">
 								<img
 									src={product.image}
 									alt={product.name}
-									className="w-full h-full object-center object-cover"
+									className="h-full w-full object-cover object-center"
 								/>
 							</div>
 							<Flex justify="between" className="mt-4">
 								<div>
 									<h3 className="text-sm text-white">
-										<Link href={`/products/${product.slug}`}>
+										<Link href={`/products/${product.slug}`} legacyBehavior>
 											<a>
 												<span aria-hidden="true" className="absolute inset-0" />
 												{product.name}

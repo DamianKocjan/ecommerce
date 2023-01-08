@@ -1,6 +1,7 @@
 import { PutObjectCommand, PutObjectCommandInput } from "@aws-sdk/client-s3";
 import { getSignedUrl as awsGetSignedUrl } from "@aws-sdk/s3-request-presigner";
 import crypto from "crypto";
+
 import { Bucket, client } from "../../client";
 
 /** Updates an existing product image.

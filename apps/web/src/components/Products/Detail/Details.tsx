@@ -1,8 +1,9 @@
-import { classNames } from "@/components/shared/utils";
-import { Flex } from "@ecommerce/ui";
 import { Disclosure } from "@headlessui/react";
 import { Minus, Plus } from "phosphor-react";
 import React from "react";
+
+import { Flex } from "../../shared/core/Flex";
+import { classNames } from "../../shared/utils/classnames";
 
 export interface ProductDetailsProps {
 	details: {
@@ -18,7 +19,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ details }) => {
 				Additional details
 			</h2>
 
-			<div className="border-t divide-y divide-gray-200">
+			<div className="divide-y divide-gray-200 border-t">
 				{details?.map((detail) => (
 					<Disclosure as="div" key={detail.name}>
 						{({ open }) => (
@@ -28,12 +29,12 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ details }) => {
 										as={Flex}
 										items="center"
 										justify="between"
-										className="group relative w-full py-6 text-left cursor-pointer"
+										className="group relative w-full cursor-pointer py-6 text-left"
 									>
 										<span
 											className={classNames(
 												open ? "text-teal-600" : "text-gray-900",
-												"font-semibold"
+												"font-semibold",
 											)}
 										>
 											{detail.name}
@@ -53,7 +54,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ details }) => {
 										</Flex>
 									</Disclosure.Button>
 								</h3>
-								<Disclosure.Panel as="div" className="pb-6 prose prose-sm">
+								<Disclosure.Panel as="div" className="prose prose-sm pb-6">
 									<ul role="list">
 										{detail.items.map((item) => (
 											<li key={item}>{item}</li>

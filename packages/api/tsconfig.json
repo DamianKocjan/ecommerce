@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.json",
+  "include": [
+    "src",
+    "index.ts",
+    "transformer.ts",
+    "utils.ts",
+    "../auth/next-auth.d.ts"
+  ]
+}

@@ -1,3 +1,3 @@
-import { Wishlist } from "@/components/Wishlist";
+import { Wishlist } from "../components/Wishlist";
 
 export default Wishlist;

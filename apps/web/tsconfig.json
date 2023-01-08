@@ -1,11 +1,12 @@
 {
-	"extends": "@ecommerce/config/tsconfig/next.json",
-	"compilerOptions": {
-		"baseUrl": ".",
-		"paths": {
-			"@/*": ["./src/*"]
-		}
-	},
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-	"exclude": ["node_modules"]
+  "extends": "../../tsconfig.json",
+  "exclude": [],
+  "include": [
+    "next-env.d.ts",
+    "../../packages/auth/next-auth.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.cjs",
+    "**/*.mjs"
+  ]
 }

@@ -1,4 +1,4 @@
-import type { Season } from "@ecommerce/prisma";
+import type { Season } from "@ecommerce/db";
 import create from "zustand";
 
 export type Filters = keyof FilterState["filters"];

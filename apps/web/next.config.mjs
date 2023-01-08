@@ -1,13 +1,22 @@
-import transpileModule from "next-transpile-modules";
+// @ts-check
+/**
+ * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
+ * This is especially useful for Docker builds.
+ */
+!process.env.SKIP_ENV_VALIDATION && (await import("./src/env/server.mjs"));
 
-const withTM = transpileModule([
-	"@ecommerce/auth",
-	"@ecommerce/prisma",
-	"@ecommerce/ui",
-]);
-
-export default withTM({
+/** @type {import("next").NextConfig} */
+const config = {
 	reactStrictMode: true,
+	swcMinify: true,
+	experimental: {
+		// Enables hot-reload and easy integration for local packages
+		transpilePackages: ["@ecommerce/api", "@ecommerce/auth", "@ecommerce/db"],
+	},
+	// We already do linting on GH actions
+	eslint: {
+		ignoreDuringBuilds: !!process.env.CI,
+	},
 	images: {
 		domains: [
 			"tailwindcss.com",
@@ -17,20 +26,6 @@ export default withTM({
 			"picsum.photos",
 		],
 	},
-	experimental: {
-		images: {
-			allowFutureImage: true,
-		},
-		swcPlugins: [
-			[
-				"next-superjson-plugin",
-				{
-					excluded: [],
-				},
-			],
-		],
-	},
-	typescript: {
-		ignoreBuildErrors: true,
-	},
-});
+};
+
+export default config;

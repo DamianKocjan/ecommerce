@@ -1,5 +1,6 @@
-import { Category } from "@/components/Category";
 import { GetServerSidePropsContext } from "next";
+
+import { Category } from "../../components/Category";
 
 export default Category;
 
@@ -10,7 +11,7 @@ export function getServerSideProps(context: GetServerSidePropsContext) {
 
 	return {
 		props: {
-			previousUrl: previousUrl || null,
+			previousUrl,
 		},
 	};
 }

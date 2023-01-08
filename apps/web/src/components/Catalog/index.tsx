@@ -1,28 +1,30 @@
-import { useFilter } from "@/features/filter";
-import { trpc } from "@/utils/trpc";
-import { EmptyState, Flex } from "@ecommerce/ui";
 import { useRouter } from "next/router";
 import { useCallback, useMemo, useState } from "react";
-import { Categories } from "../shared/Categories";
-import { Container } from "../shared/Container";
-import { Filters } from "../shared/Products/Filters";
-import { ProductsList } from "../shared/Products/List";
-import { ListFooter } from "../shared/Products/ListFooter";
-import { PER_PAGE } from "../shared/Products/ListFooter/PerPage";
 
-export function Catalog({ previousUrl }: { previousUrl: string }) {
+import { useFilter } from "../../features/filter";
+import { trpc } from "../../utils/trpc";
+import { Container } from "../shared/core/Container";
+import { EmptyState } from "../shared/core/EmptyState";
+import { Flex } from "../shared/core/Flex";
+import { Categories } from "../shared/layout/Categories";
+import { Filters } from "../shared/layout/Products/Filters";
+import { ProductsList } from "../shared/layout/Products/List";
+import { ListFooter } from "../shared/layout/Products/ListFooter";
+import { PER_PAGE } from "../shared/layout/Products/ListFooter/PerPage";
+
+export function Catalog({ previousUrl }: { previousUrl?: string }) {
 	const router = useRouter();
 	const category = router.query["slug"] as string;
 	const query = router.query["q"] as string;
 	const queryPage = router.query["page"] as string;
 
-	const [perPage, setPerPage] = useState(
+	const [perPage, setPerPage] = useState<number>(
 		typeof window !== "undefined"
-			? Number(window.localStorage.getItem("perPage")) || PER_PAGE[0]
-			: PER_PAGE[0]
+			? Number(window.localStorage.getItem("perPage")) || PER_PAGE[0]!
+			: PER_PAGE[0]!,
 	);
 	const [page, setPage] = useState<number | undefined>(
-		queryPage ? parseInt(queryPage as string, 10) : undefined
+		queryPage ? parseInt(queryPage as string, 10) : undefined,
 	);
 
 	const handleSetPage = useCallback(
@@ -33,10 +35,10 @@ export function Catalog({ previousUrl }: { previousUrl: string }) {
 					query: { ...router.query, page },
 				},
 				undefined,
-				{ shallow: true }
+				{ shallow: true },
 			);
 		},
-		[router]
+		[router],
 	);
 
 	const handlePerPageChange = useCallback((value: number) => {
@@ -58,20 +60,17 @@ export function Catalog({ previousUrl }: { previousUrl: string }) {
 		return parsed;
 	}, [filters]);
 
-	const products = trpc.useQuery(
-		[
-			"products",
-			{
-				category: category || null,
-				q: query || null,
-				perPage,
-				page,
-				...parsedFilters,
-			},
-		],
+	const products = trpc.product.all.useQuery(
+		{
+			category: category,
+			q: query,
+			perPage,
+			page,
+			...parsedFilters,
+		},
 		{
 			refetchOnWindowFocus: false,
-		}
+		},
 	);
 
 	return (

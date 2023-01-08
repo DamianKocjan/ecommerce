@@ -1,10 +1,11 @@
-import { classNames } from "@/components/shared/utils";
-import { InferQueryOutput } from "@/utils/trpc";
-import { Flex } from "@ecommerce/ui";
 import { RadioGroup } from "@headlessui/react";
 import React from "react";
 
-type Colors = InferQueryOutput<"product">["colors"];
+import { RouterOutputs } from "../../../utils/trpc";
+import { Flex } from "../../shared/core/Flex";
+import { classNames } from "../../shared/utils/classnames";
+
+type Colors = RouterOutputs["product"]["get"]["colors"];
 type Color = Colors[number];
 
 export interface ProductColorsProps {
@@ -37,7 +38,7 @@ export const ProductColors: React.FC<ProductColorsProps> = ({
 								classNames(
 									active && checked ? "ring ring-offset-1" : "",
 									!active && checked ? "ring-2" : "",
-									"-m-0.5 relative p-0.5 flex items-center justify-center cursor-pointer focus:outline-none"
+									"relative -m-0.5 flex cursor-pointer items-center justify-center p-0.5 focus:outline-none",
 								)
 							}
 						>

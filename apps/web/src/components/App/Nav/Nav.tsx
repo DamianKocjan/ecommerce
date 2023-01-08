@@ -1,6 +1,5 @@
-import { signIn, useSession } from "@ecommerce/auth/nextjs/client";
-import { Button, Flex, IconButton } from "@ecommerce/ui";
 import { Disclosure } from "@headlessui/react";
+import { signIn, useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import {
@@ -9,7 +8,11 @@ import {
 	SignIn as SignInIcon,
 	X as XIcon,
 } from "phosphor-react";
-import { useCallback } from "react";
+import React, { useCallback } from "react";
+
+import { Button } from "../../shared/core/Button";
+import { Flex } from "../../shared/core/Flex";
+import { IconButton } from "../../shared/core/IconButton";
 
 const NAVIGATION = [
 	{ name: "Home", href: "/" },
@@ -22,14 +25,14 @@ const AccountMenu = dynamic(
 	() => import("./AccountMenu").then((mod) => mod.AccountMenu),
 	{
 		ssr: false,
-	}
+	},
 );
 
 const BagButton = dynamic(
 	() => import("./BagButton").then((mod) => mod.BagButton),
 	{
 		ssr: false,
-	}
+	},
 );
 
 export const Nav: React.FC = () => {
@@ -44,7 +47,7 @@ export const Nav: React.FC = () => {
 		<Disclosure as="nav" className="bg-black font-mono">
 			{({ open }) => (
 				<>
-					<div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+					<div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
 						<Flex items="center" justify="between" className="relative h-16">
 							<Flex
 								items="center"
@@ -52,8 +55,9 @@ export const Nav: React.FC = () => {
 							>
 								{/* Mobile menu button*/}
 								<Disclosure.Button
-									className="hover:text-white text-gray-300"
 									as={IconButton}
+									intent="light"
+									className="hover:text-white"
 								>
 									<span className="sr-only">Open main menu</span>
 									{open ? (
@@ -64,15 +68,12 @@ export const Nav: React.FC = () => {
 								</Disclosure.Button>
 							</Flex>
 							<Flex items="center" justify="center">
-								<div className="hidden sm:block sm:ml-6">
+								<div className="hidden sm:ml-6 sm:block">
 									<Flex className="space-x-4">
 										{NAVIGATION.map((item) => (
-											<Link key={item.name} href={item.href}>
+											<Link key={item.name} href={item.href} legacyBehavior>
 												<a>
-													<Button
-														intent="secondary"
-														className={"hover:text-white text-gray-300"}
-													>
+													<Button intent="secondary" textColor="light">
 														{item.name}
 													</Button>
 												</a>
@@ -95,11 +96,12 @@ export const Nav: React.FC = () => {
 								items="center"
 								className="absolute inset-y-0 right-0 pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
 							>
-								<Link href="/wishlist">
+								<Link href="/wishlist" legacyBehavior>
 									<a>
 										<IconButton
+											intent="light"
+											className="hover:text-white"
 											type="button"
-											className="hover:text-white text-gray-300"
 										>
 											<span className="sr-only">Wishlist</span>
 											<HeartIcon className="h-6 w-6" aria-hidden="true" />
@@ -143,8 +145,9 @@ export const Nav: React.FC = () => {
 									<AccountMenu />
 								) : (
 									<IconButton
+										intent="light"
+										className="hover:text-white"
 										type="button"
-										className="hover:text-white text-gray-300"
 										onClick={handleSignIn}
 									>
 										<span className="sr-only">Login</span>
@@ -159,13 +162,14 @@ export const Nav: React.FC = () => {
 						<Flex
 							direction="row"
 							items="stretch"
-							className="px-2 pt-2 pb-3 space-y-1"
+							className="space-y-1 px-2 pt-2 pb-3"
 						>
 							{NAVIGATION.map((item) => (
 								<Disclosure.Button key={item.name} as={Link} href={item.href}>
 									<Button
 										intent="secondary"
-										className="hover:text-white text-gray-300 flex-1 mx-1 my-2 first-of-type:mt-1"
+										textColor="light"
+										className="mx-1 my-2 flex-1 first-of-type:mt-1"
 									>
 										{item.name}
 									</Button>

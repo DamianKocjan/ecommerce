@@ -1,5 +1,4 @@
 {
-	"extends": "@ecommerce/config/tsconfig/base.json",
-	"include": ["**/*.ts"],
-	"exclude": ["node_modules"]
+  "extends": "../../tsconfig.json",
+  "include": ["./**/*.ts"]
 }

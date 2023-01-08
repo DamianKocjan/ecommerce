@@ -1,4 +1,4 @@
-import { Container } from "../shared/Container";
+import { Container } from "../shared/core/Container";
 import { ForWho } from "./ForWho";
 import { Hero } from "./Hero";
 import { NewProducts } from "./NewProducts";

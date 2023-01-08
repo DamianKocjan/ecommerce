@@ -1,13 +1,15 @@
-import { InferQueryOutput } from "@/utils/trpc";
-import { Flex, IconButton } from "@ecommerce/ui";
 import Link from "next/link";
 import { Check, Clock, X } from "phosphor-react";
 import React, { useMemo } from "react";
-import { useBag } from "../shared/Bag/useBag";
-import { useCurrencyFormatter } from "../shared/formatters";
+
+import { RouterOutputs } from "../../utils/trpc";
+import { Flex } from "../shared/core/Flex";
+import { IconButton } from "../shared/core/IconButton";
+import { useCurrencyFormatter } from "../shared/hooks/useCurrencyFormatter";
+import { useBag } from "../shared/layout/Bag/useBag";
 
 export interface BagItemProps {
-	product: InferQueryOutput<"bagProducts">[number];
+	product: RouterOutputs["product"]["bag"][number];
 }
 
 export const BagItem: React.FC<BagItemProps> = ({ product }) => {
@@ -16,16 +18,16 @@ export const BagItem: React.FC<BagItemProps> = ({ product }) => {
 
 	const price = useMemo(
 		() => currencyFormater.format(product.price),
-		[currencyFormater, product.price]
+		[currencyFormater, product.price],
 	);
 
 	return (
 		<Flex as="li" className="py-6 sm:py-10">
 			<div className="flex-shrink-0">
 				<img
-					src="https://tailwindcss.com/_next/static/media/retro-shoe.24e25785.jpg"
+					src={product.thumbnailImage}
 					alt={product.title}
-					className="w-24 h-24 object-center object-cover sm:w-48 sm:h-48"
+					className="h-24 w-24 object-cover object-center sm:h-48 sm:w-48"
 				/>
 			</div>
 
@@ -43,14 +45,14 @@ export const BagItem: React.FC<BagItemProps> = ({ product }) => {
 							</h3>
 						</Flex>
 						<Flex className="mt-1 text-sm">
-							<p className="text-gray-500">{product.colors[0].name}</p>
+							<p className="text-gray-500">{product.colors[0]?.name}</p>
 							{product.size ? (
-								<p className="ml-4 pl-4 border-l border-gray-200 text-gray-500">
+								<p className="ml-4 border-l border-gray-200 pl-4 text-gray-500">
 									{product.size.name}
 								</p>
 							) : null}
 						</Flex>
-						<p className="mt-1 text-sm font-medium font-mono text-gray-900">
+						<p className="mt-1 font-mono text-sm font-medium text-gray-900">
 							{price}
 						</p>
 					</div>
@@ -62,7 +64,7 @@ export const BagItem: React.FC<BagItemProps> = ({ product }) => {
 						<select
 							id={`quantity-${product.id}`}
 							name={`quantity-${product.id}`}
-							className="max-w-full rounded-md border border-gray-300 py-1.5 text-base leading-5 font-medium text-gray-700 text-left shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+							className="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
 						>
 							<option value={1}>1</option>
 							<option value={2}>2</option>
@@ -88,20 +90,22 @@ export const BagItem: React.FC<BagItemProps> = ({ product }) => {
 					</div>
 				</div>
 
-				<p className="mt-4 flex text-sm text-gray-700 space-x-2">
+				<p className="mt-4 flex space-x-2 text-sm text-gray-700">
 					{product.quantity > 0 ? (
 						<Check
-							className="flex-shrink-0 h-5 w-5 text-green-500"
+							className="h-5 w-5 flex-shrink-0 text-green-500"
 							aria-hidden="true"
 						/>
 					) : (
 						<Clock
-							className="flex-shrink-0 h-5 w-5 text-gray-300"
+							className="h-5 w-5 flex-shrink-0 text-gray-300"
 							aria-hidden="true"
 						/>
 					)}
 
 					<span>
+						{/* FIXME: */}
+						{/* @ts-ignore */}
 						{product.quantity > 0 ? "In stock" : `Ships in ${product.leadTime}`}
 					</span>
 				</p>

@@ -26,17 +26,17 @@
 	}
 
 	[role="bar"] {
-		@apply bg-teal-400 fixed z-50 top-0 left-0 w-full h-0.5;
+		@apply fixed top-0 left-0 z-50 h-0.5 w-full bg-teal-400;
 	}
 }
 
 @layer components {
 	.rating {
-		@apply flex items-center flex-row-reverse;
+		@apply flex flex-row-reverse items-center;
 	}
 
 	.rating .rating__star {
-		@apply flex items-center justify-center cursor-pointer;
+		@apply flex cursor-pointer items-center justify-center;
 	}
 
 	.rating.disabled .rating__star {

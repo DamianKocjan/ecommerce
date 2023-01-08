@@ -1,4 +1,6 @@
-import { Flex } from "@ecommerce/ui";
+import React from "react";
+
+import { Flex } from "../../shared/core/Flex";
 import { Categories } from "./Categories";
 import { Search } from "./Search";
 
@@ -8,7 +10,7 @@ export const SubNav: React.FC = () => {
 			as="nav"
 			direction="row"
 			justify="between"
-			className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 mt-1"
+			className="mx-auto mt-1 max-w-7xl px-2 sm:px-6 lg:px-8"
 		>
 			<Categories />
 			<Search />

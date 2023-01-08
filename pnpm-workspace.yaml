@@ -1,0 +1,10 @@
+packages:
+  - apps/mobile
+  - apps/web
+  - packages/api
+  - packages/auth
+  - packages/constants
+  - packages/db
+  - packages/storage
+  - packages/utils
+  - packages/config/*

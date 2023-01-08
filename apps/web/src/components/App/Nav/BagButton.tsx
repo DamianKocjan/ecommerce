@@ -1,30 +1,34 @@
-import { useBag } from "@/features/bag";
-import { trpc } from "@/utils/trpc";
-import { Button, Flex, IconButton, Spinner } from "@ecommerce/ui";
 import { Popover, Transition } from "@headlessui/react";
 import Link from "next/link";
-import { Bag } from "phosphor-react";
+import { Bag, Spinner } from "phosphor-react";
 import React, { Fragment, useMemo } from "react";
+
+import { useBag } from "../../../features/bag";
+import { trpc } from "../../../utils/trpc";
+import { Button } from "../../shared/core/Button";
+import { Flex } from "../../shared/core/Flex";
+import { IconButton } from "../../shared/core/IconButton";
 
 export const BagButton: React.FC = () => {
 	const products = useBag((state) => state.products);
 
 	const numOfItems = useMemo(() => products.length, [products]);
 
-	const { data, isLoading, isError } = trpc.useQuery(
-		["bagProducts", { products: products.slice(0, 9) }],
+	const { data, isLoading, isError } = trpc.product.bag.useQuery(
+		{ products: products.slice(0, 9) },
 		{
 			enabled: !!products.length,
 			refetchOnWindowFocus: false,
-		}
+		},
 	);
 
 	return (
 		<Popover>
 			<Popover.Button
 				as={IconButton}
+				intent="light"
+				className="relative hover:text-white"
 				type="button"
-				className="hover:text-white text-gray-300 relative"
 			>
 				<span className="sr-only">Your bag</span>
 				<Bag className="h-6 w-6" aria-hidden="true" />
@@ -39,7 +43,7 @@ export const BagButton: React.FC = () => {
 					leave="transition ease-out duration-100"
 					leaveFrom="transform opacity-100"
 					leaveTo="transform opacity-0"
-					className="absolute top-3 right-2 translate-x-2/4 -translate-y-1/2 w-5 h-5 text-xs font-bold bg-black outline outline-2 outline-teal-400 text-white rounded-full z-10"
+					className="absolute top-3 right-2 z-10 h-5 w-5 translate-x-2/4 -translate-y-1/2 rounded-full bg-black text-xs font-bold text-white outline outline-2 outline-teal-400"
 				>
 					<span>
 						{numOfItems > 9 ? "9+" : numOfItems > 0 ? numOfItems : "1"}
@@ -56,10 +60,10 @@ export const BagButton: React.FC = () => {
 				leaveFrom="opacity-100"
 				leaveTo="opacity-0"
 			>
-				<Popover.Panel className="absolute top-16 inset-x-0 mt-px pb-6 bg-white shadow-lg sm:px-2 lg:top-full lg:left-auto lg:right-0 lg:mt-3 lg:-mr-1.5 lg:w-80 lg:ring-1 lg:ring-black lg:ring-opacity-5 z-20">
+				<Popover.Panel className="absolute inset-x-0 top-16 z-20 mt-px bg-white pb-6 shadow-lg sm:px-2 lg:top-full lg:left-auto lg:right-0 lg:mt-3 lg:-mr-1.5 lg:w-80 lg:ring-1 lg:ring-black lg:ring-opacity-5">
 					<h2 className="sr-only">Bag</h2>
 
-					<form className="max-w-2xl mx-auto px-4">
+					<form className="mx-auto max-w-2xl px-4">
 						{isLoading ? (
 							<Flex justify="center" items="center" className="h-32">
 								<Spinner />
@@ -84,7 +88,7 @@ export const BagButton: React.FC = () => {
 										<img
 											src="https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg"
 											alt="Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch."
-											className="flex-none w-16 h-16 border border-gray-200"
+											className="h-16 w-16 flex-none border border-gray-200"
 										/>
 										<div className="ml-4 flex-auto">
 											<h3 className="font-medium text-gray-900">
@@ -107,7 +111,7 @@ export const BagButton: React.FC = () => {
 									<Flex items="center" className="py-6">
 										<div className="flex-auto">
 											<h3 className="font-medium text-gray-900">
-												<a href="#">+{numOfItems - 9} more to view</a>
+												+{numOfItems - 9} more to view
 											</h3>
 										</div>
 									</Flex>
@@ -116,21 +120,19 @@ export const BagButton: React.FC = () => {
 						)}
 
 						<Link href="/checkout">
-							<a>
-								<Button
-									intent="primary"
-									className="w-full disabled:cursor-not-allowed"
-									disabled={isLoading || isError || !data || !data.length}
-									title={
-										isLoading || isError || !data || !data.length
-											? "Bag is empty"
-											: "Checkout"
-									}
-									type="button"
-								>
-									Checkout
-								</Button>
-							</a>
+							<Button
+								intent="primary"
+								className="w-full disabled:cursor-not-allowed"
+								disabled={isLoading || isError || !data || !data.length}
+								title={
+									isLoading || isError || !data || !data.length
+										? "Bag is empty"
+										: "Checkout"
+								}
+								type="button"
+							>
+								Checkout
+							</Button>
 						</Link>
 
 						<p className="mt-6 text-center">

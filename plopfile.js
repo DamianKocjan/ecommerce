@@ -16,15 +16,42 @@ module.exports = function (/** @type {import('plop').NodePlopAPI} */ plop) {
 			},
 			{
 				type: "confirm",
+				name: "isWeb",
+				message: "Is this a Web component?",
+			},
+			{
+				type: "confirm",
 				name: "isCVA",
 				message: "Is this a CVA component?",
 			},
+			{
+				type: "list",
+				name: "type",
+				message: "What type of component is this?",
+				choices: [
+					{
+						name: "Core",
+						value: "core",
+					},
+					{
+						name: "Layout",
+						value: "layout",
+						checked: true,
+					},
+					{
+						name: "Form",
+						value: "forms",
+					},
+				],
+			},
 		],
-		actions: function ({ isCVA }) {
+		actions: function ({ isCVA, isWeb, type }) {
 			return [
 				{
 					type: "add",
-					path: "packages/ui/src/{{properCase name}}/{{properCase name}}.tsx",
+					path: `apps/${
+						isWeb ? "web" : "mobile"
+					}/src/components/${type}/{{properCase name}}/index.tsx`,
 					templateFile: isCVA
 						? ".templates/component/component-cva.hbs"
 						: ".templates/component/component.hbs",
@@ -34,24 +61,6 @@ module.exports = function (/** @type {import('plop').NodePlopAPI} */ plop) {
 				// 	path: "packages/ui/src/{{properCase name}}/{{properCase name}}.test.ts",
 				// 	templateFile: ".templates/component/component.test.hbs",
 				// },
-				{
-					type: "add",
-					path: "packages/ui/src/{{properCase name}}/{{properCase name}}.stories.tsx",
-					templateFile: ".templates/component/component.stories.hbs",
-				},
-				{
-					type: "add",
-					path: "packages/ui/src/{{properCase name}}/index.ts",
-					templateFile: ".templates/component/component.index.hbs",
-				},
-				{
-					type: "append",
-					path: "packages/ui/src/index.ts",
-					// eslint-disable-next-line quotes
-					template: 'export * from "./{{properCase name}}";\n',
-					unique: true,
-					separator: "",
-				},
 			];
 		},
 	});
@@ -86,19 +95,30 @@ module.exports = function (/** @type {import('plop').NodePlopAPI} */ plop) {
 					return true;
 				},
 			},
-		],
-		actions: [
 			{
-				type: "add",
-				path: "apps/web/src/pages/{{pathCase path}}.tsx",
-				templateFile: ".templates/page/page.hbs",
-			},
-			{
-				type: "add",
-				path: "apps/web/src/components/{{properCase name}}/index.tsx",
-				templateFile: ".templates/page/component.hbs",
+				type: "confirm",
+				name: "isWeb",
+				message: "Is this a Web component?",
 			},
 		],
+		actions: function ({ isWeb }) {
+			return [
+				{
+					type: "add",
+					path: `apps/${
+						isWeb ? "web" : "mobile"
+					}/src/pages/{{pathCase path}}.tsx`,
+					templateFile: ".templates/page/page.hbs",
+				},
+				{
+					type: "add",
+					path: `apps/${
+						isWeb ? "web" : "app"
+					}/src/components/{{properCase name}}/index.tsx`,
+					templateFile: ".templates/page/component.hbs",
+				},
+			];
+		},
 	});
 
 	plop.setGenerator("e2e test", {

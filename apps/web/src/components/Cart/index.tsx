@@ -1,19 +1,21 @@
-import { useBag } from "@/features/bag";
-import { trpc } from "@/utils/trpc";
-import { Flex, Spinner } from "@ecommerce/ui";
 import { useMemo } from "react";
-import { Container } from "../shared/Container";
+
+import { useBag } from "../../features/bag";
+import { trpc } from "../../utils/trpc";
+import { Container } from "../shared/core/Container";
+import { Flex } from "../shared/core/Flex";
+import { Spinner } from "../shared/core/Spinner";
 import { BagItem } from "./BagItem";
 import { OrderSummary } from "./OrderSummary";
 
 export function Cart() {
 	const products = useBag((state) => state.products);
 
-	const { data, isError, isLoading } = trpc.useQuery(
-		["bagProducts", { products }],
+	const { data, isError, isLoading } = trpc.product.bag.useQuery(
+		{ products },
 		{
 			refetchOnWindowFocus: false,
-		}
+		},
 	);
 
 	const quantity = 1;
@@ -22,7 +24,7 @@ export function Cart() {
 			data
 				? data.reduce((acc, product) => acc + product.price * quantity, 0)
 				: 0,
-		[data]
+		[data],
 	);
 
 	return (
@@ -30,7 +32,7 @@ export function Cart() {
 			<h1 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
 				Shopping Bag
 			</h1>
-			<form className="mt-12 lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start xl:gap-x-16">
+			<form className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
 				<section aria-labelledby="cart-heading" className="lg:col-span-7">
 					<h2 id="cart-heading" className="sr-only">
 						Items in your shopping bag
@@ -50,7 +52,7 @@ export function Cart() {
 					) : (
 						<ul
 							role="list"
-							className="border-t border-b border-gray-200 divide-y divide-gray-200"
+							className="divide-y divide-gray-200 border-t border-b border-gray-200"
 						>
 							{data.map((product) => (
 								<BagItem key={product.slug} product={product} />

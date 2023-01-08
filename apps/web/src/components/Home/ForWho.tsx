@@ -1,6 +1,7 @@
-import { Grid } from "@ecommerce/ui";
 import Link from "next/link";
 import React from "react";
+
+import { Grid } from "../shared/core/Grid";
 
 const FOR_WHO = [
 	{
@@ -26,30 +27,30 @@ const FOR_WHO = [
 export const ForWho: React.FC = () => {
 	return (
 		<section className="mt-16">
-			<h3 className="font-mono font-semibold text-5xl lg:text-6xl p-8 sm:p-0">
+			<h3 className="p-8 font-mono text-5xl font-semibold sm:p-0 lg:text-6xl">
 				For who are you buying?
 			</h3>
 			<Grid
 				cols="1"
 				items="stretch"
 				justify="center"
-				className="p-4 gap-4 w-full mt-2 sm:grid-cols-2 lg:grid-cols-3"
+				className="mt-2 w-full gap-4 p-4 sm:grid-cols-2 lg:grid-cols-3"
 			>
 				{/* FIXME: fix last card max height on smaller screens */}
 				{/* FIXME: fix first two width on smaller screens */}
 				{FOR_WHO.map(({ title, imageSrc, href }) => (
-					<Link href={href} key={`for-who-${title}`}>
+					<Link href={href} key={`for-who-${title}`} legacyBehavior>
 						<a className="group bg-black p-4 last-of-type:sm:col-span-2 last-of-type:sm:place-self-center last-of-type:lg:col-span-1">
 							<article>
 								<img
 									src={imageSrc}
 									alt={title}
 									loading="lazy"
-									className="object-cover grayscale group-hover:grayscale-0 transition-filter last-of-type:sm:max-h-96 last-of-type:md:max-h-fit"
+									className="object-cover grayscale transition-filter group-hover:grayscale-0 last-of-type:sm:max-h-96 last-of-type:md:max-h-fit"
 								/>
-								<h4 className="text-4xl font-bold font-mono text-white py-2 relative w-fit">
+								<h4 className="relative w-fit py-2 font-mono text-4xl font-bold text-white">
 									{title}
-									<span className="absolute bottom-0 left-4 hidden group-hover:block w-full h-1 bg-white" />
+									<span className="absolute bottom-0 left-4 hidden h-1 w-full bg-white group-hover:block" />
 								</h4>
 							</article>
 						</a>

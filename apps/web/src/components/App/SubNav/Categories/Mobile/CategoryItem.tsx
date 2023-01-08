@@ -1,7 +1,10 @@
-import { Flex, Grid, IconButton } from "@ecommerce/ui";
 import { Dialog, Transition } from "@headlessui/react";
 import { ArrowLeft as ArrowLeftIcon, X as XIcon } from "phosphor-react";
 import React, { Fragment, useCallback, useState } from "react";
+
+import { Flex } from "../../../../shared/core/Flex";
+import { Grid } from "../../../../shared/core/Grid";
+import { IconButton } from "../../../../shared/core/IconButton";
 
 export interface CategoryItemProps {
 	category: {
@@ -40,7 +43,7 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({
 						className="object-cover"
 						loading="lazy"
 					/>
-					<h3 className="text-lg text-black hover:underline underline-offset-4 decoration-teal-400 decoration-2">
+					<h3 className="text-lg text-black decoration-teal-400 decoration-2 underline-offset-4 hover:underline">
 						{category.name}
 					</h3>
 				</div>
@@ -62,9 +65,9 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({
 									<Dialog.Panel className="pointer-events-auto relative w-screen max-w-md">
 										<Flex
 											direction="col"
-											className="h-full overflow-y-scroll bg-white py-6 shadow-xl font-mono"
+											className="h-full overflow-y-scroll bg-white py-6 font-mono shadow-xl"
 										>
-											<div className="px-4 sm:px-6 relative">
+											<div className="relative px-4 sm:px-6">
 												<Flex items="center" className="align-middle">
 													<IconButton
 														type="button"
@@ -80,7 +83,7 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({
 															aria-hidden="true"
 														/>
 													</IconButton>
-													<Dialog.Title className="text-xl font-medium py-1 px-2 md:py-2 md:px-4 w-fit text-white bg-black border-b-2 border-solid border-teal-400">
+													<Dialog.Title className="w-fit border-b-2 border-solid border-teal-400 bg-black py-1 px-2 text-xl font-medium text-white md:py-2 md:px-4">
 														{category.name}
 													</Dialog.Title>
 												</Flex>
@@ -95,7 +98,7 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({
 												</IconButton>
 											</div>
 											<div className="relative mt-6 flex-1 px-4 sm:px-6">
-												<Grid cols="2" className="gap-x-3 gap-y-5 my-4"></Grid>
+												<Grid cols="2" className="my-4 gap-x-3 gap-y-5"></Grid>
 											</div>
 										</Flex>
 									</Dialog.Panel>

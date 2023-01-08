@@ -1,13 +1,15 @@
-import { useFilter } from "@/features/filter";
-import { trpc } from "@/utils/trpc";
-import { EmptyState, PrettyContainer } from "@ecommerce/ui";
 import { useRouter } from "next/router";
 import { useCallback, useMemo, useState } from "react";
-import { Container } from "../shared/Container";
-import { Filters } from "../shared/Products/Filters";
-import { ProductsList } from "../shared/Products/List";
-import { ListFooter } from "../shared/Products/ListFooter";
-import { PER_PAGE } from "../shared/Products/ListFooter/PerPage";
+
+import { useFilter } from "../../features/filter";
+import { trpc } from "../../utils/trpc";
+import { Container } from "../shared/core/Container";
+import { EmptyState } from "../shared/core/EmptyState";
+import { PrettyContainer } from "../shared/core/PrettyContainer";
+import { Filters } from "../shared/layout/Products/Filters";
+import { ProductsList } from "../shared/layout/Products/List";
+import { ListFooter } from "../shared/layout/Products/ListFooter";
+import { PER_PAGE } from "../shared/layout/Products/ListFooter/PerPage";
 
 export function Wishlist() {
 	const router = useRouter();
@@ -16,11 +18,11 @@ export function Wishlist() {
 
 	const [perPage, setPerPage] = useState(
 		typeof window !== "undefined"
-			? Number(window.localStorage.getItem("perPage")) || PER_PAGE[0]
-			: PER_PAGE[0]
+			? Number(window.localStorage.getItem("perPage")) || PER_PAGE[0]!
+			: PER_PAGE[0]!,
 	);
 	const [page, setPage] = useState<number | undefined>(
-		queryPage ? parseInt(queryPage as string, 10) : undefined
+		queryPage ? parseInt(queryPage as string, 10) : undefined,
 	);
 
 	const handleSetPage = useCallback(
@@ -31,10 +33,10 @@ export function Wishlist() {
 					query: { ...router.query, page },
 				},
 				undefined,
-				{ shallow: true }
+				{ shallow: true },
 			);
 		},
-		[router]
+		[router],
 	);
 
 	const handlePerPageChange = useCallback((value: number) => {
@@ -56,19 +58,16 @@ export function Wishlist() {
 		return parsed;
 	}, [filters]);
 
-	const wishlisted = trpc.useQuery(
-		[
-			"wishlistedProducts",
-			{
-				q: query || null,
-				perPage,
-				page,
-				...parsedFilters,
-			},
-		],
+	const wishlisted = trpc.wishlist.all.useQuery(
+		{
+			q: query,
+			perPage,
+			page,
+			...parsedFilters,
+		},
 		{
 			refetchOnWindowFocus: false,
-		}
+		},
 	);
 
 	return (
@@ -88,7 +87,7 @@ export function Wishlist() {
 						<ProductsList
 							isLoading={wishlisted.isLoading}
 							products={wishlisted.data?.data.map(
-								(wishlisted) => wishlisted.product
+								(wishlisted) => wishlisted.product,
 							)}
 						/>
 						<ListFooter

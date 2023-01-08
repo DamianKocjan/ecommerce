@@ -1,8 +1,10 @@
-import { classNames } from "@/components/shared/utils";
-import { useSession } from "@ecommerce/auth/nextjs/client";
-import { Flex, Tooltip } from "@ecommerce/ui";
+import { useSession } from "next-auth/react";
 import { Star, StarHalf } from "phosphor-react";
 import React, { useCallback, useMemo } from "react";
+
+import { Flex } from "../../shared/core/Flex";
+import { Tooltip } from "../../shared/core/Tooltip";
+import { classNames } from "../../shared/utils/classnames";
 
 export interface RatingProps {
 	rating: number;
@@ -21,7 +23,7 @@ export const Rating: React.FC<RatingProps> = ({ rating }) => {
 
 			// TODO: Rate product
 		},
-		[sessionData]
+		[sessionData],
 	);
 
 	const stars = useMemo(
@@ -61,7 +63,7 @@ export const Rating: React.FC<RatingProps> = ({ rating }) => {
 					</button>
 				);
 			}).reverse(),
-		[rating]
+		[handleRateProduct, rating],
 	);
 
 	return (

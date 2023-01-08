@@ -1,5 +1,6 @@
-import { Catalog } from "@/components/Catalog";
 import { GetServerSidePropsContext } from "next";
+
+import { Catalog } from "../components/Catalog";
 
 export default Catalog;
 
@@ -10,7 +11,7 @@ export function getServerSideProps(context: GetServerSidePropsContext) {
 
 	return {
 		props: {
-			previousUrl: previousUrl || null,
+			previousUrl,
 		},
 	};
 }
