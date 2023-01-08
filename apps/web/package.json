@@ -59,8 +59,7 @@
 		],
 		"rules": {
 			"@typescript-eslint/unbound-method": "off",
-			"@typescript-eslint/ban-ts-comment": "warn",
-			"@typescript-eslint/no-unsafe-assignment": "warn"
+			"@typescript-eslint/ban-ts-comment": "warn"
 		}
 	}
 }

@@ -73,7 +73,6 @@ export const ProductInfo: React.FC<ProductInfoProps> = ({
 				</Flex>
 			</form>
 
-			{/* @ts-ignore */}
 			<ProductDetails details={product.details} />
 		</div>
 	);

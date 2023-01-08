@@ -111,6 +111,15 @@ export const productRouter = router({
 				discount: data.discount?.toNumber(),
 				createdAt: data.createdAt.toISOString(),
 				updatedAt: data.updatedAt.toISOString(),
+				details: [] as {
+					name: string;
+					items: string[];
+				}[],
+				images: [] as {
+					id: string;
+					src: string;
+					alt: string;
+				}[],
 			};
 		}),
 	bag: publicProcedure
