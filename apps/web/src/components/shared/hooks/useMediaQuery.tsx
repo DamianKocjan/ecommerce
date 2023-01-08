@@ -43,7 +43,7 @@ type Props<T extends keyof JSX.IntrinsicElements = "div"> =
 		children: ReactNode;
 	};
 
-export function useMediaQuery(size: Sizes, useMax: boolean = false) {
+export function useMediaQuery(size: Sizes, useMax = false) {
 	const { min, max } = Queries[size];
 	const mediaQuery = useMax ? `(max-width: ${max}px)` : `(min-width: ${min}px)`;
 

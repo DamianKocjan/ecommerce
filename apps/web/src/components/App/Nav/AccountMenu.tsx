@@ -1,24 +1,30 @@
-import { classNames } from "@/components/shared/utils";
-import { signOut } from "@ecommerce/auth/nextjs/client";
-import { Button, IconButton } from "@ecommerce/ui";
 import { Menu, Transition } from "@headlessui/react";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { User as UserIcon } from "phosphor-react";
 import React, { Fragment, useCallback } from "react";
+
+import { Button } from "../../shared/core/Button";
+import { IconButton } from "../../shared/core/IconButton";
+import { classNames } from "../../shared/utils/classnames";
 
 export const AccountMenu: React.FC = () => {
 	const handleSignOut = useCallback(
 		(e: React.MouseEvent<HTMLButtonElement>) => {
 			e.preventDefault();
-			signOut();
+			void signOut();
 		},
-		[]
+		[],
 	);
 
 	return (
 		<Menu as="div" className="relative">
 			<div>
-				<Menu.Button className="hover:text-white text-gray-300" as={IconButton}>
+				<Menu.Button
+					as={IconButton}
+					intent="light"
+					className="hover:text-white"
+				>
 					<span className="sr-only">Open user menu</span>
 					<UserIcon className="block h-6 w-6" aria-hidden="true" />
 				</Menu.Button>
@@ -32,17 +38,18 @@ export const AccountMenu: React.FC = () => {
 				leaveFrom="transform opacity-100 scale-100"
 				leaveTo="transform opacity-0 scale-95"
 			>
-				<Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 p-2 bg-black outline outline-2 outline-teal-400 focus:outline-0 text-white z-10">
+				<Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right bg-black p-2 text-white outline outline-2 outline-teal-400 focus:outline-0">
 					<div>
 						<Menu.Item>
 							{({ active }) => (
-								<Link href="">
+								<Link href="" legacyBehavior>
 									<a>
 										<Button
 											intent="secondary"
+											textColor="light"
 											className={classNames(
-												active ? "text-white" : "text-gray-300",
-												"w-full mb-1 z-10"
+												"z-10 mb-1 w-full",
+												active ? "border-2" : "",
 											)}
 										>
 											Your Profile
@@ -53,13 +60,14 @@ export const AccountMenu: React.FC = () => {
 						</Menu.Item>
 						<Menu.Item>
 							{({ active }) => (
-								<Link href="">
+								<Link href="" legacyBehavior>
 									<a>
 										<Button
 											intent="secondary"
+											textColor="light"
 											className={classNames(
-												active ? "text-white" : "text-gray-300",
-												"w-full my-1"
+												"my-1 w-full",
+												active ? "border-2" : "",
 											)}
 										>
 											Settings
@@ -73,8 +81,8 @@ export const AccountMenu: React.FC = () => {
 								<Button
 									onClick={handleSignOut}
 									className={classNames(
-										active ? "text-black" : "text-gray-800",
-										"w-full mt-1"
+										"mt-1 w-full",
+										active ? "border-2 border-white" : "",
 									)}
 								>
 									Sign out

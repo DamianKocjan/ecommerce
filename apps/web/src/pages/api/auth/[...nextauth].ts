@@ -1,4 +1,6 @@
-import { nextAuthOptions } from "@ecommerce/auth";
-import { NextAuthApiHandler } from "@ecommerce/auth/nextjs/server";
+import NextAuth from "next-auth";
 
-export default NextAuthApiHandler(nextAuthOptions);
+import { authOptions } from "@ecommerce/auth";
+
+// @ts-ignore
+export default NextAuth(authOptions);

@@ -1,31 +1,47 @@
-import { ProductDetail } from "@/components/Products/Detail";
-import { convertDecimalToNumber, DecimalToNumber } from "@/utils/converters";
-import { getSession } from "@ecommerce/auth";
-import { prisma, Product } from "@ecommerce/prisma";
+import { getServerSession } from "@ecommerce/auth";
+import { Season } from "@ecommerce/db";
 import type { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
+
+import { ProductDetail } from "../../components/Products/Detail";
 
 export default ProductDetail;
 
 interface ProductDetailProps {
-	product: DecimalToNumber<
-		Product & {
-			colors: {
-				id: number;
-				name: string;
-			}[];
-			manufacturer: {
-				id: number;
-				name: string;
-			};
-		}
-	>;
+	product: {
+		id: number;
+		slug: string;
+		title: string;
+		shortDescription: string;
+		description: string;
+		thumbnailImage: string;
+		price: number;
+		discount?: number;
+		quantity: number;
+		activatiedAt?: string;
+		multipack: boolean;
+		multipackQty: number;
+		createdAt: string;
+		updatedAt: string;
+		manufacturerId: number;
+		sizeId?: number | null;
+		season?: Season | null;
+		deliveryOptionId: string;
+		colors: {
+			id: number;
+			name: string;
+		}[];
+		manufacturer: {
+			id: number;
+			name: string;
+		};
+	};
 }
 
 export async function getServerSideProps(
-	context: GetServerSidePropsContext
+	context: GetServerSidePropsContext,
 ): Promise<GetServerSidePropsResult<ProductDetailProps>> {
 	const slug = context.params?.["slug"] as string;
-	const product = await prisma.product.findFirst({
+	const product = await prisma?.product.findFirst({
 		where: {
 			slug,
 		},
@@ -55,14 +71,14 @@ export async function getServerSideProps(
 		};
 	}
 
-	const session = await getSession({
+	const session = await getServerSession({
 		req: context.req,
 		res: context.res,
 	});
 
 	if (session && session.user) {
 		try {
-			await prisma.view.create({
+			await prisma?.view.create({
 				data: {
 					user: {
 						connect: {
@@ -76,12 +92,21 @@ export async function getServerSideProps(
 					},
 				},
 			});
-		} catch (error) {}
+		} catch (error) {
+			/* empty */
+		}
 	}
 
 	return {
 		props: {
-			product: convertDecimalToNumber(product),
+			product: {
+				...product,
+				price: product.price.toNumber(),
+				discount: product.discount?.toNumber() || undefined,
+				createdAt: product.createdAt.toISOString(),
+				updatedAt: product.updatedAt.toISOString(),
+				activatiedAt: product.activatiedAt?.toISOString() || undefined,
+			},
 		},
 	};
 }

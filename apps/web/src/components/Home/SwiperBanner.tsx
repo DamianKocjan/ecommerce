@@ -1,28 +1,29 @@
-import { Flex } from "@ecommerce/ui";
 import Link from "next/link";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+
+import { Flex } from "../shared/core/Flex";
 import { useToggleBetween } from "../shared/hooks/useToggleBetween";
 
 const TEXTS = [
 	<>
 		Place your order as soon as possible to receive your parcel before
 		Christmas.{" "}
-		<Link href="/catalog">
+		<Link href="/catalog" legacyBehavior>
 			<a className="underline">Browse</a>
 		</Link>
 		.{" "}
-		<Link href="/help">
+		<Link href="/help" legacyBehavior>
 			<a className="underline">Get help</a>
 		</Link>
 		.
 	</>,
 	<>
 		Free shipping and 30 days free returns for members.{" "}
-		<Link href="/join-us">
+		<Link href="/join-us" legacyBehavior>
 			<a className="underline">Join us</a>
 		</Link>
 		.{" "}
-		<Link href="/help">
+		<Link href="/help" legacyBehavior>
 			<a className="underline">Find out more</a>
 		</Link>
 		.
@@ -63,8 +64,8 @@ export const SwiperBanner: React.FC = () => {
 	const handleOnMouseLeave = useCallback(() => setMouseOver(false), []);
 
 	return (
-		<div className="bg-gray-50 w-full my-2">
-			<div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+		<div className="my-2 w-full bg-gray-50">
+			<div className="mx-auto max-w-7xl py-4 px-4 sm:px-6 lg:px-8">
 				<Flex items="center" justify="between" className="flex-1">
 					<Flex
 						items="center"
@@ -73,7 +74,7 @@ export const SwiperBanner: React.FC = () => {
 						onMouseLeave={handleOnMouseLeave}
 					>
 						<p
-							className="ml-3 font-medium text-gray-900 truncate transition-opacity"
+							className="ml-3 truncate font-medium text-gray-900 transition-opacity"
 							ref={ref}
 						>
 							{value}

@@ -1,36 +1,24 @@
-import { Container } from "@/components/shared/Container";
-import { DecimalToNumber } from "@/utils/converters";
-import { type Product } from "@ecommerce/prisma";
-import { Grid } from "@ecommerce/ui";
 import { NextSeo } from "next-seo";
 import { useState } from "react";
+
+import { RouterOutputs } from "../../../utils/trpc";
+import { Container } from "../../shared/core/Container";
+import { Grid } from "../../shared/core/Grid";
 import { ProductDescription } from "./Description";
 import { ImageGallery } from "./ImageGallery";
 import { ProductInfo } from "./Info";
 import { SimilarProducts } from "./SimilarProducts";
 
 export interface ProductDetailProps {
-	product: DecimalToNumber<Product> & {
-		colors: {
-			id: number;
-			name: string;
-		}[];
-		manufacturer: {
-			id: number;
-			name: string;
-		};
-	};
+	product: RouterOutputs["product"]["get"];
 }
 
 export function ProductDetail({ product }: ProductDetailProps) {
-	if (!product) {
-		return (
-			<Container title="Product not found">
-				<h1>Product not found</h1>
-			</Container>
-		);
-	}
 	const [selectedColor, setSelectedColor] = useState(product.colors[0]);
+
+	if (!product) {
+		return null;
+	}
 
 	product.details = [
 		{
@@ -94,7 +82,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
 			/>
 
 			<div className="py-4">
-				<Grid media="lg" className="lg:grid-cols-2 lg:gap-x-8 lg:items-start">
+				<Grid media="lg" className="lg:grid-cols-2 lg:items-start lg:gap-x-8">
 					{/* Image gallery */}
 					<ImageGallery images={product?.images} />
 

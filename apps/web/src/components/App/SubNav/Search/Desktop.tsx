@@ -1,7 +1,9 @@
-import { Flex, IconButton } from "@ecommerce/ui";
 import { useRouter } from "next/router";
 import { MagnifyingGlass as SearchIcon } from "phosphor-react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+
+import { Flex } from "../../../shared/core/Flex";
+import { IconButton } from "../../../shared/core/IconButton";
 
 export const DesktopSearch: React.FC = () => {
 	const [search, setSearch] = useState("");
@@ -9,22 +11,6 @@ export const DesktopSearch: React.FC = () => {
 	const router = useRouter();
 	const slug = router.query["slug"] as string;
 	const query = router.query["q"] as string;
-
-	useEffect(() => {
-		document.addEventListener("keydown", handleShortcutFocusInput);
-
-		return () => {
-			document.removeEventListener("keydown", handleShortcutFocusInput);
-		};
-	}, []);
-
-	useEffect(() => {
-		if (query) {
-			setSearch(decodeURIComponent(query));
-		} else {
-			setSearch("");
-		}
-	}, [router]);
 
 	const handleShortcutFocusInput = useCallback((e: KeyboardEvent) => {
 		if (
@@ -38,11 +24,27 @@ export const DesktopSearch: React.FC = () => {
 		}
 	}, []);
 
+	useEffect(() => {
+		document.addEventListener("keydown", handleShortcutFocusInput);
+
+		return () => {
+			document.removeEventListener("keydown", handleShortcutFocusInput);
+		};
+	}, [handleShortcutFocusInput]);
+
+	useEffect(() => {
+		if (query) {
+			setSearch(decodeURIComponent(query));
+		} else {
+			setSearch("");
+		}
+	}, [query, router]);
+
 	const handleSearchInput = useCallback(
 		(e: React.ChangeEvent<HTMLInputElement>) => {
 			setSearch(e.target.value);
 		},
-		[]
+		[],
 	);
 
 	const handleSearchSubmit = useCallback(
@@ -54,15 +56,15 @@ export const DesktopSearch: React.FC = () => {
 
 			if (path.includes("/c/")) {
 				if (path.includes("?q=")) {
-					router.push(`/c/${slug}?q=${encodedSearch}`);
+					void router.push(`/c/${slug}?q=${encodedSearch}`);
 				} else {
-					router.push(`${path}?q=${encodedSearch}`);
+					void router.push(`${path}?q=${encodedSearch}`);
 				}
 			} else {
-				router.push(`/catalog/?q=${encodedSearch}`);
+				void router.push(`/catalog/?q=${encodedSearch}`);
 			}
 		},
-		[search, router]
+		[search, router, slug],
 	);
 
 	const handleFocusInput = useCallback(() => {
@@ -90,7 +92,7 @@ export const DesktopSearch: React.FC = () => {
 					type="text"
 					placeholder="Search"
 					id="search"
-					className="flex-1 focus:ring-teal-400 focus:border-teal-400 ring-black border-ring-black"
+					className="border-ring-black flex-1 ring-black focus:border-teal-400 focus:ring-teal-400"
 					onChange={handleSearchInput}
 					value={search}
 					ref={searchInputRef}

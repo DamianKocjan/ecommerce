@@ -1,19 +1,20 @@
-import { AddToBagButton } from "@/components/shared/Bag";
-import { useCurrencyFormatter } from "@/components/shared/formatters";
-import { WishlistIconButton } from "@/components/shared/Wishlist";
-import { InferQueryOutput } from "@/utils/trpc";
-import { Flex } from "@ecommerce/ui";
 import React, { useMemo } from "react";
+
+import { RouterOutputs } from "../../../utils/trpc";
+import { Flex } from "../../shared/core/Flex";
+import { useCurrencyFormatter } from "../../shared/hooks/useCurrencyFormatter";
+import { AddToBagButton } from "../../shared/layout/Bag";
+import { WishlistIconButton } from "../../shared/layout/Wishlist";
 import { ProductColors } from "./Colors";
 import { ProductDetails } from "./Details";
 import { Rating } from "./Rating";
 
-type Product = InferQueryOutput<"product">;
+type Product = RouterOutputs["product"]["get"];
 type Color = Product["colors"][number];
 
 export interface ProductInfoProps {
 	product: Product;
-	selectedColor: Color;
+	selectedColor?: Color;
 	setSelectedColor: (color: Color) => void;
 }
 
@@ -26,11 +27,11 @@ export const ProductInfo: React.FC<ProductInfoProps> = ({
 
 	const price = useMemo(
 		() => currencyFormater.format(product.price),
-		[currencyFormater, product.price]
+		[currencyFormater, product.price],
 	);
 
 	return (
-		<div className="mt-10 px-4 sm:px-0 sm:mt-16 lg:mt-0">
+		<div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
 			<h1 className="text-3xl font-extrabold tracking-tight text-gray-900">
 				{product.title}
 			</h1>
@@ -50,7 +51,7 @@ export const ProductInfo: React.FC<ProductInfoProps> = ({
 				<h3 className="sr-only">Short description</h3>
 
 				<div
-					className="text-base text-gray-700 space-y-6"
+					className="space-y-6 text-base text-gray-700"
 					dangerouslySetInnerHTML={{ __html: product.shortDescription }}
 				/>
 			</div>
@@ -60,11 +61,12 @@ export const ProductInfo: React.FC<ProductInfoProps> = ({
 				{/* FIXME: do not provide state setters to child component */}
 				<ProductColors
 					colors={product.colors}
+					// @ts-ignore
 					selectedColor={selectedColor}
 					setSelectedColor={setSelectedColor}
 				/>
 
-				<Flex className="mt-10 sm:flex-col1">
+				<Flex className="sm:flex-col1 mt-10">
 					<AddToBagButton productSlug={product.slug} />
 
 					<WishlistIconButton productId={product.id} />

@@ -1,3 +1,3 @@
-import { SizeGuide } from "@/components/SizeGuide";
+import { SizeGuide } from "../components/SizeGuide";
 
 export default SizeGuide;

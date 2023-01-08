@@ -1,12 +1,14 @@
-import { Flex } from "@ecommerce/ui";
 import dynamic from "next/dynamic";
+import React from "react";
+
+import { Flex } from "../../../../shared/core/Flex";
 import { CategoryItemProps } from "./CategoryItem";
 
 const CategoryItem = dynamic(
 	() => import("./CategoryItem").then((mod) => mod.CategoryItem),
 	{
 		ssr: false,
-	}
+	},
 );
 
 export interface DesktopCategoriesProps {
@@ -25,7 +27,7 @@ export const DesktopCategories: React.FC<DesktopCategoriesProps> = ({
 			items="center"
 			justify="between"
 			wrap="wrap"
-			className="md:flex-nowrap hidden"
+			className="hidden md:flex-nowrap"
 		>
 			{categories.map(({ name, href, columns, image }, index) => (
 				<CategoryItem

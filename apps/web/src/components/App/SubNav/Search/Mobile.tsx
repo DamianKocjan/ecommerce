@@ -1,7 +1,9 @@
-import { Flex, IconButton } from "@ecommerce/ui";
 import { useRouter } from "next/router";
 import { MagnifyingGlass as SearchIcon } from "phosphor-react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+
+import { Flex } from "../../../shared/core/Flex";
+import { IconButton } from "../../../shared/core/IconButton";
 
 export const MobileSearch: React.FC = () => {
 	const [search, setSearch] = useState("");
@@ -18,13 +20,13 @@ export const MobileSearch: React.FC = () => {
 		} else {
 			setSearch("");
 		}
-	}, [router]);
+	}, [query, router]);
 
 	const handleSearchInput = useCallback(
 		(e: React.ChangeEvent<HTMLInputElement>) => {
 			setSearch(e.target.value);
 		},
-		[]
+		[],
 	);
 
 	const handleSearchSubmit = useCallback(
@@ -41,17 +43,17 @@ export const MobileSearch: React.FC = () => {
 
 			if (path.includes("/c/")) {
 				if (path.includes("?q=")) {
-					router.push(`/c/${slug}?q=${encodedSearch}`);
+					void router.push(`/c/${slug}?q=${encodedSearch}`);
 				} else {
-					router.push(`${path}?q=${encodedSearch}`);
+					void router.push(`${path}?q=${encodedSearch}`);
 				}
 			} else {
-				router.push(`/catalog/?q=${encodedSearch}`);
+				void router.push(`/catalog/?q=${encodedSearch}`);
 			}
 
 			setIsUserSubmit(false);
 		},
-		[search, router]
+		[isUserSubmit, search, router, slug],
 	);
 
 	const handleFocusInput = useCallback(() => {
@@ -93,7 +95,7 @@ export const MobileSearch: React.FC = () => {
 							type="text"
 							placeholder="Search"
 							id="search"
-							className="flex-1 focus:ring-teal-400 focus:border-teal-400 ring-black border-ring-black"
+							className="border-ring-black flex-1 ring-black focus:border-teal-400 focus:ring-teal-400"
 							onChange={handleSearchInput}
 							onBlur={() => setShowOpenSearch(true)}
 							value={search}

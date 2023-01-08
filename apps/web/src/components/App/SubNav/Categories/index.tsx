@@ -1,4 +1,5 @@
 import React from "react";
+
 import { DESKTOP_CATEGORIES, MOBILE_CATEGORIES } from "./constants";
 import { DesktopCategories } from "./Desktop";
 import { MobileCategories } from "./Mobile";
