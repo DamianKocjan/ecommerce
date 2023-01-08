@@ -27,6 +27,11 @@ export function useFormatRelativeDate(locale = "en-us") {
 
 			for (let i = 0; i <= DIVISIONS.length; i++) {
 				const division = DIVISIONS[i];
+
+				if (!division) {
+					continue;
+				}
+
 				if (Math.abs(duration) < division.amount) {
 					return formatter.format(
 						Math.round(duration),

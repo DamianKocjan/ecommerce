@@ -9,10 +9,8 @@
 const config = {
 	reactStrictMode: true,
 	swcMinify: true,
-	experimental: {
-		// Enables hot-reload and easy integration for local packages
-		transpilePackages: ["@ecommerce/api", "@ecommerce/auth", "@ecommerce/db"],
-	},
+	// Enables hot-reload and easy integration for local packages
+	transpilePackages: ["@ecommerce/api", "@ecommerce/auth", "@ecommerce/db"],
 	// We already do linting on GH actions
 	eslint: {
 		ignoreDuringBuilds: !!process.env.CI,
