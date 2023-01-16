@@ -14,6 +14,7 @@ module.exports = {
 					"./tsconfig.json",
 					"./apps/*/tsconfig.json",
 					"./packages/*/tsconfig.json",
+					"./packages/db/prisma/tsconfig.json",
 				],
 			},
 		},

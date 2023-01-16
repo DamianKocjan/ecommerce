@@ -1,4 +1,4 @@
-import type { Prisma, PrismaClient } from "..";
+import type { Prisma, PrismaClient } from "../..";
 
 const COLORS = [
 	"Aqua",
