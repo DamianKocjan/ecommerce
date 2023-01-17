@@ -15,9 +15,9 @@ interface ProductDetailProps {
 		description: string;
 		thumbnailImage: string;
 		price: number;
-		discount?: number;
+		discount?: number | null;
 		quantity: number;
-		activatiedAt?: string;
+		activatiedAt?: string | null;
 		multipack: boolean;
 		multipackQty: number;
 		createdAt: string;
@@ -102,10 +102,10 @@ export async function getServerSideProps(
 			product: {
 				...product,
 				price: product.price.toNumber(),
-				discount: product.discount?.toNumber() || undefined,
+				discount: product.discount?.toNumber() || null,
 				createdAt: product.createdAt.toISOString(),
 				updatedAt: product.updatedAt.toISOString(),
-				activatiedAt: product.activatiedAt?.toISOString() || undefined,
+				activatiedAt: product.activatiedAt?.toISOString() || null,
 			},
 		},
 	};
