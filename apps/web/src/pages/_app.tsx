@@ -3,6 +3,7 @@ import { SessionProvider } from "next-auth/react";
 import { DefaultSeo } from "next-seo";
 import { ThemeProvider } from "next-themes";
 import type { AppType } from "next/app";
+import { GoogleAnalytics } from "nextjs-google-analytics";
 
 import { Nav } from "../components/App/Nav";
 import { NProgress } from "../components/App/NProgress";
@@ -59,6 +60,8 @@ const App: AppType<{ session: Session | null }> = ({
 						site: "@vercel",
 					}}
 				/>
+
+				<GoogleAnalytics trackPageViews />
 
 				<NProgress />
 				<Nav />

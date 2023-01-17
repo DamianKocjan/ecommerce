@@ -107,6 +107,7 @@ importers:
       next-auth: ^4.18.8
       next-seo: ^5.15.0
       next-themes: ^0.2.1
+      nextjs-google-analytics: ^2.2.2
       nprogress: ^0.2.0
       phosphor-react: ^1.4.1
       postcss: ^8.4.19
@@ -136,6 +137,7 @@ importers:
       next-auth: 4.18.8_q76c2b4vyoegvsbrcwkfvimnai
       next-seo: 5.15.0_q76c2b4vyoegvsbrcwkfvimnai
       next-themes: 0.2.1_q76c2b4vyoegvsbrcwkfvimnai
+      nextjs-google-analytics: 2.2.2_next@13.1.1+react@18.2.0
       nprogress: 0.2.0
       phosphor-react: 1.4.1_react@18.2.0
       react: 18.2.0
@@ -3766,7 +3768,7 @@ packages:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
     dependencies:
-      '@tanstack/react-query': 4.22.0_slnhbjkuf3cktqrwdgz34rrasq
+      '@tanstack/react-query': 4.22.0_biqbaboplfbrettd7655fr4n2y
       '@trpc/client': 10.8.1_@trpc+server@10.8.1
       '@trpc/server': 10.8.1
       react: 18.2.0
@@ -8709,6 +8711,18 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
+    dev: false
+
+  /nextjs-google-analytics/2.2.2_next@13.1.1+react@18.2.0:
+    resolution: {integrity: sha512-PfA5QZCV+tsCEHG6AE3UXHY8fpHguN+l8t81GztdVW1EtX6UCfu8/rb/X/E+D3oFMY0P3YFQzouSgdm1OhWFiA==}
+    peerDependencies:
+      next: '>=11.0.0'
+      react: '>=17.0.0'
+    dependencies:
+      next: 13.1.1_biqbaboplfbrettd7655fr4n2y
+      react: 18.2.0
+    optionalDependencies:
+      fsevents: 2.3.2
     dev: false
 
   /nice-try/1.0.5:
