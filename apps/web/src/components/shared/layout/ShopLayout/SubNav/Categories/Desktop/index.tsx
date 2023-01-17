@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import React from "react";
 
-import { Flex } from "../../../../shared/core/Flex";
+import { Flex } from "../../../../../../shared/core/Flex";
 import { CategoryItemProps } from "./CategoryItem";
 
 const CategoryItem = dynamic(

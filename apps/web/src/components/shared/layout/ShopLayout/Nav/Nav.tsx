@@ -10,9 +10,9 @@ import {
 } from "phosphor-react";
 import React, { useCallback } from "react";
 
-import { Button } from "../../shared/core/Button";
-import { Flex } from "../../shared/core/Flex";
-import { IconButton } from "../../shared/core/IconButton";
+import { Button } from "../../../../shared/core/Button";
+import { Flex } from "../../../../shared/core/Flex";
+import { IconButton } from "../../../../shared/core/IconButton";
 
 const NAVIGATION = [
 	{ name: "Home", href: "/" },

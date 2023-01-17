@@ -4,9 +4,9 @@ import Link from "next/link";
 import { User as UserIcon } from "phosphor-react";
 import React, { Fragment, useCallback } from "react";
 
-import { Button } from "../../shared/core/Button";
-import { IconButton } from "../../shared/core/IconButton";
-import { classNames } from "../../shared/utils/classnames";
+import { Button } from "../../../../shared/core/Button";
+import { IconButton } from "../../../../shared/core/IconButton";
+import { classNames } from "../../../../shared/utils/classnames";
 
 export const AccountMenu: React.FC = () => {
 	const handleSignOut = useCallback(

@@ -8,7 +8,7 @@ import React, {
 	useState,
 } from "react";
 
-import { Flex } from "../../../../shared/core/Flex";
+import { Flex } from "../../../../../../shared/core/Flex";
 import { useCategoryMenuOpen } from "./useCategoryMenuOpen";
 
 export interface SubCategory {

@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useCallback, useMemo, useState } from "react";
 
 import { useFilter } from "../../features/filter";
+import { NextPageWithLayout } from "../../pages/_app";
 import { trpc } from "../../utils/trpc";
 import { Container } from "../shared/core/Container";
 import { EmptyState } from "../shared/core/EmptyState";
@@ -12,7 +13,9 @@ import { ProductsList } from "../shared/layout/Products/List";
 import { ListFooter } from "../shared/layout/Products/ListFooter";
 import { PER_PAGE } from "../shared/layout/Products/ListFooter/PerPage";
 
-export function Category({ previousUrl }: { previousUrl?: string }) {
+export const Category: NextPageWithLayout<{ previousUrl?: string }> = ({
+	previousUrl,
+}) => {
 	const router = useRouter();
 	const category = router.query["slug"] as string;
 	const query = router.query["q"] as string;
@@ -104,4 +107,4 @@ export function Category({ previousUrl }: { previousUrl?: string }) {
 			</Flex>
 		</Container>
 	);
-}
+};

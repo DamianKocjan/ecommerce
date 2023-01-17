@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 
 import { useBag } from "../../features/bag";
+import { NextPageWithLayout } from "../../pages/_app";
 import { trpc } from "../../utils/trpc";
 import { Container } from "../shared/core/Container";
 import { Flex } from "../shared/core/Flex";
@@ -8,7 +9,7 @@ import { Spinner } from "../shared/core/Spinner";
 import { BagItem } from "./BagItem";
 import { OrderSummary } from "./OrderSummary";
 
-export function Cart() {
+export const Cart: NextPageWithLayout = () => {
 	const products = useBag((state) => state.products);
 
 	const { data, isError, isLoading } = trpc.product.bag.useQuery(
@@ -66,4 +67,4 @@ export function Cart() {
 			</form>
 		</Container>
 	);
-}
+};

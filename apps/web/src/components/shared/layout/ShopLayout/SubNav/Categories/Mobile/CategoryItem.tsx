@@ -2,9 +2,9 @@ import { Dialog, Transition } from "@headlessui/react";
 import { ArrowLeft as ArrowLeftIcon, X as XIcon } from "phosphor-react";
 import React, { Fragment, useCallback, useState } from "react";
 
-import { Flex } from "../../../../shared/core/Flex";
-import { Grid } from "../../../../shared/core/Grid";
-import { IconButton } from "../../../../shared/core/IconButton";
+import { Flex } from "../../../../../../shared/core/Flex";
+import { Grid } from "../../../../../../shared/core/Grid";
+import { IconButton } from "../../../../../../shared/core/IconButton";
 
 export interface CategoryItemProps {
 	category: {

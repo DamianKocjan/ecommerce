@@ -3,11 +3,11 @@ import Link from "next/link";
 import { Bag, Spinner } from "phosphor-react";
 import React, { Fragment, useMemo } from "react";
 
-import { useBag } from "../../../features/bag";
-import { trpc } from "../../../utils/trpc";
-import { Button } from "../../shared/core/Button";
-import { Flex } from "../../shared/core/Flex";
-import { IconButton } from "../../shared/core/IconButton";
+import { useBag } from "../../../../../features/bag";
+import { trpc } from "../../../../../utils/trpc";
+import { Button } from "../../../../shared/core/Button";
+import { Flex } from "../../../../shared/core/Flex";
+import { IconButton } from "../../../../shared/core/IconButton";
 
 export const BagButton: React.FC = () => {
 	const products = useBag((state) => state.products);

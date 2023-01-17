@@ -6,10 +6,10 @@ import {
 } from "phosphor-react";
 import React, { Fragment, useCallback, useState } from "react";
 
-import { Button } from "../../../../shared/core/Button";
-import { Flex } from "../../../../shared/core/Flex";
-import { Grid } from "../../../../shared/core/Grid";
-import { IconButton } from "../../../../shared/core/IconButton";
+import { Button } from "../../../../../../shared/core/Button";
+import { Flex } from "../../../../../../shared/core/Flex";
+import { Grid } from "../../../../../../shared/core/Grid";
+import { IconButton } from "../../../../../../shared/core/IconButton";
 import { CategoryItem } from "./CategoryItem";
 
 export interface CategoryItemProps {
