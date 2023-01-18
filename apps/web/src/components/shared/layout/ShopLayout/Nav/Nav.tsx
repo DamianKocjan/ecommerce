@@ -10,9 +10,9 @@ import {
 } from "phosphor-react";
 import React, { useCallback } from "react";
 
-import { Button } from "../../../../shared/core/Button";
 import { Flex } from "../../../../shared/core/Flex";
 import { IconButton } from "../../../../shared/core/IconButton";
+import { ButtonLink } from "../../../core/ButtonLink";
 
 const NAVIGATION = [
 	{ name: "Home", href: "/" },
@@ -71,13 +71,14 @@ export const Nav: React.FC = () => {
 								<div className="hidden sm:ml-6 sm:block">
 									<Flex className="space-x-4">
 										{NAVIGATION.map((item) => (
-											<Link key={item.name} href={item.href} legacyBehavior>
-												<a>
-													<Button intent="secondary" textColor="light">
-														{item.name}
-													</Button>
-												</a>
-											</Link>
+											<ButtonLink
+												key={item.name}
+												href={item.href}
+												intent="secondary"
+												textColor="light"
+											>
+												{item.name}
+											</ButtonLink>
 										))}
 									</Flex>
 								</div>
@@ -161,18 +162,22 @@ export const Nav: React.FC = () => {
 					<Disclosure.Panel className="sm:hidden">
 						<Flex
 							direction="row"
-							items="stretch"
+							items="baseline"
 							className="space-y-1 px-2 pt-2 pb-3"
 						>
 							{NAVIGATION.map((item) => (
-								<Disclosure.Button key={item.name} as={Link} href={item.href}>
-									<Button
+								<Disclosure.Button
+									key={item.name}
+									className="mx-1 my-2 flex-1 first-of-type:mt-1"
+								>
+									<ButtonLink
+										href={item.href}
 										intent="secondary"
 										textColor="light"
-										className="mx-1 my-2 flex-1 first-of-type:mt-1"
+										fullWidth
 									>
 										{item.name}
-									</Button>
+									</ButtonLink>
 								</Disclosure.Button>
 							))}
 						</Flex>

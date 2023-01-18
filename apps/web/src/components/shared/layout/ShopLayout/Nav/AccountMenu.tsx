@@ -1,12 +1,12 @@
 import { Menu, Transition } from "@headlessui/react";
 import { signOut } from "next-auth/react";
-import Link from "next/link";
 import { User as UserIcon } from "phosphor-react";
 import React, { Fragment, useCallback } from "react";
 
 import { Button } from "../../../../shared/core/Button";
 import { IconButton } from "../../../../shared/core/IconButton";
 import { classNames } from "../../../../shared/utils/classnames";
+import { ButtonLink } from "../../../core/ButtonLink";
 
 export const AccountMenu: React.FC = () => {
 	const handleSignOut = useCallback(
@@ -42,38 +42,28 @@ export const AccountMenu: React.FC = () => {
 					<div>
 						<Menu.Item>
 							{({ active }) => (
-								<Link href="" legacyBehavior>
-									<a>
-										<Button
-											intent="secondary"
-											textColor="light"
-											className={classNames(
-												"z-10 mb-1 w-full",
-												active ? "border-2" : "",
-											)}
-										>
-											Your Profile
-										</Button>
-									</a>
-								</Link>
+								<ButtonLink
+									href=""
+									intent="secondary"
+									textColor="light"
+									fullWidth
+									className={classNames("z-10 mb-1", active ? "border-2" : "")}
+								>
+									Your Profile
+								</ButtonLink>
 							)}
 						</Menu.Item>
 						<Menu.Item>
 							{({ active }) => (
-								<Link href="" legacyBehavior>
-									<a>
-										<Button
-											intent="secondary"
-											textColor="light"
-											className={classNames(
-												"my-1 w-full",
-												active ? "border-2" : "",
-											)}
-										>
-											Settings
-										</Button>
-									</a>
-								</Link>
+								<ButtonLink
+									href=""
+									intent="secondary"
+									textColor="light"
+									fullWidth
+									className={classNames("z-10 mb-1", active ? "border-2" : "")}
+								>
+									Settings
+								</ButtonLink>
 							)}
 						</Menu.Item>
 						<Menu.Item>
@@ -81,7 +71,7 @@ export const AccountMenu: React.FC = () => {
 								<Button
 									onClick={handleSignOut}
 									className={classNames(
-										"mt-1 w-full",
+										"w-full",
 										active ? "border-2 border-white" : "",
 									)}
 								>

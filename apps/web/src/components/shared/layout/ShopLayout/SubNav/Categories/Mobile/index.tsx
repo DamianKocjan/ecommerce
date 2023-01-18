@@ -1,15 +1,14 @@
 import { Dialog, Transition } from "@headlessui/react";
-import Link from "next/link";
 import {
 	DotsThreeVertical as DotsThreeVerticalIcon,
 	X as XIcon,
 } from "phosphor-react";
 import React, { Fragment, useCallback, useState } from "react";
 
-import { Button } from "../../../../../../shared/core/Button";
 import { Flex } from "../../../../../../shared/core/Flex";
 import { Grid } from "../../../../../../shared/core/Grid";
 import { IconButton } from "../../../../../../shared/core/IconButton";
+import { ButtonLink } from "../../../../../core/ButtonLink";
 import { CategoryItem } from "./CategoryItem";
 
 export interface CategoryItemProps {
@@ -94,21 +93,27 @@ export const MobileCategories: React.FC<MobileCategoriesProps> = ({
 											</div>
 											<div className="relative mt-6 flex-1 px-4 sm:px-6">
 												<Flex justify="around">
-													<Link href="/c/women">
-														<Button intent="secondary" className="w-full">
-															Women
-														</Button>
-													</Link>
-													<Link href="/c/men">
-														<Button intent="secondary" className="w-full">
-															Men
-														</Button>
-													</Link>
-													<Link href="/c/kids">
-														<Button intent="secondary" className="w-full">
-															Kids
-														</Button>
-													</Link>
+													<ButtonLink
+														href="/c/women"
+														intent="secondary"
+														fullWidth
+													>
+														Women
+													</ButtonLink>
+													<ButtonLink
+														href="/c/men"
+														intent="secondary"
+														fullWidth
+													>
+														Men
+													</ButtonLink>
+													<ButtonLink
+														href="/c/kids"
+														intent="secondary"
+														fullWidth
+													>
+														Kids
+													</ButtonLink>
 												</Flex>
 
 												<Grid cols="2" className="my-4 gap-x-3 gap-y-5">

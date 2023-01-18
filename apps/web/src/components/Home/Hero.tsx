@@ -1,7 +1,6 @@
-import Link from "next/link";
 import React from "react";
 
-import { Button } from "../shared/core/Button";
+import { ButtonLink } from "../shared/core/ButtonLink";
 import { Flex } from "../shared/core/Flex";
 
 export const Hero: React.FC = () => {
@@ -29,12 +28,9 @@ export const Hero: React.FC = () => {
 					quod, voluptate, quia, voluptates quas voluptatibus quibusdam
 					accusantium quae voluptatum quidem quos.
 				</p>
-				{/* TODO: create ui button like link component */}
-				<Link href="/c/new" legacyBehavior>
-					<a className="mt-4 self-end">
-						<Button intent="secondary">Checkout new collection</Button>
-					</a>
-				</Link>
+				<ButtonLink href="/c/new" intent="secondary" className="mt-4 self-end">
+					Checkout new collection
+				</ButtonLink>
 			</Flex>
 		</Flex>
 	);

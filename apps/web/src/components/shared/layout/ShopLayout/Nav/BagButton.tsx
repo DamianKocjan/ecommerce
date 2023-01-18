@@ -5,9 +5,9 @@ import React, { Fragment, useMemo } from "react";
 
 import { useBag } from "../../../../../features/bag";
 import { trpc } from "../../../../../utils/trpc";
-import { Button } from "../../../../shared/core/Button";
 import { Flex } from "../../../../shared/core/Flex";
 import { IconButton } from "../../../../shared/core/IconButton";
+import { ButtonLink } from "../../../core/ButtonLink";
 
 export const BagButton: React.FC = () => {
 	const products = useBag((state) => state.products);
@@ -21,6 +21,8 @@ export const BagButton: React.FC = () => {
 			refetchOnWindowFocus: false,
 		},
 	);
+
+	const isDisabled = isLoading || isError || !data || !data.length;
 
 	return (
 		<Popover>
@@ -119,21 +121,16 @@ export const BagButton: React.FC = () => {
 							</ul>
 						)}
 
-						<Link href="/checkout">
-							<Button
-								intent="primary"
-								className="w-full disabled:cursor-not-allowed"
-								disabled={isLoading || isError || !data || !data.length}
-								title={
-									isLoading || isError || !data || !data.length
-										? "Bag is empty"
-										: "Checkout"
-								}
-								type="button"
-							>
-								Checkout
-							</Button>
-						</Link>
+						<ButtonLink
+							href="/checkout"
+							intent="primary"
+							fullWidth
+							className={isDisabled ? "cursor-not-allowed" : ""}
+							onClick={isDisabled ? (e) => e.preventDefault() : undefined}
+							title={isDisabled ? "Bag is empty" : "Checkout"}
+						>
+							Checkout
+						</ButtonLink>
 
 						<p className="mt-6 text-center">
 							<Link
