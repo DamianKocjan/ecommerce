@@ -23,7 +23,10 @@ export const wishlistRouter = router({
 					userId: ctx.session.user?.id,
 				},
 			});
-			return wishlist?.id;
+			if (wishlist) {
+				return wishlist.id;
+			}
+			return null;
 		}),
 	add: protectedProcedure
 		.input(
