@@ -1,4 +1,5 @@
 import { getServerSession } from "@ecommerce/auth";
+import { Role } from "@ecommerce/db";
 import { GetServerSideProps } from "next";
 import { Dashboard } from "../../components/Dashboard";
 
@@ -17,6 +18,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 		};
 	}
 
+	if (session.user.role !== Role.ADMIN) {
+		return {
+			redirect: {
+				destination: "/",
+				permanent: false,
+			},
+		};
+	}
 	return {
 		props: {},
 	};
