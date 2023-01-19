@@ -3,8 +3,8 @@ import { useState } from "react";
 import { NextPageWithLayout } from "../../../pages/_app";
 
 import { RouterOutputs } from "../../../utils/trpc";
-import { Container } from "../../shared/core/Container";
 import { Grid } from "../../shared/core/Grid";
+import { Container } from "../../shared/layout/ShopLayout/Container";
 import { ProductDescription } from "./Description";
 import { ImageGallery } from "./ImageGallery";
 import { ProductInfo } from "./Info";

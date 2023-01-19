@@ -4,13 +4,13 @@ import { useCallback, useMemo, useState } from "react";
 import { useFilter } from "../../features/filter";
 import { NextPageWithLayout } from "../../pages/_app";
 import { trpc } from "../../utils/trpc";
-import { Container } from "../shared/core/Container";
 import { EmptyState } from "../shared/core/EmptyState";
 import { PrettyContainer } from "../shared/core/PrettyContainer";
 import { Filters } from "../shared/layout/Products/Filters";
 import { ProductsList } from "../shared/layout/Products/List";
 import { ListFooter } from "../shared/layout/Products/ListFooter";
 import { PER_PAGE } from "../shared/layout/Products/ListFooter/PerPage";
+import { Container } from "../shared/layout/ShopLayout/Container";
 
 export const Wishlist: NextPageWithLayout = () => {
 	const router = useRouter();

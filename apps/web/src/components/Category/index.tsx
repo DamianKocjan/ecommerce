@@ -4,7 +4,6 @@ import { useCallback, useMemo, useState } from "react";
 import { useFilter } from "../../features/filter";
 import { NextPageWithLayout } from "../../pages/_app";
 import { trpc } from "../../utils/trpc";
-import { Container } from "../shared/core/Container";
 import { EmptyState } from "../shared/core/EmptyState";
 import { Flex } from "../shared/core/Flex";
 import { Categories } from "../shared/layout/Categories";
@@ -12,6 +11,7 @@ import { Filters } from "../shared/layout/Products/Filters";
 import { ProductsList } from "../shared/layout/Products/List";
 import { ListFooter } from "../shared/layout/Products/ListFooter";
 import { PER_PAGE } from "../shared/layout/Products/ListFooter/PerPage";
+import { Container } from "../shared/layout/ShopLayout/Container";
 
 export const Category: NextPageWithLayout<{ previousUrl?: string }> = ({
 	previousUrl,

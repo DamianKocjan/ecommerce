@@ -16,3 +16,5 @@ export const ShopLayout: React.FC<ShopLayoutProps> = ({ children }) => {
 		</>
 	);
 };
+
+export * from "./Container";

@@ -3,9 +3,9 @@ import { useMemo } from "react";
 import { useBag } from "../../features/bag";
 import { NextPageWithLayout } from "../../pages/_app";
 import { trpc } from "../../utils/trpc";
-import { Container } from "../shared/core/Container";
 import { Flex } from "../shared/core/Flex";
 import { Spinner } from "../shared/core/Spinner";
+import { Container } from "../shared/layout/ShopLayout/Container";
 import { BagItem } from "./BagItem";
 import { OrderSummary } from "./OrderSummary";
 
