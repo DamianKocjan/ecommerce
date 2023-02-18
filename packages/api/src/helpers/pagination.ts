@@ -48,11 +48,27 @@ export function productPaginationWithFilters<T extends z.infer<typeof obj>>(
 	input: T,
 ): Prisma.ProductWhereInput {
 	return {
-		title: input.q
-			? {
-					contains: input.q,
-					mode: "insensitive",
-			  }
+		OR: input.q
+			? [
+					{
+						title: {
+							contains: input.q,
+							mode: "insensitive",
+						},
+					},
+					{
+						shortDescription: {
+							contains: input.q,
+							mode: "insensitive",
+						},
+					},
+					{
+						description: {
+							contains: input.q,
+							mode: "insensitive",
+						},
+					},
+			  ]
 			: undefined,
 		size: input.sizes
 			? {
