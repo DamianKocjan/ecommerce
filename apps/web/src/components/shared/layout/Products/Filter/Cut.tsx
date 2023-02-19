@@ -1,29 +1,35 @@
+import { Combobox } from "@headlessui/react";
 import { useRouter } from "next/router";
-import React, { useCallback, useEffect } from "react";
+import { List } from "phosphor-react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 import { useFilter } from "../../../../../features/filter";
 import { trpc } from "../../../../../utils/trpc";
-import {
-	FilterListbox,
-	FilterListBoxButton,
-	FilterListboxOption,
-	FilterListboxOptions,
-	FilterListboxOptionsLoader,
-} from "./Listbox";
+import { FilterComboboxOption } from "./Combobox/Option";
 
 export const CutFilter: React.FC = () => {
 	const cuts = trpc.cut.all.useQuery(undefined, {
 		refetchOnWindowFocus: false,
 	});
+	const [query, setQuery] = useState("");
 	const { filters, setFilter } = useFilter();
 	const router = useRouter();
 
-	// TODO: type this
-	const handleChange = useCallback(
-		(val: unknown) => {
-			setFilter("cuts", val);
+	const filteredCuts = useMemo(
+		() =>
+			query === ""
+				? cuts.data
+				: cuts.data?.filter((cut) =>
+						cut.value.toLowerCase().includes(query.toLowerCase()),
+				  ),
+		[cuts.data, query],
+	);
 
-			if ((val as string[]).length === 0) {
+	const updateCutFilter = useCallback(
+		(cuts: number[]) => {
+			setFilter("cuts", cuts);
+
+			if (cuts.length === 0) {
 				const query = { ...router.query };
 				delete query.cuts;
 
@@ -41,14 +47,14 @@ export const CutFilter: React.FC = () => {
 				{
 					query: {
 						...router.query,
-						cuts: `[${(val as string[]).join(".")}]`,
+						cuts: `[${cuts.join(".")}]`,
 					},
 				},
 				undefined,
 				{ shallow: true },
 			);
 		},
-		[setFilter, router],
+		[router, setFilter],
 	);
 
 	useEffect(() => {
@@ -59,28 +65,51 @@ export const CutFilter: React.FC = () => {
 				cuts
 					.slice(1, -1)
 					.split(".")
-					.map((c) => Number(c))
-					.filter((c) => c !== 0),
+					.map((b) => Number(b))
+					.filter((b) => b !== 0),
 			);
 		}
 	}, [router.query, setFilter]);
 
+	const disabled = cuts.isLoading || !cuts.data || !cuts.data.length;
+
 	return (
-		<FilterListbox onChange={handleChange} value={filters?.cuts || []} multiple>
-			<FilterListBoxButton label="Cut" />
-			<FilterListboxOptions>
-				{cuts.isLoading ? (
-					<FilterListboxOptionsLoader />
-				) : (
-					cuts.data?.map((cut) => (
-						<FilterListboxOption
-							key={cut.key}
-							label={cut.value}
-							value={cut.key}
-						/>
-					))
+		<Combobox
+			as="div"
+			value={filters.cuts}
+			onChange={updateCutFilter}
+			disabled={disabled}
+			multiple
+		>
+			<Combobox.Label className="block text-sm font-medium text-gray-700">
+				Cuts
+			</Combobox.Label>
+			<div className="relative mt-1">
+				<Combobox.Input
+					className="w-full border border-black bg-white py-2 pl-3 pr-10 shadow-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500 disabled:cursor-not-allowed sm:text-sm"
+					onChange={(event) => setQuery(event.target.value)}
+					displayValue={(selected: number[]) =>
+						selected
+							?.map((cut) => cuts.data?.find((c) => c.key === cut)?.value)
+							.join(", ") ?? ""
+					}
+				/>
+				<Combobox.Button className="absolute inset-y-0 right-0 flex items-center px-2 focus:outline-none">
+					<List className="h-5 w-5 text-gray-400" aria-hidden="true" />
+				</Combobox.Button>
+
+				{(filteredCuts?.length ?? 0) > 0 && (
+					<Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+						{filteredCuts?.map((cut) => (
+							<FilterComboboxOption
+								key={cut.key}
+								value={cut.key}
+								displayName={cut.value}
+							/>
+						))}
+					</Combobox.Options>
 				)}
-			</FilterListboxOptions>
-		</FilterListbox>
+			</div>
+		</Combobox>
 	);
 };

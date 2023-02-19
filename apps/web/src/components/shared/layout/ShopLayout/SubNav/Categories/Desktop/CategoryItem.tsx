@@ -102,7 +102,7 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({
 				leaveTo={!isCategoryMenuOpen ? "-translate-y-4 opacity-0 hidden" : ""}
 				className="absolute left-0 right-0 z-30 mt-4 max-h-full w-[80rem]"
 				style={{
-					left: -leftOffset.current || 0,
+					left: -leftOffset.current,
 					// width: `${width.current}px`,
 				}}
 			>

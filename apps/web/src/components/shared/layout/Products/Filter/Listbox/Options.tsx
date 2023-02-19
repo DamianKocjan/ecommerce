@@ -14,7 +14,7 @@ export const FilterListboxOptions: React.FC<FilterListboxOptionsProps> = ({
 		<Listbox.Options
 			as={Flex}
 			direction="col"
-			className="absolute z-20 mt-1 max-h-60 overflow-auto bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+			className="absolute top-full -left-1/2 z-20 mt-1 max-h-60 overflow-auto bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
 		>
 			{children}
 		</Listbox.Options>

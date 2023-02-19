@@ -3,13 +3,7 @@ import React, { useCallback, useEffect } from "react";
 
 import { useFilter } from "../../../../../features/filter";
 import { trpc } from "../../../../../utils/trpc";
-import {
-	FilterListbox,
-	FilterListBoxButton,
-	FilterListboxOption,
-	FilterListboxOptions,
-	FilterListboxOptionsLoader,
-} from "./Listbox";
+import { FilterListbox } from "./Listbox";
 
 export const SizeFilter: React.FC = () => {
 	const router = useRouter();
@@ -75,20 +69,20 @@ export const SizeFilter: React.FC = () => {
 			value={filters?.sizes || []}
 			multiple
 		>
-			<FilterListBoxButton label="Size" />
-			<FilterListboxOptions>
+			<FilterListbox.Button label="Sizes" />
+			<FilterListbox.Options>
 				{sizes.isLoading ? (
-					<FilterListboxOptionsLoader />
+					<FilterListbox.OptionsLoader />
 				) : (
 					sizes.data?.map((size) => (
-						<FilterListboxOption
+						<FilterListbox.Option
 							key={size.key}
 							label={size.value}
 							value={size.key}
 						/>
 					))
 				)}
-			</FilterListboxOptions>
+			</FilterListbox.Options>
 		</FilterListbox>
 	);
 };

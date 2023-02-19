@@ -2,12 +2,7 @@ import { useRouter } from "next/router";
 import React, { useCallback, useEffect } from "react";
 
 import { useFilter, type SortBy } from "../../../../../features/filter";
-import {
-	FilterListbox,
-	FilterListBoxButton,
-	FilterListboxOption,
-	FilterListboxOptions,
-} from "./Listbox";
+import { FilterListbox } from "./Listbox";
 
 const OPTIONS: {
 	key: SortBy;
@@ -70,16 +65,16 @@ export const SortByFilter: React.FC = () => {
 			onChange={handleChange}
 			value={filters?.sortBy || "popularity"}
 		>
-			<FilterListBoxButton label="Order by" />
-			<FilterListboxOptions>
+			<FilterListbox.Button label="Order by" />
+			<FilterListbox.Options>
 				{OPTIONS.map((option) => (
-					<FilterListboxOption
+					<FilterListbox.Option
 						key={option.key}
 						label={option.value}
 						value={option.key}
 					/>
 				))}
-			</FilterListboxOptions>
+			</FilterListbox.Options>
 		</FilterListbox>
 	);
 };

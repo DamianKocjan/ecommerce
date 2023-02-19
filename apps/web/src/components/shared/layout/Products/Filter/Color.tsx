@@ -3,13 +3,7 @@ import React, { useCallback, useEffect } from "react";
 
 import { useFilter } from "../../../../../features/filter";
 import { trpc } from "../../../../../utils/trpc";
-import {
-	FilterListbox,
-	FilterListBoxButton,
-	FilterListboxOption,
-	FilterListboxOptions,
-	FilterListboxOptionsLoader,
-} from "./Listbox";
+import { FilterListbox } from "./Listbox";
 
 export const ColorFilter: React.FC = () => {
 	const colors = trpc.color.all.useQuery(undefined, {
@@ -71,20 +65,20 @@ export const ColorFilter: React.FC = () => {
 			value={filters?.colors || []}
 			multiple
 		>
-			<FilterListBoxButton label="Color" />
-			<FilterListboxOptions>
+			<FilterListbox.Button label="Color" />
+			<FilterListbox.Options>
 				{colors.isLoading ? (
-					<FilterListboxOptionsLoader />
+					<FilterListbox.OptionsLoader />
 				) : (
 					colors.data?.map((color) => (
-						<FilterListboxOption
+						<FilterListbox.Option
 							key={color.key}
 							label={color.value}
 							value={color.key}
 						/>
 					))
 				)}
-			</FilterListboxOptions>
+			</FilterListbox.Options>
 		</FilterListbox>
 	);
 };
