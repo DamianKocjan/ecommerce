@@ -9,6 +9,8 @@ import { Container } from "../shared/layout/ShopLayout/Container";
 import { BagItem } from "./BagItem";
 import { OrderSummary } from "./OrderSummary";
 
+const cacheTime = 1000 * 60 * 5; // 5 minutes
+
 export const Cart: NextPageWithLayout = () => {
 	const products = useBag((state) => state.products);
 
@@ -16,6 +18,7 @@ export const Cart: NextPageWithLayout = () => {
 		{ products },
 		{
 			refetchOnWindowFocus: false,
+			cacheTime,
 		},
 	);
 

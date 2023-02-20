@@ -6,10 +6,12 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useFilter } from "../../../../../features/filter";
 import { trpc } from "../../../../../utils/trpc";
 import { FilterComboboxOption } from "./Combobox/Option";
+import { cacheTime } from "./constants";
 
 export const CollectionFilter: React.FC = () => {
 	const collections = trpc.collection.all.useQuery(undefined, {
 		refetchOnWindowFocus: false,
+		cacheTime,
 	});
 	const [query, setQuery] = useState("");
 	const { filters, setFilter } = useFilter();

@@ -3,6 +3,7 @@ import React, { useCallback, useEffect } from "react";
 
 import { useFilter } from "../../../../../features/filter";
 import { trpc } from "../../../../../utils/trpc";
+import { cacheTime } from "./constants";
 import { FilterListbox } from "./Listbox";
 
 export const SizeFilter: React.FC = () => {
@@ -12,7 +13,7 @@ export const SizeFilter: React.FC = () => {
 		{
 			category: slug,
 		},
-		{ refetchOnWindowFocus: false },
+		{ refetchOnWindowFocus: false, cacheTime },
 	);
 	const { filters, setFilter } = useFilter();
 

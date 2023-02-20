@@ -3,11 +3,13 @@ import React, { useCallback, useEffect } from "react";
 
 import { useFilter } from "../../../../../features/filter";
 import { trpc } from "../../../../../utils/trpc";
+import { cacheTime } from "./constants";
 import { FilterListbox } from "./Listbox";
 
 export const ColorFilter: React.FC = () => {
 	const colors = trpc.color.all.useQuery(undefined, {
 		refetchOnWindowFocus: false,
+		cacheTime,
 	});
 	const { filters, setFilter } = useFilter();
 	const router = useRouter();
