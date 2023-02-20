@@ -9,7 +9,7 @@ import { PrettyContainer } from "../shared/core/PrettyContainer";
 import { Filters } from "../shared/layout/Products/Filters";
 import { ProductsList } from "../shared/layout/Products/List";
 import { ListFooter } from "../shared/layout/Products/ListFooter";
-import { PER_PAGE } from "../shared/layout/Products/ListFooter/PerPage";
+import { usePerPage } from "../shared/layout/Products/ListFooter/usePerPage";
 import { Container } from "../shared/layout/ShopLayout/Container";
 
 export const Wishlist: NextPageWithLayout = () => {
@@ -17,11 +17,7 @@ export const Wishlist: NextPageWithLayout = () => {
 	const query = router.query["q"] as string;
 	const queryPage = router.query["page"] as string;
 
-	const [perPage, setPerPage] = useState(
-		typeof window !== "undefined"
-			? Number(window.localStorage.getItem("perPage")) || PER_PAGE[0]!
-			: PER_PAGE[0]!,
-	);
+	const [perPage, handlePerPageChange] = usePerPage();
 	const [page, setPage] = useState<number | undefined>(
 		queryPage ? parseInt(queryPage, 10) : undefined,
 	);
@@ -39,11 +35,6 @@ export const Wishlist: NextPageWithLayout = () => {
 		},
 		[router],
 	);
-
-	const handlePerPageChange = useCallback((value: number) => {
-		setPerPage(value);
-		window.localStorage.setItem("perPage", value.toString());
-	}, []);
 
 	const filters = useFilter((state) => state.filters);
 

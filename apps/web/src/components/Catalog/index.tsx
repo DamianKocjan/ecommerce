@@ -10,7 +10,7 @@ import { Categories } from "../shared/layout/Categories";
 import { Filters } from "../shared/layout/Products/Filters";
 import { ProductsList } from "../shared/layout/Products/List";
 import { ListFooter } from "../shared/layout/Products/ListFooter";
-import { PER_PAGE } from "../shared/layout/Products/ListFooter/PerPage";
+import { usePerPage } from "../shared/layout/Products/ListFooter/usePerPage";
 import { Container } from "../shared/layout/ShopLayout/Container";
 
 export const Catalog: NextPageWithLayout<{ previousUrl?: string }> = ({
@@ -21,14 +21,10 @@ export const Catalog: NextPageWithLayout<{ previousUrl?: string }> = ({
 	const query = router.query["q"] as string;
 	const queryPage = router.query["page"] as string;
 
-	const [perPage, setPerPage] = useState<number>(
-		typeof window !== "undefined"
-			? Number(window.localStorage.getItem("perPage")) || PER_PAGE[0]!
-			: PER_PAGE[0]!,
-	);
 	const [page, setPage] = useState<number | undefined>(
 		queryPage ? parseInt(queryPage, 10) : undefined,
 	);
+	const [perPage, handlePerPageChange] = usePerPage();
 
 	const handleSetPage = useCallback(
 		(page: number | undefined) => {
@@ -43,11 +39,6 @@ export const Catalog: NextPageWithLayout<{ previousUrl?: string }> = ({
 		},
 		[router],
 	);
-
-	const handlePerPageChange = useCallback((value: number) => {
-		setPerPage(value);
-		window.localStorage.setItem("perPage", value.toString());
-	}, []);
 
 	const filters = useFilter((state) => state.filters);
 
