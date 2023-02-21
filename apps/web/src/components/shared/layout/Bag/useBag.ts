@@ -7,7 +7,8 @@ export function useBag(productSlug: string) {
 	const products = useBagStore((state) => state.products);
 
 	const isInBag = useMemo(
-		() => products.includes(productSlug),
+		() =>
+			typeof window !== "undefined" ? products.includes(productSlug) : false,
 		[products, productSlug],
 	);
 
