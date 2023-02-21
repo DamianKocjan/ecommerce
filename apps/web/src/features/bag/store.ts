@@ -13,17 +13,15 @@ export const useBag = create(
 		(set) => ({
 			products: [],
 			addToBag: (productSlug) =>
-				set((state) => ({
-					...state,
-					products: [...new Set([...state.products, productSlug])],
+				set((prev) => ({
+					products: [...new Set([...prev.products, productSlug])],
 				})),
-			clearBag: () => set((state) => ({ ...state, products: [] })),
+			clearBag: () => set(() => ({ products: [] })),
 			removeFromBag: (productSlug) =>
-				set((state) => ({
-					...state,
-					products: state.products.filter((prod) => prod !== productSlug),
+				set((prev) => ({
+					products: prev.products.filter((prod) => prod !== productSlug),
 				})),
 		}),
-		{ name: "cart" }
-	)
+		{ name: "cart" },
+	),
 );

@@ -7,8 +7,7 @@ interface CategoryMenuOpenState {
 
 const store = create<CategoryMenuOpenState>((set) => ({
 	categoryMenuOpen: null,
-	setCategoryMenuOpen: (menu) =>
-		set((state) => ({ ...state, categoryMenuOpen: menu })),
+	setCategoryMenuOpen: (menu) => set(() => ({ categoryMenuOpen: menu })),
 }));
 
 export function useCategoryMenuOpen() {

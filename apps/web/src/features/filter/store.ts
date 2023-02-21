@@ -34,16 +34,16 @@ export const useFilter = create<FilterState>((set) => ({
 		sortBy: "popularity",
 	},
 	setFilter: (key, value) =>
-		set((state) => ({
-			...state,
+		set((prev) => ({
 			filters: {
-				...state.filters,
+				...prev.filters,
 				[key]: value,
 			},
 		})),
 	resetFilters: () =>
-		set((state) => ({
-			...state,
-			filters: {},
+		set(() => ({
+			filters: {
+				sortBy: "popularity",
+			},
 		})),
 }));
