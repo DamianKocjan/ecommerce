@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useCallback, useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import { useFilter } from "../../features/filter";
 import { NextPageWithLayout } from "../../pages/_app";
@@ -9,32 +9,16 @@ import { PrettyContainer } from "../shared/core/PrettyContainer";
 import { Filters } from "../shared/layout/Products/Filters";
 import { ProductsList } from "../shared/layout/Products/List";
 import { ListFooter } from "../shared/layout/Products/ListFooter";
+import { usePage } from "../shared/layout/Products/ListFooter/usePage";
 import { usePerPage } from "../shared/layout/Products/ListFooter/usePerPage";
 import { Container } from "../shared/layout/ShopLayout/Container";
 
 export const Wishlist: NextPageWithLayout = () => {
 	const router = useRouter();
 	const query = router.query["q"] as string;
-	const queryPage = router.query["page"] as string;
 
 	const [perPage, handlePerPageChange] = usePerPage();
-	const [page, setPage] = useState<number | undefined>(
-		queryPage ? parseInt(queryPage, 10) : undefined,
-	);
-
-	const handleSetPage = useCallback(
-		(page: number | undefined) => {
-			setPage(page);
-			void router.push(
-				{
-					query: { ...router.query, page },
-				},
-				undefined,
-				{ shallow: true },
-			);
-		},
-		[router],
-	);
+	const [page, setPage] = usePage();
 
 	const filters = useFilter((state) => state.filters);
 
@@ -85,8 +69,8 @@ export const Wishlist: NextPageWithLayout = () => {
 						<ListFooter
 							handlePerPageChange={handlePerPageChange}
 							perPage={perPage}
-							setPage={handleSetPage}
-							currentPage={wishlisted.data?.meta.currentPage}
+							setPage={setPage}
+							currentPage={page}
 							nextPage={wishlisted.data?.meta.next}
 							previousPage={wishlisted.data?.meta.prev}
 						/>

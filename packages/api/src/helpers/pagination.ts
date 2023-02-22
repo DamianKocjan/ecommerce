@@ -142,3 +142,13 @@ export function productPaginationWithFilters<T extends z.infer<typeof obj>>(
 				: undefined,
 	};
 }
+
+export function getPreviousPage({
+	page,
+	lastPage,
+}: {
+	page: number;
+	lastPage: number;
+}) {
+	return page > 0 ? page - 1 : lastPage;
+}

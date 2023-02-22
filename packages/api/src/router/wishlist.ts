@@ -4,6 +4,7 @@ import { z } from "zod";
 
 import {
 	getOrderBy,
+	getPreviousPage,
 	productPaginationWithFilters,
 	productPaginationWithFiltersSchema,
 } from "../helpers/pagination";
@@ -143,7 +144,7 @@ export const wishlistRouter = router({
 					lastPage,
 					currentPage: page,
 					perPage,
-					prev: page > 1 ? page - 1 : undefined,
+					prev: getPreviousPage({ page, lastPage }),
 					next: page < lastPage ? page + 1 : undefined,
 				},
 			};
