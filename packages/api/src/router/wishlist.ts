@@ -36,6 +36,16 @@ export const wishlistRouter = router({
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
+			const wishlistedProduct = await ctx.prisma.wishlist.findFirst({
+				where: {
+					productId: input.productId,
+					userId: ctx.session.user?.id,
+				},
+			});
+			if (wishlistedProduct) {
+				return wishlistedProduct.id;
+			}
+
 			const wishlist = await ctx.prisma.wishlist.create({
 				data: {
 					user: {

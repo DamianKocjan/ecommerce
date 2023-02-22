@@ -12,6 +12,7 @@ import { PatternFilter } from "./Filter/Pattern";
 import { SizeFilter } from "./Filter/Size";
 import { SortByFilter } from "./Filter/SortBy";
 
+// TODO: RWD
 export const Filters: React.FC = () => {
 	const { setOpen } = useFilterPanel();
 

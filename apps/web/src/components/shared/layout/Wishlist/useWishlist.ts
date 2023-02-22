@@ -12,8 +12,8 @@ export function useWishlist(productId: number) {
 	const isInWishlistQuery = trpc.wishlist.isIn.useQuery(
 		{ productId },
 		{
+			refetchOnMount: false,
 			refetchOnWindowFocus: false,
-			enabled: false,
 			initialData: null,
 			cacheTime,
 		},

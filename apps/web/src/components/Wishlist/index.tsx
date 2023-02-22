@@ -34,6 +34,7 @@ export const Wishlist: NextPageWithLayout = () => {
 		return parsed;
 	}, [filters]);
 
+	const context = trpc.useContext();
 	const wishlisted = trpc.wishlist.all.useQuery(
 		{
 			q: query,
@@ -43,6 +44,16 @@ export const Wishlist: NextPageWithLayout = () => {
 		},
 		{
 			refetchOnWindowFocus: false,
+			onSuccess({ data }) {
+				data.map(({ id, product: { id: productId } }) => {
+					context.wishlist.isIn.setData(
+						{
+							productId,
+						},
+						id,
+					);
+				});
+			},
 		},
 	);
 
