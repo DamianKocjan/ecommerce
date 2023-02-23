@@ -2,6 +2,7 @@ import { FunnelSimple } from "phosphor-react";
 import React from "react";
 
 import { Flex } from "../../core/Flex";
+import MediaQuery from "../../hooks/useMediaQuery";
 import { BrandFilter } from "./Filter/Brand";
 import { CollectionFilter } from "./Filter/Collection";
 import { ColorFilter } from "./Filter/Color";
@@ -12,7 +13,6 @@ import { PatternFilter } from "./Filter/Pattern";
 import { SizeFilter } from "./Filter/Size";
 import { SortByFilter } from "./Filter/SortBy";
 
-// TODO: RWD
 export const Filters: React.FC = () => {
 	const { setOpen } = useFilterPanel();
 
@@ -20,9 +20,15 @@ export const Filters: React.FC = () => {
 		<Flex direction="row" wrap="wrap" className="gap-2">
 			{/* <Filter /> */}
 			<div className="flex-1" />
-			<SortByFilter />
-			<ColorFilter />
-			<SizeFilter />
+
+			<MediaQuery min="sm">
+				<Flex direction="row" className="gap-2">
+					<SortByFilter />
+					<ColorFilter />
+					<SizeFilter />
+				</Flex>
+			</MediaQuery>
+
 			<button
 				className="focus-visible:ring-teal flex items-center justify-center gap-2 focus:outline-none focus-visible:border-teal-500 focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-600 sm:text-sm"
 				type="button"
@@ -33,6 +39,15 @@ export const Filters: React.FC = () => {
 			</button>
 
 			<FilterPanel>
+				<MediaQuery max="xs">
+					<Flex direction="row" justify="around">
+						{/* FIXME: selection box is cut off */}
+						<SortByFilter />
+						<ColorFilter />
+						<SizeFilter />
+					</Flex>
+				</MediaQuery>
+
 				<BrandFilter />
 				<CollectionFilter />
 				<CutFilter />
