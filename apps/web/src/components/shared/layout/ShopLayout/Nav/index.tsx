@@ -1,7 +1,6 @@
 import { Disclosure } from "@headlessui/react";
 import { signIn, useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
-import Link from "next/link";
 import {
 	Heart as HeartIcon,
 	List as MenuIcon,
@@ -13,6 +12,7 @@ import React, { useCallback } from "react";
 import { ButtonLink } from "../../../core/ButtonLink";
 import { Flex } from "../../../core/Flex";
 import { IconButton } from "../../../core/IconButton";
+import { IconButtonLink } from "../../../core/IconButtonLink";
 
 const NAVIGATION = [
 	{ name: "Home", href: "/" },
@@ -97,18 +97,14 @@ export const Nav: React.FC = () => {
 								items="center"
 								className="absolute inset-y-0 right-0 pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
 							>
-								<Link href="/wishlist" legacyBehavior>
-									<a>
-										<IconButton
-											intent="light"
-											className="hover:text-white"
-											type="button"
-										>
-											<span className="sr-only">Wishlist</span>
-											<HeartIcon className="h-6 w-6" aria-hidden="true" />
-										</IconButton>
-									</a>
-								</Link>
+								<IconButtonLink
+									intent="light"
+									className="hover:text-white"
+									href="/wishlist"
+								>
+									<span className="sr-only">Wishlist</span>
+									<HeartIcon className="h-6 w-6" aria-hidden="true" />
+								</IconButtonLink>
 
 								{/* <Link href="/cart">
 									<a>
