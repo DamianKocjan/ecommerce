@@ -2,7 +2,7 @@ import Link from "next/link";
 import React, { useCallback, useState } from "react";
 
 import { trpc } from "../../utils/trpc";
-import { Flex } from "../shared/core/Flex";
+import { Grid } from "../shared/core/Grid";
 import { ProductCard } from "./ProductCard";
 
 export const NewProducts: React.FC = () => {
@@ -64,8 +64,8 @@ export const NewProducts: React.FC = () => {
 				<Link href="/c/new">Latest products</Link>
 				<span className="absolute bottom-4 left-16 h-2 w-full scale-x-0 bg-black group-hover:animate-strikeThrough" />
 			</h3>
-			<Flex
-				className="sm:scrollbar-thin w-full snap-x gap-8 overflow-x-auto p-6 pb-2"
+			<Grid
+				className="sm:scrollbar-thin snap-x auto-cols-max grid-flow-col gap-4 overflow-x-auto p-2"
 				ref={ref}
 				onMouseDown={handleMouseDown}
 				onMouseLeave={handleMouseLeave}
@@ -75,7 +75,7 @@ export const NewProducts: React.FC = () => {
 				{data?.data.map((product) => (
 					<ProductCard product={product} key={product.slug} />
 				))}
-			</Flex>
+			</Grid>
 		</section>
 	);
 };
