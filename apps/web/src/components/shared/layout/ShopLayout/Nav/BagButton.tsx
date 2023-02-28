@@ -3,14 +3,14 @@ import Link from "next/link";
 import { Bag, Spinner } from "phosphor-react";
 import React, { Fragment, useMemo } from "react";
 
-import { useBag } from "../../../../../features/bag";
 import { trpc } from "../../../../../utils/trpc";
 import { Flex } from "../../../../shared/core/Flex";
 import { IconButton } from "../../../../shared/core/IconButton";
 import { ButtonLink } from "../../../core/ButtonLink";
+import { useBagStore } from "../../Bag/store";
 
 export const BagButton: React.FC = () => {
-	const products = useBag((state) => state.products);
+	const products = useBagStore((state) => state.products);
 
 	const numOfItems = useMemo(() => products.length, [products]);
 

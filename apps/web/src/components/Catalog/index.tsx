@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 
-import { useFilter } from "../../features/filter";
 import { NextPageWithLayout } from "../../pages/_app";
 import { trpc } from "../../utils/trpc";
 import { EmptyState } from "../shared/core/EmptyState";
 import { Flex } from "../shared/core/Flex";
 import { Categories } from "../shared/layout/Categories";
+import { useFilter } from "../shared/layout/Products/Filter/store";
 import { Filters } from "../shared/layout/Products/Filters";
 import { ProductsList } from "../shared/layout/Products/List";
 import { ListFooter } from "../shared/layout/Products/ListFooter";

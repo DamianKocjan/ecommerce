@@ -2,6 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { X } from "phosphor-react";
 import { Fragment } from "react";
 import create from "zustand";
+
 import { Flex } from "../../../core/Flex";
 
 interface Store {

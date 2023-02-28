@@ -8,7 +8,7 @@ interface BagState {
 	removeFromBag: (productSlug: string) => void;
 }
 
-export const useBag = create(
+export const useBagStore = create(
 	persist<BagState>(
 		(set) => ({
 			products: [],

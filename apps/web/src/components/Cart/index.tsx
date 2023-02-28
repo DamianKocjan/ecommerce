@@ -1,10 +1,10 @@
 import { useMemo } from "react";
 
-import { useBag } from "../../features/bag";
 import { NextPageWithLayout } from "../../pages/_app";
 import { trpc } from "../../utils/trpc";
 import { Flex } from "../shared/core/Flex";
 import { Spinner } from "../shared/core/Spinner";
+import { useBagStore } from "../shared/layout/Bag/store";
 import { Container } from "../shared/layout/ShopLayout/Container";
 import { BagItem } from "./BagItem";
 import { OrderSummary } from "./OrderSummary";
@@ -12,7 +12,7 @@ import { OrderSummary } from "./OrderSummary";
 const cacheTime = 1000 * 60 * 5; // 5 minutes
 
 export const Cart: NextPageWithLayout = () => {
-	const products = useBag((state) => state.products);
+	const products = useBagStore((state) => state.products);
 
 	const { data, isError, isLoading } = trpc.product.bag.useQuery(
 		{ products },

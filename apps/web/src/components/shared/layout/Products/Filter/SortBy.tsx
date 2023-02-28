@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect } from "react";
 
-import { useFilter, type SortBy } from "../../../../../features/filter";
 import { FilterListbox } from "./Listbox";
+import { useFilter, type SortBy } from "./store";
 
 const OPTIONS: {
 	key: SortBy;

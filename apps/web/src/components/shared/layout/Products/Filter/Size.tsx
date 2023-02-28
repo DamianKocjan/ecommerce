@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect } from "react";
 
-import { useFilter } from "../../../../../features/filter";
 import { trpc } from "../../../../../utils/trpc";
 import { cacheTime } from "./constants";
 import { FilterListbox } from "./Listbox";
+import { useFilter } from "./store";
 
 export const SizeFilter: React.FC = () => {
 	const router = useRouter();

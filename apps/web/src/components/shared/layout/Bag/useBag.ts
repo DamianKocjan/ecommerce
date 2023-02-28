@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 
-import { useBag as useBagStore } from "../../../../features/bag";
+import { useBagStore } from "./store";
 
 export function useBag(productSlug: string) {
 	const { addToBag, removeFromBag } = useBagStore();

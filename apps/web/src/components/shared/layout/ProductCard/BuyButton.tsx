@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 
-import { useBag } from "../../../../features/bag";
 import { Button } from "../../core/Button";
+import { useBagStore } from "../Bag/store";
 
 export interface BuyButtonProps {
 	disabled: boolean;
@@ -13,7 +13,7 @@ export interface BuyButtonProps {
 }
 
 export const BuyButton: React.FC<BuyButtonProps> = ({ disabled, product }) => {
-	const addToBag = useBag((state) => state.addToBag);
+	const addToBag = useBagStore((state) => state.addToBag);
 
 	const handleAddToBag = useCallback(
 		(e: React.FormEvent<HTMLButtonElement>) => {

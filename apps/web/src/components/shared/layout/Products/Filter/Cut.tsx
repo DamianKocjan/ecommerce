@@ -3,10 +3,10 @@ import { useRouter } from "next/router";
 import { List } from "phosphor-react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 
-import { useFilter } from "../../../../../features/filter";
 import { trpc } from "../../../../../utils/trpc";
 import { FilterComboboxOption } from "./Combobox/Option";
 import { cacheTime } from "./constants";
+import { useFilter } from "./store";
 
 export const CutFilter: React.FC = () => {
 	const cuts = trpc.cut.all.useQuery(undefined, {
