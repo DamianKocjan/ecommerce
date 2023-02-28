@@ -61,11 +61,8 @@ export const Categories: React.FC<CategoriesProps> = ({
 			<ul className="my-4 mx-2">
 				{previousCategorySlug !== null && categories.data?.parentCategory && (
 					<li className="text-xl font-semibold text-neutral-500 decoration-teal-400 decoration-2 underline-offset-[3px] hover:text-black hover:underline">
-						<Link
-							href={`/c/${categories.data.parentCategory.slug}`}
-							legacyBehavior
-						>
-							<Flex as="a" items="center">
+						<Link href={`/c/${categories.data.parentCategory.slug}`}>
+							<Flex items="center">
 								<ArrowLeftIcon className="mr-2 h-5 w-5" />
 								{categories.data.parentCategory.name}
 							</Flex>

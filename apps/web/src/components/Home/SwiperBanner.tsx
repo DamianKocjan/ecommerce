@@ -8,23 +8,23 @@ const TEXTS = [
 	<>
 		Place your order as soon as possible to receive your parcel before
 		Christmas.{" "}
-		<Link href="/catalog" legacyBehavior>
-			<a className="underline">Browse</a>
+		<Link href="/catalog" className="underline">
+			Browse
 		</Link>
 		.{" "}
-		<Link href="/help" legacyBehavior>
-			<a className="underline">Get help</a>
+		<Link href="/help" className="underline">
+			Get help
 		</Link>
 		.
 	</>,
 	<>
 		Free shipping and 30 days free returns for members.{" "}
-		<Link href="/join-us" legacyBehavior>
-			<a className="underline">Join us</a>
+		<Link href="/join-us" className="underline">
+			Join us
 		</Link>
 		.{" "}
-		<Link href="/help" legacyBehavior>
-			<a className="underline">Find out more</a>
+		<Link href="/help" className="underline">
+			Find out more
 		</Link>
 		.
 	</>,

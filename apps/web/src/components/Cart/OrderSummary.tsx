@@ -60,13 +60,14 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({ subtotal }) => {
 				>
 					<Flex as="dt" items="center" className="text-sm text-gray-400">
 						<span>Shipping estimate</span>
-						<Link href="" legacyBehavior>
-							<a className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">
-								<span className="sr-only">
-									Learn more about how shipping is calculated
-								</span>
-								<Question className="h-5 w-5" aria-hidden="true" />
-							</a>
+						<Link
+							href=""
+							className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500"
+						>
+							<span className="sr-only">
+								Learn more about how shipping is calculated
+							</span>
+							<Question className="h-5 w-5" aria-hidden="true" />
 						</Link>
 					</Flex>
 					<dd className="font-mono text-sm font-medium text-gray-100">
@@ -80,13 +81,14 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({ subtotal }) => {
 				>
 					<Flex as="dt" className="text-sm text-gray-400">
 						<span>Tax estimate</span>
-						<Link href="" legacyBehavior>
-							<a className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">
-								<span className="sr-only">
-									Learn more about how tax is calculated
-								</span>
-								<Question className="h-5 w-5" aria-hidden="true" />
-							</a>
+						<Link
+							href=""
+							className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500"
+						>
+							<span className="sr-only">
+								Learn more about how tax is calculated
+							</span>
+							<Question className="h-5 w-5" aria-hidden="true" />
 						</Link>
 					</Flex>
 					<dd className="font-mono text-sm font-medium text-gray-100">

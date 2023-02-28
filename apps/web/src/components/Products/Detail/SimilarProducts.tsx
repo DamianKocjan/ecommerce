@@ -54,11 +54,9 @@ export const SimilarProducts: React.FC = () => {
 							<Flex justify="between" className="mt-4">
 								<div>
 									<h3 className="text-sm text-white">
-										<Link href={`/products/${product.slug}`} legacyBehavior>
-											<a>
-												<span aria-hidden="true" className="absolute inset-0" />
-												{product.name}
-											</a>
+										<Link href={`/products/${product.slug}`}>
+											<span aria-hidden="true" className="absolute inset-0" />
+											{product.name}
 										</Link>
 									</h3>
 									<p className="mt-1 text-sm text-gray-500">{product.color}</p>
