@@ -57,8 +57,24 @@ export const Categories: React.FC<CategoriesProps> = ({
 				</Flex>
 			</div>
 		);
+	} else if (categories.isError) {
+		return (
+			<div className="w-1/4">
+				<Heading className="text-3xl">Categories</Heading>
+				<Flex className="my-4 ml-2 gap-4 py-4 px-2 text-slate-700 outline outline-black">
+					<WarningCircleIcon className="h-8 w-8 text-red-500" />
+					<Flex direction="col">
+						<h4 className="text-bold text-sm text-red-500">
+							An error occurred!
+						</h4>
+						<p className="text-xs">
+							{categories.error?.message ?? "Unknown error"}
+						</p>
+					</Flex>
+				</Flex>
+			</div>
+		);
 	}
-
 	return (
 		<div className="w-1/4">
 			<Heading className="text-3xl">Categories</Heading>
