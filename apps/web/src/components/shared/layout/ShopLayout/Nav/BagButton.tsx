@@ -1,5 +1,6 @@
 import { Popover, Transition } from "@headlessui/react";
-import { Bag, Spinner } from "@phosphor-icons/react";
+import { Bag } from "@phosphor-icons/react";
+import Image from "next/image";
 import Link from "next/link";
 import React, { Fragment, useMemo } from "react";
 
@@ -7,6 +8,7 @@ import { trpc } from "../../../../../utils/trpc";
 import { Flex } from "../../../../shared/core/Flex";
 import { IconButton } from "../../../../shared/core/IconButton";
 import { ButtonLink } from "../../../core/ButtonLink";
+import { Spinner } from "../../../core/Spinner";
 import { useBagStore } from "../../Bag/store";
 
 export const BagButton: React.FC = () => {
@@ -14,7 +16,7 @@ export const BagButton: React.FC = () => {
 
 	const numOfItems = useMemo(() => products.length, [products]);
 
-	const { data, isLoading, isError } = trpc.product.bag.useQuery(
+	const { data, isLoading, isError, error } = trpc.product.bag.useQuery(
 		{ products: products.slice(0, 9) },
 		{
 			enabled: !!products.length,
@@ -67,17 +69,29 @@ export const BagButton: React.FC = () => {
 
 					<form className="mx-auto max-w-2xl px-4">
 						{isLoading ? (
-							<Flex justify="center" items="center" className="h-32">
-								<Spinner />
+							<Flex
+								as="p"
+								justify="center"
+								items="center"
+								className="h-32 gap-2"
+							>
+								<Spinner className="text-teal-500" />
+								<span>Loading...</span>
 							</Flex>
 						) : isError ? (
-							<Flex justify="center" items="center" className="h-32">
-								<h3>There was an error fetching your bag. Please try again.</h3>
+							<Flex
+								direction="col"
+								className="mt-6 mb-4 border border-red-600 bg-red-400 p-4 text-center text-sm"
+							>
+								<h3 className="font-semibold">Something went wrong!</h3>
+								<p className="mt-1 text-xs">
+									{error?.message ?? "Unknown error"}
+								</p>
 							</Flex>
 						) : !data || !data.length ? (
-							<Flex justify="center" items="center" className="h-32">
-								<h3>Your bag is empty.</h3>
-							</Flex>
+							<div className="mt-6 mb-4 text-center text-sm">
+								<h3>Your bag is empty!</h3>
+							</div>
 						) : (
 							<ul role="list" className="divide-y divide-gray-200">
 								{data.map((product) => (
@@ -87,10 +101,12 @@ export const BagButton: React.FC = () => {
 										items="center"
 										className="py-6"
 									>
-										<img
-											src="https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg"
-											alt="Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch."
+										<Image
+											src={product.thumbnailImage}
+											alt={product.title}
 											className="h-16 w-16 flex-none border border-gray-200"
+											width={128}
+											height={128}
 										/>
 										<div className="ml-4 flex-auto">
 											<h3 className="font-medium text-gray-900">
@@ -132,10 +148,10 @@ export const BagButton: React.FC = () => {
 							Checkout
 						</ButtonLink>
 
-						<p className="mt-6 text-center">
+						<p className="mt-6 text-center text-sm">
 							<Link
 								href="/cart"
-								className="text-sm font-medium text-teal-600 hover:text-teal-500"
+								className="font-medium text-teal-600 hover:text-teal-500"
 							>
 								View Shopping Bag
 							</Link>
