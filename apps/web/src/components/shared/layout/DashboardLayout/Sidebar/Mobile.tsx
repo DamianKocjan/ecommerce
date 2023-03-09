@@ -1,6 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
+import { X } from "@phosphor-icons/react";
 import Link from "next/link";
-import { X } from "phosphor-react";
 import React, { Fragment } from "react";
 import { Flex } from "../../../core/Flex";
 import { classNames } from "../../../utils/classnames";

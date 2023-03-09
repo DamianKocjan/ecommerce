@@ -1,4 +1,4 @@
-import { CaretLeft, CaretRight } from "phosphor-react";
+import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 import React from "react";
 
 import { Flex } from "../../../core/Flex";

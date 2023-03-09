@@ -1,6 +1,6 @@
 import { Popover, Transition } from "@headlessui/react";
+import { Bag, Spinner } from "@phosphor-icons/react";
 import Link from "next/link";
-import { Bag, Spinner } from "phosphor-react";
 import React, { Fragment, useMemo } from "react";
 
 import { trpc } from "../../../../../utils/trpc";

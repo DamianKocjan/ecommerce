@@ -1,5 +1,5 @@
 import { Dialog, RadioGroup, Transition } from "@headlessui/react";
-import { Star, X } from "phosphor-react";
+import { Star, X } from "@phosphor-icons/react";
 import React, { Fragment, useState } from "react";
 
 import { Flex } from "../../core/Flex";

@@ -1,5 +1,5 @@
+import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft, ArrowRight } from "phosphor-react";
 import React, { useCallback, useMemo, useState } from "react";
 
 import { Flex } from "../shared/core/Flex";

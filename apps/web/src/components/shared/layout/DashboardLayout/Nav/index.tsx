@@ -1,7 +1,7 @@
 import { Menu, Transition } from "@headlessui/react";
+import { Bell, List, MagnifyingGlass } from "@phosphor-icons/react";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
-import { Bell, List, MagnifyingGlass } from "phosphor-react";
 import React, { Fragment, useCallback } from "react";
 import { Flex } from "../../../core/Flex";
 import { classNames } from "../../../utils/classnames";

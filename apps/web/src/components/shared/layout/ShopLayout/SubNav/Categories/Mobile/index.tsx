@@ -2,7 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import {
 	DotsThreeVertical as DotsThreeVerticalIcon,
 	X as XIcon,
-} from "phosphor-react";
+} from "@phosphor-icons/react";
 import React, { Fragment, useCallback, useState } from "react";
 
 import { Flex } from "../../../../../../shared/core/Flex";

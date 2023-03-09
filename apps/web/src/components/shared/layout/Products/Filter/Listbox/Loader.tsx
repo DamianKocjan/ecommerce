@@ -1,5 +1,5 @@
 import { Listbox } from "@headlessui/react";
-import { SpinnerGap } from "phosphor-react";
+import { SpinnerGap } from "@phosphor-icons/react";
 import React from "react";
 
 import { Flex } from "../../../../core/Flex";

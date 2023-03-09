@@ -1,5 +1,5 @@
+import { Check, Clock, X } from "@phosphor-icons/react";
 import Link from "next/link";
-import { Check, Clock, X } from "phosphor-react";
 import React, { useMemo } from "react";
 
 import { RouterOutputs } from "../../utils/trpc";

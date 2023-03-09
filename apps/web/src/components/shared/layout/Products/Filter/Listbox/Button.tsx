@@ -1,5 +1,5 @@
 import { Listbox } from "@headlessui/react";
-import { CaretDown } from "phosphor-react";
+import { CaretDown } from "@phosphor-icons/react";
 import React from "react";
 
 import { Flex } from "../../../../core/Flex";

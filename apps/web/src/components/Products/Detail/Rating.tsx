@@ -1,5 +1,5 @@
+import { Star, StarHalf } from "@phosphor-icons/react";
 import { useSession } from "next-auth/react";
-import { Star, StarHalf } from "phosphor-react";
 import React, { useCallback, useMemo } from "react";
 
 import { Flex } from "../../shared/core/Flex";

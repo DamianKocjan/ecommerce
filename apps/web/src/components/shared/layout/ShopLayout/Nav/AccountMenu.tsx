@@ -1,6 +1,6 @@
 import { Menu, Transition } from "@headlessui/react";
+import { User as UserIcon } from "@phosphor-icons/react";
 import { signOut } from "next-auth/react";
-import { User as UserIcon } from "phosphor-react";
 import React, { Fragment, useCallback } from "react";
 
 import { Button } from "../../../../shared/core/Button";

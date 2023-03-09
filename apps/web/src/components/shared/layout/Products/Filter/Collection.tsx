@@ -1,6 +1,6 @@
 import { Combobox } from "@headlessui/react";
+import { List } from "@phosphor-icons/react";
 import { useRouter } from "next/router";
-import { List } from "phosphor-react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 import { trpc } from "../../../../../utils/trpc";

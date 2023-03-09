@@ -1,5 +1,5 @@
+import { MagnifyingGlass as SearchIcon } from "@phosphor-icons/react";
 import { useRouter } from "next/router";
-import { MagnifyingGlass as SearchIcon } from "phosphor-react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import { Flex } from "../../../../../shared/core/Flex";

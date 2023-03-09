@@ -5,7 +5,7 @@ import {
 	Folder,
 	House,
 	Users,
-} from "phosphor-react";
+} from "@phosphor-icons/react";
 
 export const navigation = [
 	{ name: "Dashboard", href: "/dashboard", icon: House, current: true },

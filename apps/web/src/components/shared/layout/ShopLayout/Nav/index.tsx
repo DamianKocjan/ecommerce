@@ -1,12 +1,12 @@
 import { Disclosure } from "@headlessui/react";
-import { signIn, useSession } from "next-auth/react";
-import dynamic from "next/dynamic";
 import {
 	Heart as HeartIcon,
 	List as MenuIcon,
 	SignIn as SignInIcon,
 	X as XIcon,
-} from "phosphor-react";
+} from "@phosphor-icons/react";
+import { signIn, useSession } from "next-auth/react";
+import dynamic from "next/dynamic";
 import React, { useCallback } from "react";
 
 import { ButtonLink } from "../../../core/ButtonLink";

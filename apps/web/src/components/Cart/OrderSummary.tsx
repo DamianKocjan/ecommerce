@@ -1,5 +1,5 @@
+import { Question } from "@phosphor-icons/react";
 import Link from "next/link";
-import { Question } from "phosphor-react";
 import React, { useMemo } from "react";
 
 import { Button } from "../shared/core/Button";
