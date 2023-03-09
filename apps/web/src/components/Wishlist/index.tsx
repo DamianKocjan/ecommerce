@@ -63,7 +63,7 @@ export const Wishlist: NextPageWithLayout = () => {
 				<h1 className="text-3xl">Your wishlist</h1>
 			</PrettyContainer>
 			<div className="my-2 mx-4">
-				<Filters />
+				<Filters hideCategories />
 				{!wishlisted.isLoading && wishlisted.data?.data.length === 0 ? (
 					<EmptyState
 						title="No wishlisted products found"

@@ -1,8 +1,10 @@
 import { FunnelSimple } from "@phosphor-icons/react";
+import dynamic from "next/dynamic";
 import React from "react";
 
 import { Flex } from "../../core/Flex";
-import MediaQuery from "../../hooks/useMediaQuery";
+import MediaQuery, { useMediaQuery } from "../../hooks/useMediaQuery";
+import { CategoriesDesktopPanelProps } from "../Categories/DesktopPanel";
 import { BrandFilter } from "./Filter/Brand";
 import { CollectionFilter } from "./Filter/Collection";
 import { ColorFilter } from "./Filter/Color";
@@ -13,21 +15,48 @@ import { PatternFilter } from "./Filter/Pattern";
 import { SizeFilter } from "./Filter/Size";
 import { SortByFilter } from "./Filter/SortBy";
 
-export const Filters: React.FC = () => {
+const CategoriesDesktopPanel = dynamic(
+	() =>
+		import("../Categories/DesktopPanel").then(
+			(mod) => mod.CategoriesDesktopPanel,
+		),
+	{
+		ssr: false,
+	},
+);
+
+export interface FiltersProps extends CategoriesDesktopPanelProps {
+	hideCategories?: boolean;
+}
+
+export const Filters: React.FC<FiltersProps> = ({
+	hideCategories,
+	parentCategory,
+	previousUrl,
+}) => {
 	const { setOpen } = useFilterPanel();
+
+	const isSmallerThanMediumScreen = useMediaQuery("sm", true);
+	const isMediumScreen = useMediaQuery("sm");
 
 	return (
 		<Flex direction="row" wrap="wrap" className="gap-2">
-			{/* <Filter /> */}
+			{isSmallerThanMediumScreen && !hideCategories && (
+				<CategoriesDesktopPanel
+					parentCategory={parentCategory}
+					previousUrl={previousUrl}
+				/>
+			)}
+
 			<div className="flex-1" />
 
-			<MediaQuery min="sm">
-				<Flex direction="row" className="gap-2">
+			{isMediumScreen && (
+				<>
 					<SortByFilter />
 					<ColorFilter />
 					<SizeFilter />
-				</Flex>
-			</MediaQuery>
+				</>
+			)}
 
 			<button
 				className="focus-visible:ring-teal flex items-center justify-center gap-2 focus:outline-none focus-visible:border-teal-500 focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-600 sm:text-sm"
