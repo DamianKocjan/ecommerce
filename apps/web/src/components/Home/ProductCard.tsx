@@ -3,6 +3,7 @@ import React from "react";
 
 import { RouterOutputs } from "../../utils/trpc";
 import { Flex } from "../shared/core/Flex";
+import { Shimmer } from "../shared/core/Shimmer";
 
 export interface ProductCardProps {
 	product: RouterOutputs["product"]["new"]["data"][number];
@@ -34,5 +35,27 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 				</h4>
 			</Flex>
 		</Link>
+	);
+};
+
+export const ProductCardShimmer: React.FC = () => {
+	return (
+		<div className="relative bg-black p-2 pb-4">
+			<Flex as="article" direction="col">
+				<div className="relative">
+					<Shimmer
+						shape="rectangular"
+						className="h-36 w-64 bg-white/25 sm:h-48"
+					/>
+					<div className="absolute bottom-0 left-8 min-w-[3rem] bg-black p-0.5">
+						<Shimmer shape="text" className="bg-white/25">
+							&nbsp;
+						</Shimmer>
+					</div>
+				</div>
+
+				<Shimmer shape="text" className="my-2 h-6 bg-white/25" />
+			</Flex>
+		</div>
 	);
 };
