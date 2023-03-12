@@ -70,7 +70,9 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
 					}}
 				/>
 
-				<GoogleAnalytics trackPageViews />
+				{process.env.NODE_ENV !== "development" && (
+					<GoogleAnalytics trackPageViews />
+				)}
 				<NProgress />
 
 				{getLayout(<Component {...pageProps} />)}
