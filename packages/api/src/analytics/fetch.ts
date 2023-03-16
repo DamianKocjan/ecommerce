@@ -32,6 +32,31 @@ function headers(): Record<string, string> {
 	};
 }
 
+function enforceEnv() {
+	if (!API_KEY) {
+		throw new Error("Missing API_KEY");
+	}
+	if (!USER_ID) {
+		throw new Error("Missing USER_ID");
+	}
+}
+
+// DOCS: https://docs.simpleanalytics.com/api/stats#query-parameters
+type QueryParams = {
+	version: 5;
+	start?: string;
+	end?: string;
+	limit?: number;
+	timezone?: string;
+	info?: boolean;
+	events?: "*" | string;
+	fields?: string;
+};
+
+type QueryFilters = {
+	page?: string;
+};
+
 interface HistogramPoint {
 	date: string;
 	pageviews: number;

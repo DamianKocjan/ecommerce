@@ -39,4 +39,22 @@ export const analyticsRouter = router({
 			totalProfitToday,
 		};
 	}),
+	orders: protectedProcedure.subscription(async ({ ctx, input }) => {
+		// get last 10 orders
+		const orders = await ctx.prisma.order.findMany({
+			take: 10,
+			orderBy: {
+				createdAt: "desc",
+			},
+			include: {
+				items: {
+					include: {
+						product: true,
+					},
+				},
+			},
+		});
+
+		return orders;
+	}),
 });
