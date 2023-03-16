@@ -11,7 +11,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
 	children,
 }) => {
 	return (
-		<div className="h-screen">
+		<div className="min-h-screen">
 			<div>
 				<SidebarMobile />
 				<Sidebar />
