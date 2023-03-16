@@ -4,9 +4,9 @@ import { SessionProvider } from "next-auth/react";
 import { DefaultSeo } from "next-seo";
 import { ThemeProvider } from "next-themes";
 import type { AppProps } from "next/app";
-import { GoogleAnalytics } from "nextjs-google-analytics";
 import React from "react";
 
+import { Analytics } from "../components/App/Analytics";
 import { NProgress } from "../components/App/NProgress";
 import { ShopLayout } from "../components/shared/layout/ShopLayout";
 import "../styles/globals.css";
@@ -70,9 +70,7 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
 					}}
 				/>
 
-				{process.env.NODE_ENV !== "development" && (
-					<GoogleAnalytics trackPageViews />
-				)}
+				<Analytics />
 				<NProgress />
 
 				{getLayout(<Component {...pageProps} />)}
