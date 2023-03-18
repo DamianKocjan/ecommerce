@@ -92,11 +92,11 @@ export const ChartViews: React.FC<ChartViewsProps> = ({ data }) => {
 				[
 					{
 						name: "Page views",
-						data: data?.map((item) => item.pageviews),
+						data: data?.map((item) => item.pageviews) ?? [],
 					},
 					{
 						name: "Visitors",
-						data: data?.map((item) => item.visitors),
+						data: data?.map((item) => item.visitors) ?? [],
 						color: "#000000",
 					},
 				],

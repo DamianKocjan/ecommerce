@@ -40,88 +40,95 @@ export const Dashboard: NextPageWithLayout = () => {
 		data?.totalUsers ?? 0,
 	);
 
-	const wrapper = (children: React.ReactNode) =>
-		isLoading ? (
-			<dd className="mt-3 text-gray-900">
-				<Spinner />
-			</dd>
-		) : isError || !data ? (
-			<dd className="mt-1 font-mono text-3xl font-semibold text-gray-900">0</dd>
-		) : (
-			children
-		);
+	const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+		if (isLoading) {
+			return (
+				<dd className="mt-3 text-gray-900">
+					<Spinner />
+				</dd>
+			);
+		}
+		if (isError || !data) {
+			return (
+				<dd className="mt-1 font-mono text-3xl font-semibold text-gray-900">
+					0
+				</dd>
+			);
+		}
+		return <>{children}</>;
+	};
 
 	return (
 		<Container title="Dashboard">
-			<dl className="grid h-full grid-cols-7 grid-rows-5 gap-5">
-				<div className="col-span-2 row-span-1 overflow-hidden border border-black bg-white px-4 py-5 sm:p-6">
+			<dl className="grid h-full grid-cols-1 grid-rows-none gap-5 md:grid-cols-7 md:grid-rows-5">
+				<div className="overflow-hidden border border-black bg-white px-4 py-5 sm:p-6 md:col-span-2 md:row-span-1">
 					<dt className="truncate text-sm font-medium text-gray-500">
 						Total views
 					</dt>
-					{wrapper(
+					<Wrapper>
 						<dd
 							className="mt-1 font-mono text-3xl font-semibold text-gray-900"
 							title={data?.pageviews.toString()}
 						>
 							{formattedViews}
-						</dd>,
-					)}
+						</dd>
+					</Wrapper>
 				</div>
 
 				<div className="col-span-2 row-span-1 overflow-hidden border border-black bg-white px-4 py-5 sm:p-6">
 					<dt className="truncate text-sm font-medium text-gray-500">
 						Total profit
 					</dt>
-					{wrapper(
+					<Wrapper>
 						<dd
 							className="mt-1 font-mono text-3xl font-semibold text-gray-900"
 							title={data?.totalProfit.toString()}
 						>
 							{formattedTotalProfit}
-						</dd>,
-					)}
+						</dd>
+					</Wrapper>
 				</div>
 
 				<div className="col-span-3 row-span-3 overflow-hidden border border-black bg-white px-4 py-5 sm:p-6">
 					<dt className="truncate text-sm font-medium text-gray-500">
 						Profit this day
 					</dt>
-					{wrapper(
+					<Wrapper>
 						<dd
 							className="mt-1 font-mono text-3xl font-semibold text-gray-900"
 							title={data?.totalProfitToday.toString()}
 						>
 							{formattedTotalProfitToday}
-						</dd>,
-					)}
+						</dd>
+					</Wrapper>
 				</div>
 
 				<div className="col-span-2 row-span-1 overflow-hidden border border-black bg-white px-4 py-5 sm:p-6">
 					<dt className="truncate text-sm font-medium text-gray-500">
 						Total products
 					</dt>
-					{wrapper(
+					<Wrapper>
 						<dd
 							className="mt-1 font-mono text-3xl font-semibold text-gray-900"
 							title={data?.totalProducts.toString()}
 						>
 							{formattedTotalProducts}
-						</dd>,
-					)}
+						</dd>
+					</Wrapper>
 				</div>
 
 				<div className="col-span-2 row-span-1 overflow-hidden border border-black bg-white px-4 py-5 sm:p-6">
 					<dt className="truncate text-sm font-medium text-gray-500">
 						Total users
 					</dt>
-					{wrapper(
+					<Wrapper>
 						<dd
 							className="mt-1 font-mono text-3xl font-semibold text-gray-900"
 							title={data?.totalUsers.toString()}
 						>
 							{formattedTotalUsers}
-						</dd>,
-					)}
+						</dd>
+					</Wrapper>
 				</div>
 
 				<div className="col-span-4 row-span-4 overflow-hidden border border-black bg-white px-4 py-5 sm:p-6">
