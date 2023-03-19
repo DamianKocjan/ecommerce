@@ -1,10 +1,9 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { X } from "@phosphor-icons/react";
-import Link from "next/link";
 import React, { Fragment } from "react";
 import { Flex } from "../../../core/Flex";
-import { classNames } from "../../../utils/classnames";
 import { navigation } from "../constants";
+import { MenuItem } from "./MenuItem";
 import { useSidebar } from "./store";
 
 export const SidebarMobile: React.FC = () => {
@@ -47,11 +46,7 @@ export const SidebarMobile: React.FC = () => {
 							justify="between"
 							className="flex-shrink-0 px-4"
 						>
-							<img
-								className="h-8 w-auto"
-								src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
-								alt="Workflow"
-							/>
+							<h1 className="h-8 font-mono text-3xl">Ecommerce</h1>
 
 							<button
 								type="button"
@@ -65,27 +60,13 @@ export const SidebarMobile: React.FC = () => {
 						<div className="mt-5 h-0 flex-1 overflow-y-auto">
 							<nav className="space-y-1 px-2">
 								{navigation.map((item) => (
-									<Link
+									<MenuItem
 										key={item.name}
 										href={item.href}
-										className={classNames(
-											item.current
-												? "bg-gray-100 text-gray-900"
-												: "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
-											"group flex items-center rounded-md px-2 py-2 text-base font-medium",
-										)}
-									>
-										<item.icon
-											className={classNames(
-												item.current
-													? "text-gray-500"
-													: "text-gray-400 group-hover:text-gray-500",
-												"mr-4 h-6 w-6 flex-shrink-0",
-											)}
-											aria-hidden="true"
-										/>
-										{item.name}
-									</Link>
+										isCurrent={item.current}
+										name={item.name}
+										icon={item.icon}
+									/>
 								))}
 							</nav>
 						</div>

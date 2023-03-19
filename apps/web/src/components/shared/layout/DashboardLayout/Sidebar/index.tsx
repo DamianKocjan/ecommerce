@@ -15,11 +15,7 @@ export const Sidebar: React.FC = () => {
 				className="flex-grow overflow-y-auto border-r border-gray-200 bg-white pt-5"
 			>
 				<Flex items="center" className="flex-shrink-0 px-4">
-					<img
-						className="h-8 w-auto"
-						src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
-						alt="Workflow"
-					/>
+					<h1 className="h-8 font-mono text-3xl">Ecommerce</h1>
 				</Flex>
 				<Flex direction="col" className="mt-5 flex-grow">
 					<nav className="flex-1 space-y-1 px-2 pb-4">

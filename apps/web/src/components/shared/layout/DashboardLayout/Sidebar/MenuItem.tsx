@@ -23,15 +23,13 @@ export const MenuItem: React.FC<MenuItemProps> = ({
 				isCurrent
 					? "bg-gray-100 text-gray-900"
 					: "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
-				"group flex items-center rounded-md px-2 py-2 text-sm font-medium",
+				"group flex items-center px-2 py-2 text-sm font-medium",
 			)}
 		>
 			<Icon
 				className={classNames(
-					isCurrent
-						? "text-gray-500"
-						: "text-gray-400 group-hover:text-gray-500",
-					"mr-3 h-6 w-6 flex-shrink-0",
+					isCurrent ? "text-black" : "text-gray-600 group-hover:text-gray-900",
+					"mr-4 h-6 w-6 flex-shrink-0 md:mr-3",
 				)}
 				aria-hidden="true"
 			/>

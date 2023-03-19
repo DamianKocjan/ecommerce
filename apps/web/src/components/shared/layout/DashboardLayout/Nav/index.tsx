@@ -1,8 +1,10 @@
 import { Menu, Transition } from "@headlessui/react";
-import { Bell, List, MagnifyingGlass } from "@phosphor-icons/react";
+import { List, MagnifyingGlass } from "@phosphor-icons/react";
 import { signOut } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import React, { Fragment, useCallback } from "react";
+
 import { Flex } from "../../../core/Flex";
 import { classNames } from "../../../utils/classnames";
 import { userNavigation } from "../constants";
@@ -29,6 +31,7 @@ export const Nav: React.FC = () => {
 				<span className="sr-only">Open sidebar</span>
 				<List className="h-6 w-6" aria-hidden="true" />
 			</button>
+
 			<Flex justify="between" className="flex-1 px-4">
 				<Flex className="flex-1">
 					<form className="flex w-full md:ml-0" action="#" method="GET">
@@ -52,24 +55,18 @@ export const Nav: React.FC = () => {
 						</div>
 					</form>
 				</Flex>
-				<Flex items="center" className="ml-4 md:ml-6">
-					<button
-						type="button"
-						className="rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-					>
-						<span className="sr-only">View notifications</span>
-						<Bell className="h-6 w-6" aria-hidden="true" />
-					</button>
 
-					{/* Profile dropdown */}
+				<Flex items="center" className="ml-4 md:ml-6">
 					<Menu as="div" className="relative ml-3">
 						<div>
-							<Menu.Button className="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+							<Menu.Button className="flex max-w-xs items-center border-2 border-black bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
 								<span className="sr-only">Open user menu</span>
-								<img
-									className="h-8 w-8 rounded-full"
+								<Image
+									className="h-8 w-8"
 									src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-									alt=""
+									alt="Profile picture"
+									width={128}
+									height={128}
 								/>
 							</Menu.Button>
 						</div>
