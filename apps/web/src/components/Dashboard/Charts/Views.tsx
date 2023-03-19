@@ -53,7 +53,7 @@ export const ChartViews: React.FC<ChartViewsProps> = ({ data }) => {
 			const date = new Date(item.date);
 			const year = date.getFullYear();
 			const month = date.getMonth();
-			const day = date.getDay() + 1;
+			const day = date.getDate();
 
 			const monthName = MONTHS[month] as typeof MONTHS[number];
 			const shortMonthName = SHORT_MONTHS[month] as typeof SHORT_MONTHS[number];

@@ -1,15 +1,18 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 import type { NextPageWithLayout } from "../../pages/_app";
 import { trpc } from "../../utils/trpc";
 import { Spinner } from "../shared/core/Spinner";
 import { useCompactNumberFormatter } from "../shared/hooks/useCompactNumberFormatter";
+import { useCurrencyFormatter } from "../shared/hooks/useCurrencyFormatter";
 import { Container, DashboardLayout } from "../shared/layout/DashboardLayout";
 import { classNames } from "../shared/utils/classnames";
 import { ChartBrowsers } from "./Charts/Browsers";
 import { ChartDevices } from "./Charts/Devices";
 import { ChartReferrers } from "./Charts/Referrers";
 import { ChartViews } from "./Charts/Views";
+import { LatestOrders } from "./LatestOrders";
+import { ProfitThisDay } from "./ProfitThisDay";
 
 type ChartType = "views" | "referrers" | "browsers" | "devices";
 
@@ -25,19 +28,18 @@ export const Dashboard: NextPageWithLayout = () => {
 		useState<ChartType>("views");
 
 	const numberCompactFormatter = useCompactNumberFormatter();
-
 	const formattedViews = numberCompactFormatter.format(data?.pageviews ?? 0);
+	const formattedTotalUsers = numberCompactFormatter.format(
+		data?.totalUsers ?? 0,
+	);
+
+	const currencyFormatter = useCurrencyFormatter();
 	const formattedTotalProducts = numberCompactFormatter.format(
 		data?.totalProducts ?? 0,
 	);
-	const formattedTotalProfit = numberCompactFormatter.format(
-		data?.totalProfit ?? 0,
-	);
-	const formattedTotalProfitToday = numberCompactFormatter.format(
+	const formattedTotalProfit = currencyFormatter.format(data?.totalProfit ?? 0);
+	const formattedTotalProfitToday = currencyFormatter.format(
 		data?.totalProfitToday ?? 0,
-	);
-	const formattedTotalUsers = numberCompactFormatter.format(
-		data?.totalUsers ?? 0,
 	);
 
 	const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -58,85 +60,54 @@ export const Dashboard: NextPageWithLayout = () => {
 		return <>{children}</>;
 	};
 
+	const Card: React.FC<{
+		title: string;
+		value?: string;
+		description: string;
+	}> = ({ description, title, value }) => (
+		<div className="col-span-2 row-span-1 overflow-hidden border border-black bg-white px-4 py-5 sm:p-6">
+			<dt className="truncate text-sm font-medium text-gray-500">{title}</dt>
+			<Wrapper>
+				<dd
+					className="mt-1 font-mono text-3xl font-semibold text-gray-900"
+					title={value}
+				>
+					{description}
+				</dd>
+			</Wrapper>
+		</div>
+	);
+
 	return (
 		<Container title="Dashboard">
-			<dl className="grid h-full grid-cols-1 grid-rows-none gap-5 md:grid-cols-7 md:grid-rows-5">
-				<div className="overflow-hidden border border-black bg-white px-4 py-5 sm:p-6 md:col-span-2 md:row-span-1">
-					<dt className="truncate text-sm font-medium text-gray-500">
-						Total views
-					</dt>
-					<Wrapper>
-						<dd
-							className="mt-1 font-mono text-3xl font-semibold text-gray-900"
-							title={data?.pageviews.toString()}
-						>
-							{formattedViews}
-						</dd>
-					</Wrapper>
-				</div>
-
-				<div className="col-span-2 row-span-1 overflow-hidden border border-black bg-white px-4 py-5 sm:p-6">
-					<dt className="truncate text-sm font-medium text-gray-500">
-						Total profit
-					</dt>
-					<Wrapper>
-						<dd
-							className="mt-1 font-mono text-3xl font-semibold text-gray-900"
-							title={data?.totalProfit.toString()}
-						>
-							{formattedTotalProfit}
-						</dd>
-					</Wrapper>
-				</div>
-
-				<div className="col-span-3 row-span-3 overflow-hidden border border-black bg-white px-4 py-5 sm:p-6">
-					<dt className="truncate text-sm font-medium text-gray-500">
-						Profit this day
-					</dt>
-					<Wrapper>
-						<dd
-							className="mt-1 font-mono text-3xl font-semibold text-gray-900"
-							title={data?.totalProfitToday.toString()}
-						>
-							{formattedTotalProfitToday}
-						</dd>
-					</Wrapper>
-				</div>
-
-				<div className="col-span-2 row-span-1 overflow-hidden border border-black bg-white px-4 py-5 sm:p-6">
-					<dt className="truncate text-sm font-medium text-gray-500">
-						Total products
-					</dt>
-					<Wrapper>
-						<dd
-							className="mt-1 font-mono text-3xl font-semibold text-gray-900"
-							title={data?.totalProducts.toString()}
-						>
-							{formattedTotalProducts}
-						</dd>
-					</Wrapper>
-				</div>
-
-				<div className="col-span-2 row-span-1 overflow-hidden border border-black bg-white px-4 py-5 sm:p-6">
-					<dt className="truncate text-sm font-medium text-gray-500">
-						Total users
-					</dt>
-					<Wrapper>
-						<dd
-							className="mt-1 font-mono text-3xl font-semibold text-gray-900"
-							title={data?.totalUsers.toString()}
-						>
-							{formattedTotalUsers}
-						</dd>
-					</Wrapper>
-				</div>
+			<dl className="flex h-full flex-col gap-5 md:grid md:grid-cols-7 md:grid-rows-5">
+				<Card
+					title="Total views"
+					value={data?.pageviews.toString()}
+					description={formattedViews}
+				/>
+				<Card
+					title="Total profit"
+					value={data?.totalProfit.toString()}
+					description={formattedTotalProfit}
+				/>
+				<Card
+					title="Total products"
+					value={data?.totalProducts.toString()}
+					description={formattedTotalProducts}
+				/>
+				<Card
+					title="Total users"
+					value={data?.totalUsers.toString()}
+					description={formattedTotalUsers}
+				/>
 
 				<div className="col-span-4 row-span-4 overflow-hidden border border-black bg-white px-4 py-5 sm:p-6">
 					<dt className="truncate text-sm font-medium text-gray-500">
 						Statistics
 					</dt>
-					<dd className="mt-1 font-mono text-3xl font-semibold text-gray-900">
-						<div className="mb-2 flex gap-2">
+					<dd className="mt-1 font-mono text-xl font-semibold text-gray-900 lg:text-3xl">
+						<div className="mb-2 flex flex-wrap gap-4">
 							<button
 								className={classNames(
 									selectedChartType === "views"
@@ -191,17 +162,12 @@ export const Dashboard: NextPageWithLayout = () => {
 					</dd>
 				</div>
 
-				<div className="col-span-3 row-span-2 overflow-hidden border border-black bg-white px-4 py-5 sm:p-6">
-					<dt className="truncate text-sm font-medium text-gray-500">
-						Latest orders
-					</dt>
-					<dd
-						className="mt-1 font-mono text-3xl font-semibold text-gray-900"
-						// title={data?.pageviews.toString()}
-					>
-						{formattedViews}
-					</dd>
-				</div>
+				<ProfitThisDay
+					totalProfitToday={formattedTotalProfitToday}
+					totalProfitWeekPerDay={data?.totalProfitWeekPerDay}
+				/>
+
+				<LatestOrders orders={data?.latestOrders} />
 			</dl>
 		</Container>
 	);

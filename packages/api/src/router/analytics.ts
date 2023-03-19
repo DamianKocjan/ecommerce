@@ -1,6 +1,41 @@
+import type { PrismaClient } from "@ecommerce/db";
+
 import { fetchAnalytics } from "../analytics/fetch";
 import { assertIsAdmin } from "../helpers/auth";
 import { protectedProcedure, router } from "../trpc";
+
+type Profit = {
+	date: string;
+	profit: number;
+};
+
+const ONE_DAY = 24 * 60 * 60 * 1000;
+
+/** Returns profits of each day of the week */
+async function getProfitsFromEachDayWeek(prisma: PrismaClient) {
+	const profits: Profit[] = [];
+	const now = new Date().setHours(0, 0, 0, 0);
+
+	for (let i = 6; i > -1; i--) {
+		const date = new Date(now - (i - 1) * ONE_DAY);
+		const profit = await prisma.order.aggregate({
+			_sum: {
+				total: true,
+			},
+			where: {
+				createdAt: {
+					gte: date,
+				},
+			},
+		});
+
+		profits.push({
+			date: date.toISOString(),
+			profit: profit._sum.total?.toNumber() ?? 0,
+		});
+	}
+	return profits;
+}
 
 export const analyticsRouter = router({
 	fetch: protectedProcedure.query(async ({ ctx }) => {
@@ -30,19 +65,8 @@ export const analyticsRouter = router({
 					},
 				})
 			)._sum.total?.toNumber() ?? 0;
-
-		return {
-			...analytics,
-			totalProducts,
-			totalUsers,
-			totalProfit,
-			totalProfitToday,
-		};
-	}),
-	orders: protectedProcedure.subscription(async ({ ctx, input }) => {
-		// get last 10 orders
-		const orders = await ctx.prisma.order.findMany({
-			take: 10,
+		const latestOrders = await ctx.prisma.order.findMany({
+			take: 5,
 			orderBy: {
 				createdAt: "desc",
 			},
@@ -55,6 +79,14 @@ export const analyticsRouter = router({
 			},
 		});
 
-		return orders;
+		return {
+			...analytics,
+			totalProducts,
+			totalUsers,
+			totalProfit,
+			totalProfitToday,
+			totalProfitWeekPerDay: await getProfitsFromEachDayWeek(ctx.prisma),
+			latestOrders,
+		};
 	}),
 });
