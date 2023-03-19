@@ -1,21 +1,24 @@
 import {
-	Calendar,
+	Basket,
 	ChartBar,
-	EnvelopeSimple,
-	Folder,
 	House,
-	Users,
+	Package,
+	ThumbsUp,
 } from "@phosphor-icons/react";
 
 export const navigation = [
 	{ name: "Dashboard", href: "/dashboard", icon: House, current: true },
-	{ name: "Team", href: "/dashboard", icon: Users, current: false },
-	{ name: "Projects", href: "/dashboard", icon: Folder, current: false },
-	{ name: "Calendar", href: "/dashboard", icon: Calendar, current: false },
+	{ name: "Sales", href: "/dashboard/sales", icon: Package, current: false },
 	{
-		name: "Documents",
-		href: "/dashboard",
-		icon: EnvelopeSimple,
+		name: "Products",
+		href: "/dashboard/products",
+		icon: Basket,
+		current: false,
+	},
+	{
+		name: "Reviews",
+		href: "/dashboard/reviews",
+		icon: ThumbsUp,
 		current: false,
 	},
 	{ name: "Reports", href: "/dashboard", icon: ChartBar, current: false },
