@@ -37,8 +37,8 @@ async function getProfitsFromEachDayWeek(prisma: PrismaClient) {
 	return profits;
 }
 
-export const analyticsRouter = router({
-	fetch: protectedProcedure.query(async ({ ctx }) => {
+export const dashboardRouter = router({
+	analytics: protectedProcedure.query(async ({ ctx }) => {
 		assertIsAdmin(ctx.session.user);
 
 		const analytics = await fetchAnalytics();

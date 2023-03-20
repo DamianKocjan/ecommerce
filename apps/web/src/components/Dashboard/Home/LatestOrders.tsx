@@ -7,7 +7,7 @@ import { useCurrencyFormatter } from "../../shared/hooks/useCurrencyFormatter";
 import { useFormatRelativeDate } from "../../shared/hooks/useFormatRelativeDate";
 
 interface LatestOrdersProps {
-	orders?: RouterOutputs["analytics"]["fetch"]["latestOrders"];
+	orders?: RouterOutputs["dashboard"]["analytics"]["latestOrders"];
 }
 
 // FIXME: Temporary UI
@@ -21,7 +21,7 @@ export const LatestOrders: React.FC<LatestOrdersProps> = ({ orders }) => {
 				Latest orders
 			</dt>
 			<dd className="mt-2 flex flex-col">
-				{orders ? (
+				{!orders || orders.length < 1 ? (
 					<p className="text-semibold text-lg text-slate-700">No orders yet</p>
 				) : (
 					orders?.map((order, i) => (

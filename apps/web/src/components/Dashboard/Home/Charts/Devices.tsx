@@ -2,14 +2,14 @@ import type { ApexOptions } from "apexcharts";
 import dynamic from "next/dynamic";
 import React, { useMemo } from "react";
 
-import type { RouterOutputs } from "../../../utils/trpc";
+import type { RouterOutputs } from "../../../../utils/trpc";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
 	ssr: false,
 });
 
 interface ChartDevicesProps {
-	data?: RouterOutputs["analytics"]["fetch"]["device_types"];
+	data?: RouterOutputs["dashboard"]["analytics"]["device_types"];
 }
 
 export const ChartDevices: React.FC<ChartDevicesProps> = ({ data }) => {

@@ -20,7 +20,7 @@ import { ProfitThisDay } from "./ProfitThisDay";
 type ChartType = "views" | "referrers" | "browsers" | "devices";
 
 export const Dashboard: NextPageWithLayout = () => {
-	const { data, isLoading, isError } = trpc.analytics.fetch.useQuery(
+	const { data, isLoading, isError } = trpc.dashboard.analytics.useQuery(
 		undefined,
 		{
 			refetchOnWindowFocus: false,

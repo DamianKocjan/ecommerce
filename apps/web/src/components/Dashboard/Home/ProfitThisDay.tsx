@@ -25,7 +25,7 @@ const SHORT_MONTHS = [
 
 interface ProfitThisDayProps {
 	totalProfitToday: string;
-	totalProfitWeekPerDay?: RouterOutputs["analytics"]["fetch"]["totalProfitWeekPerDay"];
+	totalProfitWeekPerDay?: RouterOutputs["dashboard"]["analytics"]["totalProfitWeekPerDay"];
 }
 
 export const ProfitThisDay: React.FC<ProfitThisDayProps> = ({
