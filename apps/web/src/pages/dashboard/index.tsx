@@ -1,13 +1,13 @@
 import { getServerSession } from "@ecommerce/auth";
 import { Role } from "@ecommerce/db";
 import { GetServerSideProps } from "next";
-import { Dashboard } from "../../components/Dashboard";
 
 export default Dashboard;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	const { req, res } = context;
 	const session = await getServerSession({ req, res });
+import { Dashboard } from "../../components/Dashboard/Home";
 
 	if (!session) {
 		return {

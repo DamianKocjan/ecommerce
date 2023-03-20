@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 
-import type { NextPageWithLayout } from "../../pages/_app";
-import { trpc } from "../../utils/trpc";
-import { Spinner } from "../shared/core/Spinner";
-import { useCompactNumberFormatter } from "../shared/hooks/useCompactNumberFormatter";
-import { useCurrencyFormatter } from "../shared/hooks/useCurrencyFormatter";
-import { Container, DashboardLayout } from "../shared/layout/DashboardLayout";
-import { classNames } from "../shared/utils/classnames";
+import type { NextPageWithLayout } from "../../../pages/_app";
+import { trpc } from "../../../utils/trpc";
+import { Spinner } from "../../shared/core/Spinner";
+import { useCompactNumberFormatter } from "../../shared/hooks/useCompactNumberFormatter";
+import { useCurrencyFormatter } from "../../shared/hooks/useCurrencyFormatter";
+import {
+	Container,
+	DashboardLayout,
+} from "../../shared/layout/DashboardLayout";
+import { classNames } from "../../shared/utils/classnames";
 import { ChartBrowsers } from "./Charts/Browsers";
 import { ChartDevices } from "./Charts/Devices";
 import { ChartReferrers } from "./Charts/Referrers";
