@@ -1,29 +1,22 @@
 import fetch from "node-fetch";
 
 const API_URL = "https://simpleanalytics.com";
-const API_KEY = process.env.SIMPLE_ANALYTICS_API_KEY!;
-const USER_ID = process.env.SIMPLE_ANALYTICS_USER_ID!;
+const API_KEY = process.env.SIMPLE_ANALYTICS_API_KEY;
+const USER_ID = process.env.SIMPLE_ANALYTICS_USER_ID;
 
 const HOSTNAME = (
 	process.env.NEXT_PUBLIC_VERCEL_URL ?? "https://simpleanalytics.com"
-).split("://")[1]!; // "http://localhost:3000";
+).split("://")[1] as string; // "http://localhost:3000";
 
-function path(pathname: string, queryParams?: QueryParams) {
-	const url = new URL(API_URL);
-	url.pathname = pathname + ".json";
-
-	if (queryParams) {
-		Object.entries(queryParams).forEach(([key, value]) => {
-			if (value !== undefined) {
-				url.searchParams.set(key, value.toString());
-			}
-		});
+function assert(env: string | undefined): asserts env is string {
+	if (!env) {
+		throw new Error("Missing API_KEY");
 	}
-	return url.toString();
 }
 
 function headers(): Record<string, string> {
-	enforceEnv();
+	assert(API_KEY);
+	assert(USER_ID);
 
 	return {
 		"Content-Type": "application/json",
@@ -31,31 +24,6 @@ function headers(): Record<string, string> {
 		"User-Id": USER_ID,
 	};
 }
-
-function enforceEnv() {
-	if (!API_KEY) {
-		throw new Error("Missing API_KEY");
-	}
-	if (!USER_ID) {
-		throw new Error("Missing USER_ID");
-	}
-}
-
-// DOCS: https://docs.simpleanalytics.com/api/stats#query-parameters
-type QueryParams = {
-	version: 5;
-	start?: string;
-	end?: string;
-	limit?: number;
-	timezone?: string;
-	info?: boolean;
-	events?: "*" | string;
-	fields?: string;
-};
-
-type QueryFilters = {
-	page?: string;
-};
 
 interface HistogramPoint {
 	date: string;
@@ -91,7 +59,7 @@ interface Analytics {
 
 export async function fetchAnalytics() {
 	const res = await fetch(
-		"https://simpleanalytics.com/simpleanalytics.com.json?version=4&fields=histogram,pageviews,referrers,device_types,browser_names",
+		`${API_URL}/${HOSTNAME}.json?version=4&fields=histogram,pageviews,referrers,device_types,browser_names`,
 		{
 			headers: headers(),
 		},
