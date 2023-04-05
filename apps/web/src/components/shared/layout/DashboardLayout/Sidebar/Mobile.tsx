@@ -62,10 +62,10 @@ export const SidebarMobile: React.FC = () => {
 								{navigation.map((item) => (
 									<MenuItem
 										key={item.name}
-										href={item.href}
-										isCurrent={item.current}
 										name={item.name}
+										href={item.href}
 										icon={item.icon}
+										path={item.path}
 									/>
 								))}
 							</nav>

@@ -1,20 +1,27 @@
 import Link from "next/link";
-import React from "react";
+import React, { useMemo } from "react";
+
 import { classNames } from "../../../utils/classnames";
+import { useSidebar, type Path } from "./store";
 
 export interface MenuItemProps {
-	isCurrent: boolean;
 	name: string;
 	href: string;
 	icon: React.FC<{ className?: string }>;
+	path: string;
 }
 
 export const MenuItem: React.FC<MenuItemProps> = ({
-	isCurrent,
 	name,
 	href,
 	icon: Icon,
+	path,
 }) => {
+	const currentPath = useSidebar((state) => state.currentPath);
+	const isCurrent = useMemo(() => currentPath === path, [currentPath, path]);
+
+	const setCurrentPath = useSidebar((state) => state.setCurrentPath);
+
 	return (
 		<Link
 			key={name}
@@ -25,6 +32,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
 					: "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
 				"group flex items-center px-2 py-2 text-sm font-medium",
 			)}
+			onClick={() => setCurrentPath(path as Path)}
 		>
 			<Icon
 				className={classNames(

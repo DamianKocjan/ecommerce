@@ -2,6 +2,7 @@ import React from "react";
 import { Flex } from "../../core/Flex";
 import { Nav } from "./Nav";
 import { Sidebar, SidebarMobile } from "./Sidebar";
+import { useCurrentPath } from "./Sidebar/store";
 
 export interface DashboardLayoutProps {
 	children: React.ReactNode;
@@ -10,6 +11,8 @@ export interface DashboardLayoutProps {
 export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
 	children,
 }) => {
+	useCurrentPath();
+
 	return (
 		<div className="min-h-screen">
 			<div>
