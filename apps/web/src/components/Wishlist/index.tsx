@@ -1,11 +1,13 @@
 import { useRouter } from "next/router";
-import { useMemo } from "react";
 
 import { NextPageWithLayout } from "../../pages/_app";
 import { trpc } from "../../utils/trpc";
 import { EmptyState } from "../shared/core/EmptyState";
 import { PrettyContainer } from "../shared/core/PrettyContainer";
-import { useFilter } from "../shared/layout/Products/Filter/store";
+import {
+	useFilter,
+	useParsedFilters,
+} from "../shared/layout/Products/Filter/store";
 import { Filters } from "../shared/layout/Products/Filters";
 import { ProductsList } from "../shared/layout/Products/List";
 import { ListFooter } from "../shared/layout/Products/ListFooter";
@@ -21,18 +23,7 @@ export const Wishlist: NextPageWithLayout = () => {
 	const [page, setPage] = usePage();
 
 	const filters = useFilter((state) => state.filters);
-
-	const parsedFilters = useMemo(() => {
-		const parsed: Record<string, unknown> = {};
-
-		for (const [key, value] of Object.entries(filters)) {
-			const isValid = Array.isArray(value) ? value.length > 0 : value;
-			if (isValid) {
-				parsed[key] = value;
-			}
-		}
-		return parsed;
-	}, [filters]);
+	const parsedFilters = useParsedFilters(filters);
 
 	const context = trpc.useContext();
 	const wishlisted = trpc.wishlist.all.useQuery(

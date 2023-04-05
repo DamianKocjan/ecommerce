@@ -1,13 +1,15 @@
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
 
 import { NextPageWithLayout } from "../../pages/_app";
 import { trpc } from "../../utils/trpc";
 import { EmptyState } from "../shared/core/EmptyState";
 import { Flex } from "../shared/core/Flex";
 import { useMediaQuery } from "../shared/hooks/useMediaQuery";
-import { useFilter } from "../shared/layout/Products/Filter/store";
+import {
+	useFilter,
+	useParsedFilters,
+} from "../shared/layout/Products/Filter/store";
 import { Filters } from "../shared/layout/Products/Filters";
 import { ProductsList } from "../shared/layout/Products/List";
 import { ListFooter } from "../shared/layout/Products/ListFooter";
@@ -33,18 +35,7 @@ export const Category: NextPageWithLayout<{ previousUrl?: string }> = ({
 	const [page, setPage] = usePage();
 
 	const filters = useFilter((state) => state.filters);
-
-	const parsedFilters = useMemo(() => {
-		const parsed: Record<string, unknown> = {};
-
-		for (const [key, value] of Object.entries(filters)) {
-			const isValid = Array.isArray(value) ? value.length > 0 : value;
-			if (isValid) {
-				parsed[key] = value;
-			}
-		}
-		return parsed;
-	}, [filters]);
+	const parsedFilters = useParsedFilters(filters);
 
 	const products = trpc.product.all.useQuery(
 		{

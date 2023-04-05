@@ -1,5 +1,6 @@
 import type { Season } from "@ecommerce/db";
 import create from "zustand";
+import { useMemo } from "react";
 
 export type Filters = keyof FilterState["filters"];
 export type SortBy =
@@ -47,3 +48,17 @@ export const useFilter = create<FilterState>((set) => ({
 			},
 		})),
 }));
+
+export function useParsedFilters(filters: FilterState["filters"]) {
+	return useMemo(() => {
+		const parsed: Record<string, unknown> = {};
+
+		for (const [key, value] of Object.entries(filters)) {
+			const isValid = Array.isArray(value) ? value.length > 0 : value;
+			if (isValid) {
+				parsed[key] = value;
+			}
+		}
+		return parsed;
+	}, [filters]);
+}
