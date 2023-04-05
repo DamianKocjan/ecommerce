@@ -47,6 +47,12 @@ export const Catalog: NextPageWithLayout<{ previousUrl?: string }> = ({
 		},
 		{
 			refetchOnWindowFocus: false,
+			onSuccess(data) {
+				const lastPage = data.meta.lastPage;
+				if (lastPage < page) {
+					setPage(lastPage);
+				}
+			},
 		},
 	);
 

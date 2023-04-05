@@ -35,7 +35,7 @@ export const Wishlist: NextPageWithLayout = () => {
 		},
 		{
 			refetchOnWindowFocus: false,
-			onSuccess({ data }) {
+			onSuccess({ data, meta }) {
 				data.map(({ id, product: { id: productId } }) => {
 					context.wishlist.isIn.setData(
 						{
@@ -44,6 +44,11 @@ export const Wishlist: NextPageWithLayout = () => {
 						id,
 					);
 				});
+
+				const lastPage = meta.lastPage;
+				if (lastPage < page) {
+					setPage(lastPage);
+				}
 			},
 		},
 	);
