@@ -1,3 +1,4 @@
+import { type Icon } from "@phosphor-icons/react";
 import Link from "next/link";
 import React, { useMemo } from "react";
 
@@ -7,8 +8,8 @@ import { useSidebar, type Path } from "./store";
 export interface MenuItemProps {
 	name: string;
 	href: string;
-	icon: React.FC<{ className?: string }>;
-	path: string;
+	icon: Icon;
+	path: Path;
 }
 
 export const MenuItem: React.FC<MenuItemProps> = ({
@@ -18,9 +19,9 @@ export const MenuItem: React.FC<MenuItemProps> = ({
 	path,
 }) => {
 	const currentPath = useSidebar((state) => state.currentPath);
-	const isCurrent = useMemo(() => currentPath === path, [currentPath, path]);
-
 	const setCurrentPath = useSidebar((state) => state.setCurrentPath);
+
+	const isCurrent = useMemo(() => currentPath === path, [currentPath, path]);
 
 	return (
 		<Link
@@ -32,7 +33,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
 					: "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
 				"group flex items-center px-2 py-2 text-sm font-medium",
 			)}
-			onClick={() => setCurrentPath(path as Path)}
+			onClick={() => setCurrentPath(path)}
 		>
 			<Icon
 				className={classNames(
