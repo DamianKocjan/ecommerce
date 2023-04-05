@@ -2,7 +2,12 @@ import { useCallback, useSyncExternalStore } from "react";
 import { PER_PAGE } from "./PerPage";
 
 function getSnapshot() {
-	return Number(window.localStorage.getItem("perPage")) ?? PER_PAGE[0];
+	const value = Number(window.localStorage.getItem("perPage"));
+
+	if (value) {
+		return value;
+	}
+	return PER_PAGE[0];
 }
 
 function getServerSnapshot() {
