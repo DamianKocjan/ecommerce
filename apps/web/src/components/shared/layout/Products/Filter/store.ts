@@ -1,6 +1,6 @@
 import type { Season } from "@ecommerce/db";
-import create from "zustand";
 import { useMemo } from "react";
+import { create } from "zustand";
 
 export type Filters = keyof FilterState["filters"];
 export type SortBy =
