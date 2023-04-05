@@ -91,6 +91,7 @@ importers:
       '@tailwindcss/line-clamp': ^0.4.2
       '@tailwindcss/typography': ^0.5.8
       '@tanstack/react-query': ^4.22.0
+      '@tanstack/react-table': ^8.8.5
       '@trpc/client': ^10.5.0
       '@trpc/next': ^10.8.1
       '@trpc/react-query': ^10.8.1
@@ -130,6 +131,7 @@ importers:
       '@hookform/resolvers': 2.9.10_react-hook-form@7.41.5
       '@phosphor-icons/react': 2.0.5_biqbaboplfbrettd7655fr4n2y
       '@tanstack/react-query': 4.22.0_biqbaboplfbrettd7655fr4n2y
+      '@tanstack/react-table': 8.8.5_biqbaboplfbrettd7655fr4n2y
       '@trpc/client': 10.8.1_@trpc+server@10.8.1
       '@trpc/next': 10.8.1_qbmjv4atvl23vi6tsmtzsx2b4i
       '@trpc/react-query': 10.8.1_krdvppocpp5g6rpv2pnlhwexoi
@@ -3745,6 +3747,23 @@ packages:
       react-dom: 18.2.0_react@18.2.0
       react-native: 0.71.0-rc.0_oo5no556diumlvgcr27pvljqai
       use-sync-external-store: 1.2.0_react@18.2.0
+    dev: false
+
+  /@tanstack/react-table/8.8.5_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-g/t21E/ICHvaCOJOhsDNr5QaB/6aDQEHFbx/YliwwU/CJThMqG+dS28vnToIBV/5MBgpeXoGRi2waDJVJlZrtg==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      '@tanstack/table-core': 8.8.5
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /@tanstack/table-core/8.8.5:
+    resolution: {integrity: sha512-Xnwa1qxpgvSW7ozLiexmKp2PIYcLBiY/IizbdGriYCL6OOHuZ9baRhrrH51zjyz+61ly6K59rmt6AI/3RR+97Q==}
+    engines: {node: '>=12'}
     dev: false
 
   /@trpc/client/10.8.1_@trpc+server@10.8.1:

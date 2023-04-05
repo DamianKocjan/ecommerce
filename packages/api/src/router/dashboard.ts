@@ -1,7 +1,9 @@
-import type { PrismaClient } from "@ecommerce/db";
+import type { Prisma, PrismaClient } from "@ecommerce/db";
+import { z } from "zod";
 
 import { fetchAnalytics } from "../analytics/fetch";
 import { assertIsAdmin } from "../helpers/auth";
+import { getPreviousPage } from "../helpers/pagination";
 import { protectedProcedure, router } from "../trpc";
 
 type Profit = {
@@ -89,4 +91,123 @@ export const dashboardRouter = router({
 			latestOrders,
 		};
 	}),
+	products: protectedProcedure
+		.input(
+			z.object({
+				q: z.string().optional(),
+				perPage: z.number().min(1),
+				page: z.number().optional().default(0),
+			}),
+		)
+		.query(async ({ ctx, input }) => {
+			const { page, perPage, q } = input;
+
+			const where = q
+				? ({
+						OR: [
+							{
+								title: {
+									contains: q,
+									mode: "insensitive",
+								},
+							},
+							{
+								shortDescription: {
+									contains: q,
+									mode: "insensitive",
+								},
+							},
+							{
+								description: {
+									contains: q,
+									mode: "insensitive",
+								},
+							},
+						],
+				  } satisfies Prisma.ProductWhereInput)
+				: undefined;
+
+			const skip = page > 0 ? perPage * (page - 1) : 0;
+			const [total, data] = await ctx.prisma.$transaction([
+				ctx.prisma.product.count({
+					where,
+				}),
+				ctx.prisma.product.findMany({
+					where,
+					skip,
+					take: perPage,
+					orderBy: {
+						createdAt: "desc",
+					},
+					select: {
+						id: true,
+						slug: true,
+						title: true,
+						price: true,
+						discount: true,
+						manufacturer: {
+							select: {
+								id: true,
+								name: true,
+							},
+						},
+						quantity: true,
+					},
+				}),
+			]);
+
+			const lastPage = Math.ceil(total / perPage);
+
+			return {
+				results: data.map((item) => ({
+					...item,
+					price: item.price.toNumber(),
+					discount: item.discount?.toNumber(),
+				})),
+				meta: {
+					total,
+					lastPage,
+					currentPage: page,
+					perPage,
+					prev: getPreviousPage({ page, lastPage }),
+					next: page < lastPage ? page + 1 : undefined,
+				},
+			};
+		}),
+	productSearch: protectedProcedure
+		.input(z.string())
+		.query(async ({ ctx, input }) => {
+			const products = await ctx.prisma.product.findMany({
+				where: {
+					OR: [
+						{
+							title: {
+								contains: input,
+								mode: "insensitive",
+							},
+						},
+						{
+							shortDescription: {
+								contains: input,
+								mode: "insensitive",
+							},
+						},
+						{
+							description: {
+								contains: input,
+								mode: "insensitive",
+							},
+						},
+					],
+				},
+				take: 5,
+				select: {
+					id: true,
+					title: true,
+					slug: true,
+				},
+			});
+
+			return products;
+		}),
 });
