@@ -30,7 +30,7 @@ interface PaginationProps {
 }
 
 export const Pagination: React.FC<PaginationProps> = ({ meta }) => {
-	const { next, prev } = usePagination();
+	const { next, prev, page } = usePagination();
 
 	return (
 		<Flex items="center">
@@ -44,7 +44,7 @@ export const Pagination: React.FC<PaginationProps> = ({ meta }) => {
 					<CaretLeft className="h-4 w-4" weight="bold" />
 				</IconButton>
 				<span className="font-mono font-bold text-gray-900">
-					{meta?.currentPage ?? 1}
+					{meta?.currentPage ?? page}
 				</span>
 				<IconButton intent="secondary" onClick={next} disabled={!meta?.next}>
 					<span className="sr-only">Next page</span>
