@@ -14,11 +14,9 @@ const td = cva("whitespace-nowrap px-4 py-2 text-gray-700", {
 type TdProps = React.HTMLAttributes<HTMLTableCellElement> &
 	VariantProps<typeof td>;
 
-const _Td: React.FC<TdProps> = ({ className, align, ...props }) => {
+export const Td = memo<TdProps>(function Td({ className, align, ...props }) {
 	return <td className={td({ align, class: className })} {...props} />;
-};
-
-export const Td = memo(_Td);
+});
 
 const th = cva("whitespace-nowrap px-4 py-2 text-gray-900", {
 	variants: {
@@ -33,37 +31,31 @@ const th = cva("whitespace-nowrap px-4 py-2 text-gray-900", {
 type ThProps = React.HTMLAttributes<HTMLTableCellElement> &
 	VariantProps<typeof th>;
 
-const _Th: React.FC<ThProps> = ({ className, align, ...props }) => {
+export const Th = memo<ThProps>(function Th({ className, align, ...props }) {
 	return <th className={th({ align, class: className })} {...props} />;
-};
-
-export const Th = memo(_Th);
+});
 
 type WithChildren<T = unknown> = T & { children: React.ReactNode };
 
 type THeadProps = WithChildren;
 
-const _THead: React.FC<THeadProps> = ({ children }) => {
+export const THead = memo<THeadProps>(function THead({ children }) {
 	return <thead>{children}</thead>;
-};
-
-export const THead = memo(_THead);
+});
 
 type TBodyProps = WithChildren<React.HTMLAttributes<HTMLTableSectionElement>>;
 
-const _TBody: React.FC<TBodyProps> = ({ children, ...props }) => {
+export const TBody = memo<TBodyProps>(function TBody({ children, ...props }) {
 	return (
 		<tbody className="divide-y divide-gray-200" {...props}>
 			{children}
 		</tbody>
 	);
-};
-
-export const TBody = memo(_TBody);
+});
 
 type TableProps = WithChildren<React.HTMLAttributes<HTMLTableElement>>;
 
-const _Table: React.FC<TableProps> = ({ children, ...props }) => {
+export const Table = memo<TableProps>(function Table({ children, ...props }) {
 	return (
 		<div className="overflow-x-auto">
 			<table
@@ -74,6 +66,4 @@ const _Table: React.FC<TableProps> = ({ children, ...props }) => {
 			</table>
 		</div>
 	);
-};
-
-export const Table = memo(_Table);
+});
