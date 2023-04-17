@@ -17,8 +17,6 @@ type NavigationItem = {
 };
 
 export const navigation = [
-	{ name: "Dashboard", href: "/dashboard", icon: House, current: true },
-	{ name: "Sales", href: "/dashboard/sales", icon: Package, current: false },
 	{ name: "Dashboard", href: "/dashboard", icon: House, path: "HOME" },
 	{ name: "Sales", href: "/dashboard/sales", icon: Package, path: "SALES" },
 	{

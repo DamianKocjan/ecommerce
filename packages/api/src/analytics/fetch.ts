@@ -76,3 +76,23 @@ export async function fetchAnalytics() {
 		device_types,
 	};
 }
+
+type ProductAnalytics = Omit<Analytics, "browser_names" | "device_types">;
+
+export async function fetchProductAnalytics(slug: string) {
+	const res = await fetch(
+		`${API_URL}/${HOSTNAME}/products/${slug}.json?version=4&fields=histogram,pageviews,referrers`,
+		{
+			headers: headers(),
+		},
+	);
+
+	const { pageviews, histogram, referrers } =
+		(await res.json()) as ProductAnalytics;
+
+	return {
+		pageviews,
+		histogram,
+		referrers,
+	};
+}

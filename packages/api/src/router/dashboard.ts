@@ -1,7 +1,8 @@
 import type { Prisma, PrismaClient } from "@ecommerce/db";
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
-import { fetchAnalytics } from "../analytics/fetch";
+import { fetchAnalytics, fetchProductAnalytics } from "../analytics/fetch";
 import { assertIsAdmin } from "../helpers/auth";
 import { getPreviousPage } from "../helpers/pagination";
 import { protectedProcedure, router } from "../trpc";
@@ -209,5 +210,36 @@ export const dashboardRouter = router({
 			});
 
 			return products;
+		}),
+	product: protectedProcedure
+		.input(z.number())
+		.query(async ({ ctx, input }) => {
+			const product = await ctx.prisma.product.findUnique({
+				where: {
+					id: input,
+				},
+				select: {
+					id: true,
+					slug: true,
+					title: true,
+					price: true,
+					discount: true,
+					shortDescription: true,
+					thumbnailImage: true,
+				},
+			});
+			if (!product) {
+				throw new TRPCError({
+					code: "NOT_FOUND",
+					message: "Product not found",
+				});
+			}
+
+			const analytics = await fetchProductAnalytics(product.slug);
+
+			return {
+				product,
+				analytics,
+			};
 		}),
 });
