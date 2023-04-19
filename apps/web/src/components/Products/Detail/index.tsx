@@ -1,9 +1,10 @@
 import { NextSeo } from "next-seo";
 import { useState } from "react";
+import { NextPageWithLayout } from "../../../pages/_app";
 
 import { RouterOutputs } from "../../../utils/trpc";
-import { Container } from "../../shared/core/Container";
 import { Grid } from "../../shared/core/Grid";
+import { Container } from "../../shared/layout/ShopLayout/Container";
 import { ProductDescription } from "./Description";
 import { ImageGallery } from "./ImageGallery";
 import { ProductInfo } from "./Info";
@@ -13,7 +14,9 @@ export interface ProductDetailProps {
 	product: RouterOutputs["product"]["get"];
 }
 
-export function ProductDetail({ product }: ProductDetailProps) {
+export const ProductDetail: NextPageWithLayout<ProductDetailProps> = ({
+	product,
+}) => {
 	const [selectedColor, setSelectedColor] = useState(product.colors[0]);
 
 	if (!product) {
@@ -102,4 +105,4 @@ export function ProductDetail({ product }: ProductDetailProps) {
 			</div>
 		</Container>
 	);
-}
+};

@@ -1,19 +1,15 @@
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect } from "react";
 
-import { useFilter } from "../../../../../features/filter";
 import { trpc } from "../../../../../utils/trpc";
-import {
-	FilterListbox,
-	FilterListBoxButton,
-	FilterListboxOption,
-	FilterListboxOptions,
-	FilterListboxOptionsLoader,
-} from "./Listbox";
+import { cacheTime } from "./constants";
+import { FilterListbox } from "./Listbox";
+import { useFilter } from "./store";
 
 export const ColorFilter: React.FC = () => {
 	const colors = trpc.color.all.useQuery(undefined, {
 		refetchOnWindowFocus: false,
+		cacheTime,
 	});
 	const { filters, setFilter } = useFilter();
 	const router = useRouter();
@@ -71,20 +67,20 @@ export const ColorFilter: React.FC = () => {
 			value={filters?.colors || []}
 			multiple
 		>
-			<FilterListBoxButton label="Color" />
-			<FilterListboxOptions>
+			<FilterListbox.Button label="Color" />
+			<FilterListbox.Options>
 				{colors.isLoading ? (
-					<FilterListboxOptionsLoader />
+					<FilterListbox.OptionsLoader />
 				) : (
 					colors.data?.map((color) => (
-						<FilterListboxOption
+						<FilterListbox.Option
 							key={color.key}
 							label={color.value}
 							value={color.key}
 						/>
 					))
 				)}
-			</FilterListboxOptions>
+			</FilterListbox.Options>
 		</FilterListbox>
 	);
 };

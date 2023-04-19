@@ -1,7 +1,7 @@
 import {
 	Heart as HeartIcon,
 	HeartBreak as HeartBreakIcon,
-} from "phosphor-react";
+} from "@phosphor-icons/react";
 import React, { useCallback, useState } from "react";
 
 import { IconButton } from "../../core/IconButton";

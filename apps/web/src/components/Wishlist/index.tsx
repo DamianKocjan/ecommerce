@@ -1,63 +1,31 @@
 import { useRouter } from "next/router";
-import { useCallback, useMemo, useState } from "react";
 
-import { useFilter } from "../../features/filter";
+import { NextPageWithLayout } from "../../pages/_app";
 import { trpc } from "../../utils/trpc";
-import { Container } from "../shared/core/Container";
 import { EmptyState } from "../shared/core/EmptyState";
 import { PrettyContainer } from "../shared/core/PrettyContainer";
+import {
+	useFilter,
+	useParsedFilters,
+} from "../shared/layout/Products/Filter/store";
 import { Filters } from "../shared/layout/Products/Filters";
 import { ProductsList } from "../shared/layout/Products/List";
 import { ListFooter } from "../shared/layout/Products/ListFooter";
-import { PER_PAGE } from "../shared/layout/Products/ListFooter/PerPage";
+import { usePage } from "../shared/layout/Products/ListFooter/usePage";
+import { usePerPage } from "../shared/layout/Products/ListFooter/usePerPage";
+import { Container } from "../shared/layout/ShopLayout/Container";
 
-export function Wishlist() {
+export const Wishlist: NextPageWithLayout = () => {
 	const router = useRouter();
 	const query = router.query["q"] as string;
-	const queryPage = router.query["page"] as string;
 
-	const [perPage, setPerPage] = useState(
-		typeof window !== "undefined"
-			? Number(window.localStorage.getItem("perPage")) || PER_PAGE[0]!
-			: PER_PAGE[0]!,
-	);
-	const [page, setPage] = useState<number | undefined>(
-		queryPage ? parseInt(queryPage, 10) : undefined,
-	);
-
-	const handleSetPage = useCallback(
-		(page: number | undefined) => {
-			setPage(page);
-			void router.push(
-				{
-					query: { ...router.query, page },
-				},
-				undefined,
-				{ shallow: true },
-			);
-		},
-		[router],
-	);
-
-	const handlePerPageChange = useCallback((value: number) => {
-		setPerPage(value);
-		window.localStorage.setItem("perPage", value.toString());
-	}, []);
+	const [perPage, handlePerPageChange] = usePerPage();
+	const [page, setPage] = usePage();
 
 	const filters = useFilter((state) => state.filters);
+	const parsedFilters = useParsedFilters(filters);
 
-	const parsedFilters = useMemo(() => {
-		const parsed: Record<string, unknown> = {};
-
-		for (const [key, value] of Object.entries(filters)) {
-			const isValid = Array.isArray(value) ? value.length > 0 : value;
-			if (isValid) {
-				parsed[key] = value;
-			}
-		}
-		return parsed;
-	}, [filters]);
-
+	const context = trpc.useContext();
 	const wishlisted = trpc.wishlist.all.useQuery(
 		{
 			q: query,
@@ -67,6 +35,21 @@ export function Wishlist() {
 		},
 		{
 			refetchOnWindowFocus: false,
+			onSuccess({ data, meta }) {
+				data.map(({ id, product: { id: productId } }) => {
+					context.wishlist.isIn.setData(
+						{
+							productId,
+						},
+						id,
+					);
+				});
+
+				const lastPage = meta.lastPage;
+				if (lastPage < page) {
+					setPage(lastPage);
+				}
+			},
 		},
 	);
 
@@ -76,7 +59,7 @@ export function Wishlist() {
 				<h1 className="text-3xl">Your wishlist</h1>
 			</PrettyContainer>
 			<div className="my-2 mx-4">
-				<Filters />
+				<Filters hideCategories />
 				{!wishlisted.isLoading && wishlisted.data?.data.length === 0 ? (
 					<EmptyState
 						title="No wishlisted products found"
@@ -93,8 +76,8 @@ export function Wishlist() {
 						<ListFooter
 							handlePerPageChange={handlePerPageChange}
 							perPage={perPage}
-							setPage={handleSetPage}
-							currentPage={wishlisted.data?.meta.currentPage}
+							setPage={setPage}
+							currentPage={page}
 							nextPage={wishlisted.data?.meta.next}
 							previousPage={wishlisted.data?.meta.prev}
 						/>
@@ -103,4 +86,4 @@ export function Wishlist() {
 			</div>
 		</Container>
 	);
-}
+};

@@ -50,7 +50,9 @@ export function useMediaQuery(size: Sizes, useMax = false) {
 	// Always render on the server, and depend on classNames to hide it visually:
 	const [matches, setMatches] = useState(() =>
 		// Always render on the server, and depend on classNames to hide it visually:
-		typeof window !== "undefined" ? window.matchMedia(mediaQuery).matches : true
+		typeof window !== "undefined"
+			? window.matchMedia(mediaQuery).matches
+			: true,
 	);
 
 	useEffect(() => {

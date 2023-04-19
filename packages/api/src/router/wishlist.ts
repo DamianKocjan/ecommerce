@@ -4,6 +4,7 @@ import { z } from "zod";
 
 import {
 	getOrderBy,
+	getPreviousPage,
 	productPaginationWithFilters,
 	productPaginationWithFiltersSchema,
 } from "../helpers/pagination";
@@ -23,7 +24,10 @@ export const wishlistRouter = router({
 					userId: ctx.session.user?.id,
 				},
 			});
-			return wishlist?.id;
+			if (wishlist) {
+				return wishlist.id;
+			}
+			return null;
 		}),
 	add: protectedProcedure
 		.input(
@@ -32,6 +36,16 @@ export const wishlistRouter = router({
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
+			const wishlistedProduct = await ctx.prisma.wishlist.findFirst({
+				where: {
+					productId: input.productId,
+					userId: ctx.session.user?.id,
+				},
+			});
+			if (wishlistedProduct) {
+				return wishlistedProduct.id;
+			}
+
 			const wishlist = await ctx.prisma.wishlist.create({
 				data: {
 					user: {
@@ -140,7 +154,7 @@ export const wishlistRouter = router({
 					lastPage,
 					currentPage: page,
 					perPage,
-					prev: page > 1 ? page - 1 : undefined,
+					prev: getPreviousPage({ page, lastPage }),
 					next: page < lastPage ? page + 1 : undefined,
 				},
 			};

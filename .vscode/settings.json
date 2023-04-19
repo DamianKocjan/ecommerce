@@ -1,22 +1,22 @@
 {
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true,
-  "eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
-  "tailwindCSS.experimental.classRegex": [
-    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
-  ],
-  "tailwindCSS.classAttributes": [
-    "class",
-    "className",
-    "enter",
-    "enterFrom",
-    "enterTo",
-    "leave",
-    "leaveFrom",
-    "leaveTo"
-  ],
-  "typescript.tsdk": "node_modules/typescript/lib"
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true
+	},
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.formatOnSave": true,
+	"eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
+	"tailwindCSS.experimental.classRegex": [
+		["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
+	],
+	"tailwindCSS.classAttributes": [
+		"class",
+		"className",
+		"enter",
+		"enterFrom",
+		"enterTo",
+		"leave",
+		"leaveFrom",
+		"leaveTo"
+	],
+	"typescript.tsdk": "node_modules/typescript/lib"
 }

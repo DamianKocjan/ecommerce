@@ -1,6 +1,11 @@
 import { Listbox } from "@headlessui/react";
 import React from "react";
 
+import { FilterListboxButton } from "./Button";
+import { FilterListboxOptionsLoader } from "./Loader";
+import { FilterListboxOption } from "./Option";
+import { FilterListboxOptions } from "./Options";
+
 // TODO: generics type for value and onChange
 export interface FilterListboxProps {
 	value: unknown;
@@ -9,7 +14,14 @@ export interface FilterListboxProps {
 	children: React.ReactNode;
 }
 
-export const FilterListbox: React.FC<FilterListboxProps> = ({
+export type FilterListbox = React.FC<FilterListboxProps> & {
+	Button: typeof FilterListboxButton;
+	Options: typeof FilterListboxOptions;
+	Option: typeof FilterListboxOption;
+	OptionsLoader: typeof FilterListboxOptionsLoader;
+};
+
+export const FilterListbox: FilterListbox = ({
 	value,
 	onChange,
 	multiple,
@@ -17,12 +29,14 @@ export const FilterListbox: React.FC<FilterListboxProps> = ({
 }) => {
 	return (
 		<Listbox value={value} onChange={onChange} multiple={multiple}>
-			<div className="relative w-fit">{children}</div>
+			<div className="relative flex w-fit items-center justify-center">
+				{children}
+			</div>
 		</Listbox>
 	);
 };
 
-export * from "./Button";
-export * from "./Loader";
-export * from "./Option";
-export * from "./Options";
+FilterListbox.Button = FilterListboxButton;
+FilterListbox.Options = FilterListboxOptions;
+FilterListbox.Option = FilterListboxOption;
+FilterListbox.OptionsLoader = FilterListboxOptionsLoader;

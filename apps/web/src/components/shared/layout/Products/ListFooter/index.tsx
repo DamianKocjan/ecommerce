@@ -5,10 +5,10 @@ import { Pagination } from "./Pagination";
 import { PerPage } from "./PerPage";
 
 export interface ListFooterProps {
-	handlePerPageChange: (value: number) => void;
+	handlePerPageChange: (perPage: number) => void;
 	perPage: number;
-	setPage: (value?: number) => void;
-	currentPage?: number;
+	setPage: (page?: number) => void;
+	currentPage: number;
 	previousPage?: number;
 	nextPage?: number;
 }

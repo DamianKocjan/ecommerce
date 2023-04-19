@@ -1,7 +1,9 @@
 import { useSession } from "next-auth/react";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 
 import { trpc } from "../../../../utils/trpc";
+
+const cacheTime = 1000 * 60 * 60 * 24 * 7; // 7 days
 
 export function useWishlist(productId: number) {
 	const { data: session } = useSession();
@@ -10,10 +12,13 @@ export function useWishlist(productId: number) {
 	const isInWishlistQuery = trpc.wishlist.isIn.useQuery(
 		{ productId },
 		{
+			refetchOnMount: false,
 			refetchOnWindowFocus: false,
-			enabled: false,
+			initialData: null,
+			cacheTime,
 		},
 	);
+	const context = trpc.useContext();
 
 	const handleToggleWishlist = useCallback(() => {
 		if (!session) {
@@ -24,32 +29,39 @@ export function useWishlist(productId: number) {
 			removeFromWishlist.mutate(
 				{ id: isInWishlistQuery.data },
 				{
-					onSuccess: () => void isInWishlistQuery.refetch(),
+					onSuccess: () => {
+						context.wishlist.isIn.setData(
+							{
+								productId,
+							},
+							null,
+						);
+					},
 				},
 			);
 		} else {
 			addToWishlist.mutate(
 				{ productId },
 				{
-					onSuccess: () => void isInWishlistQuery.refetch(),
+					onSuccess: (data) => {
+						context.wishlist.isIn.setData(
+							{
+								productId,
+							},
+							data,
+						);
+					},
 				},
 			);
 		}
 	}, [
-		productId,
 		session,
-		addToWishlist,
-		removeFromWishlist,
 		isInWishlistQuery,
+		removeFromWishlist,
+		context.wishlist.isIn,
+		productId,
+		addToWishlist,
 	]);
-
-	useEffect(() => {
-		if (!session) {
-			return;
-		}
-
-		void isInWishlistQuery.refetch();
-	}, [isInWishlistQuery, session]);
 
 	return {
 		handleToggleWishlist,

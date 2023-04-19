@@ -1,26 +1,36 @@
+import type { NextPage } from "next";
 import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { DefaultSeo } from "next-seo";
 import { ThemeProvider } from "next-themes";
-import type { AppType } from "next/app";
+import type { AppProps } from "next/app";
+import React from "react";
 
-import { Nav } from "../components/App/Nav";
+import { Analytics } from "../components/App/Analytics";
 import { NProgress } from "../components/App/NProgress";
-import { SubNav } from "../components/App/SubNav";
+import { ShopLayout } from "../components/shared/layout/ShopLayout";
 import "../styles/globals.css";
 import { trpc } from "../utils/trpc";
 
-const App: AppType<{ session: Session | null }> = ({
-	Component,
-	pageProps: { session, ...pageProps },
-}) => {
+export type NextPageWithLayout<P = unknown> = NextPage<P> & {
+	getLayout?: (page: React.ReactElement) => React.ReactNode;
+};
+
+type AppPropsWithLayout = AppProps<{ session: Session | null }> & {
+	Component: NextPageWithLayout;
+};
+
+function App({ Component, pageProps }: AppPropsWithLayout) {
+	const getLayout =
+		Component.getLayout ?? ((page) => <ShopLayout>{page}</ShopLayout>);
+
 	return (
 		<ThemeProvider
 			storageKey="preferred-theme"
 			attribute="class"
 			forcedTheme="light"
 		>
-			<SessionProvider session={session}>
+			<SessionProvider session={pageProps.session}>
 				<DefaultSeo
 					additionalMetaTags={[
 						{
@@ -60,16 +70,13 @@ const App: AppType<{ session: Session | null }> = ({
 					}}
 				/>
 
+				<Analytics />
 				<NProgress />
-				<Nav />
-				<SubNav />
 
-				<main>
-					<Component {...pageProps} />
-				</main>
+				{getLayout(<Component {...pageProps} />)}
 			</SessionProvider>
 		</ThemeProvider>
 	);
-};
+}
 
 export default trpc.withTRPC(App);

@@ -14,6 +14,8 @@ export const serverSchema = z.object({
 	DATABASE_URL: z.string(),
 	AWS_S3_IAM_ACCESS: z.string(),
 	AWS_S3_IAM_SECRET: z.string(),
+	SIMPLE_ANALYTICS_USER_ID: z.string(),
+	SIMPLE_ANALYTICS_API_KEY: z.string(),
 });
 
 /**

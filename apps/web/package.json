@@ -16,11 +16,14 @@
 		"@ecommerce/tailwind-config": "*",
 		"@headlessui/react": "^1.7.7",
 		"@hookform/resolvers": "^2.9.10",
+		"@phosphor-icons/react": "^2.0.5",
 		"@tanstack/react-query": "^4.22.0",
+		"@tanstack/react-table": "^8.8.5",
 		"@trpc/client": "^10.5.0",
 		"@trpc/next": "^10.8.1",
 		"@trpc/react-query": "^10.8.1",
 		"@trpc/server": "^10.5.0",
+		"apexcharts": "^3.37.1",
 		"class-variance-authority": "^0.4.0",
 		"framer-motion": "^8.2.4",
 		"next": "^13.1.1",
@@ -28,12 +31,12 @@
 		"next-seo": "^5.15.0",
 		"next-themes": "^0.2.1",
 		"nprogress": "^0.2.0",
-		"phosphor-react": "^1.4.1",
 		"react": "18.2.0",
+		"react-apexcharts": "^1.4.0",
 		"react-dom": "18.2.0",
 		"react-hook-form": "^7.41.5",
 		"zod": "^3.20.2",
-		"zustand": "^4.2.0"
+		"zustand": "^4.3.7"
 	},
 	"devDependencies": {
 		"@tailwindcss/aspect-ratio": "^0.4.2",
@@ -59,7 +62,9 @@
 		],
 		"rules": {
 			"@typescript-eslint/unbound-method": "off",
-			"@typescript-eslint/ban-ts-comment": "warn"
+			"@typescript-eslint/ban-ts-comment": "warn",
+			"@typescript-eslint/require-await": "warn",
+			"no-mixed-spaces-and-tabs": "warn"
 		}
 	}
 }

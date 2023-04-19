@@ -1,29 +1,37 @@
+import { Combobox } from "@headlessui/react";
+import { List } from "@phosphor-icons/react";
 import { useRouter } from "next/router";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 
-import { useFilter } from "../../../../../features/filter";
 import { trpc } from "../../../../../utils/trpc";
-import {
-	FilterListbox,
-	FilterListBoxButton,
-	FilterListboxOption,
-	FilterListboxOptions,
-	FilterListboxOptionsLoader,
-} from "./Listbox";
+import { FilterComboboxOption } from "./Combobox/Option";
+import { cacheTime } from "./constants";
+import { useFilter } from "./store";
 
 export const BrandFilter: React.FC = () => {
 	const brands = trpc.brand.all.useQuery(undefined, {
 		refetchOnWindowFocus: false,
+		cacheTime,
 	});
+	const [query, setQuery] = useState("");
 	const { filters, setFilter } = useFilter();
 	const router = useRouter();
 
-	// TODO: type this
-	const handleChange = useCallback(
-		(val: unknown) => {
-			setFilter("brands", val);
+	const filteredBrands = useMemo(
+		() =>
+			query === ""
+				? brands.data
+				: brands.data?.filter((brand) =>
+						brand.value.toLowerCase().includes(query.toLowerCase()),
+				  ),
+		[brands.data, query],
+	);
 
-			if ((val as string[]).length === 0) {
+	const updateBrandFilter = useCallback(
+		(brands: number[]) => {
+			setFilter("brands", brands);
+
+			if (brands.length === 0) {
 				const query = { ...router.query };
 				delete query.brands;
 
@@ -41,14 +49,14 @@ export const BrandFilter: React.FC = () => {
 				{
 					query: {
 						...router.query,
-						brands: `[${(val as string[]).join(".")}]`,
+						brands: `[${brands.join(".")}]`,
 					},
 				},
 				undefined,
 				{ shallow: true },
 			);
 		},
-		[setFilter, router],
+		[router, setFilter],
 	);
 
 	useEffect(() => {
@@ -65,26 +73,45 @@ export const BrandFilter: React.FC = () => {
 		}
 	}, [router.query, setFilter]);
 
+	const disabled = brands.isLoading || !brands.data || !brands.data.length;
+
 	return (
-		<FilterListbox
-			onChange={handleChange}
-			value={filters?.brands || []}
+		<Combobox
+			as="div"
+			value={filters.brands}
+			onChange={updateBrandFilter}
+			disabled={disabled}
 			multiple
 		>
-			<FilterListBoxButton label="Brand" />
-			<FilterListboxOptions>
-				{brands.isLoading ? (
-					<FilterListboxOptionsLoader />
-				) : (
-					brands.data?.map((brand) => (
-						<FilterListboxOption
-							key={brand.key}
-							label={brand.value}
-							value={brand.key}
-						/>
-					))
+			<Combobox.Label className="block text-sm font-medium text-gray-700">
+				Brands
+			</Combobox.Label>
+			<div className="relative mt-1">
+				<Combobox.Input
+					className="w-full border border-black bg-white py-2 pl-3 pr-10 shadow-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500 disabled:cursor-not-allowed sm:text-sm"
+					onChange={(event) => setQuery(event.target.value)}
+					displayValue={(selected: number[]) =>
+						selected
+							?.map((brand) => brands.data?.find((b) => b.key === brand)?.value)
+							.join(", ") ?? ""
+					}
+				/>
+				<Combobox.Button className="absolute inset-y-0 right-0 flex items-center px-2 focus:outline-none">
+					<List className="h-5 w-5 text-gray-400" aria-hidden="true" />
+				</Combobox.Button>
+
+				{(filteredBrands?.length ?? 0) > 0 && (
+					<Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+						{filteredBrands?.map((brand) => (
+							<FilterComboboxOption
+								key={brand.key}
+								value={brand.key}
+								displayName={brand.value}
+							/>
+						))}
+					</Combobox.Options>
 				)}
-			</FilterListboxOptions>
-		</FilterListbox>
+			</div>
+		</Combobox>
 	);
 };

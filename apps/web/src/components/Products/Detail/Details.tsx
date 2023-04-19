@@ -1,5 +1,5 @@
 import { Disclosure } from "@headlessui/react";
-import { Minus, Plus } from "phosphor-react";
+import { Minus, Plus } from "@phosphor-icons/react";
 import React from "react";
 
 import { Flex } from "../../shared/core/Flex";

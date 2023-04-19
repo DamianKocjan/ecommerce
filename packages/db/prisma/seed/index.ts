@@ -31,7 +31,8 @@ export async function main() {
 		.then(() => seedSizes(prisma))
 		.then(() => seedColors(prisma))
 		.then(() => seedCategories(prisma))
-		.then(() => seedProducts(prisma));
+		.then(() => seedProducts(prisma))
+		.catch(() => void 0);
 }
 
 main()

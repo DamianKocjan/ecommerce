@@ -1,4 +1,4 @@
-import { ShoppingCartSimple as ShoppingCartSimpleIcon } from "phosphor-react";
+import { ShoppingCartSimple as ShoppingCartSimpleIcon } from "@phosphor-icons/react";
 import React from "react";
 
 import { IconButton } from "../../core/IconButton";

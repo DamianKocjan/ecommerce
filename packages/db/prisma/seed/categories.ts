@@ -1,4 +1,4 @@
-import type { Prisma, PrismaClient } from "..";
+import type { Prisma, PrismaClient } from "../..";
 
 const GENDER_CATEGORIES: Prisma.CategoryCreateInput[] = [
 	{
@@ -57,18 +57,20 @@ const SUBCATEGORIES: Prisma.CategoryCreateInput[] = GENDER_CATEGORIES.map(
 				},
 			},
 		})),
-	]
+	],
 ).reduce((prev, curr) => prev.concat(curr), []);
 
 export async function seedCategories(prisma: PrismaClient): Promise<void> {
 	await prisma.category
 		.createMany({ data: GENDER_CATEGORIES })
 		.then(() =>
-			CATEGORIES.map(async (cat) => await prisma.category.create({ data: cat }))
+			CATEGORIES.map(
+				async (cat) => await prisma.category.create({ data: cat }),
+			),
 		)
 		.then(() =>
 			SUBCATEGORIES.map(
-				async (cat) => await prisma.category.create({ data: cat })
-			)
+				async (cat) => await prisma.category.create({ data: cat }),
+			),
 		);
 }

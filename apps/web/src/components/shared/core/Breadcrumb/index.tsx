@@ -19,8 +19,8 @@ const BreadcrumbLink = ({ href, children, disabled }: BreadcrumbLinkProps) => {
 		);
 	}
 	return (
-		<Link href={href} legacyBehavior>
-			<a className="hidden text-slate-600 sm:block">{children}</a>
+		<Link href={href} className="hidden text-slate-600 sm:block">
+			{children}
 		</Link>
 	);
 };
