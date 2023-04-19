@@ -27,6 +27,7 @@ export const DashboardProductDetails: NextPageWithLayout = () => {
 			) : (
 				<>
 					<Info
+						id={id}
 						price={data.product.price as unknown as number}
 						discount={data.product.discount as unknown as number | null}
 						slug={data.product.slug}

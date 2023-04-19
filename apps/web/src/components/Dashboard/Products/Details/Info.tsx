@@ -35,6 +35,7 @@ const Price = memo<PriceProps>(function Price({ discount, price }) {
 });
 
 interface InfoProps {
+	id: number;
 	slug: string;
 	title: string;
 	price: number;
@@ -44,6 +45,7 @@ interface InfoProps {
 }
 
 export const Info = memo<InfoProps>(function Info({
+	id,
 	slug,
 	title,
 	price,
@@ -75,7 +77,7 @@ export const Info = memo<InfoProps>(function Info({
 						Preview
 					</ButtonLink>
 					<ButtonLink
-						href={`/dashboard/products/${slug}/edit`}
+						href={`/dashboard/products/${id}/edit`}
 						intent="secondary"
 						textColor="light"
 						fullWidth
