@@ -1,9 +1,9 @@
 import type { GetServerSideProps } from "next";
 
-import { DashboardSales } from "../../components/Dashboard/Sales";
-import { withAuthRole } from "../../utils/withAuth";
+import { DashboardReviews } from "../../../components/Dashboard/Reviews";
+import { withAuthRole } from "../../../utils/withAuth";
 
-export default DashboardSales;
+export default DashboardReviews;
 
 export const getServerSideProps: GetServerSideProps = withAuthRole(
 	"ADMIN",
