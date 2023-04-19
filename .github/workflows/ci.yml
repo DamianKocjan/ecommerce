@@ -22,6 +22,8 @@ jobs:
       GOOGLE_CLIENT_SECRET: moresecretgoogle
       AWS_S3_IAM_ACCESS: aws
       AWS_S3_IAM_SECRET: aws
+      SIMPLE_ANALYTICS_USER_ID: secretuserid
+      SIMPLE_ANALYTICS_API_KEY: secretapikey
     runs-on: ubuntu-latest
 
     steps:
