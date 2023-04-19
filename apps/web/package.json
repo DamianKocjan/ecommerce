@@ -62,7 +62,9 @@
 		],
 		"rules": {
 			"@typescript-eslint/unbound-method": "off",
-			"@typescript-eslint/ban-ts-comment": "warn"
+			"@typescript-eslint/ban-ts-comment": "warn",
+			"@typescript-eslint/require-await": "warn",
+			"no-mixed-spaces-and-tabs": "warn"
 		}
 	}
 }

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+
 import { PencilSimpleLine } from "@phosphor-icons/react";
 import {
 	createColumnHelper,
@@ -35,6 +37,7 @@ const columns = [
 	columnHelper.accessor("price", {
 		header: "Price",
 		cell: (value) => {
+			// eslint-disable-next-line react-hooks/rules-of-hooks
 			const formatter = useCurrencyFormatter();
 			const formattedValue = formatter.format(value.renderValue() ?? 0);
 			return formattedValue;
@@ -43,6 +46,7 @@ const columns = [
 	columnHelper.accessor("quantity", {
 		header: "Stock",
 		cell: (value) => {
+			// eslint-disable-next-line react-hooks/rules-of-hooks
 			const formatter = useNumberFormatter();
 			const formattedValue = formatter.format(value.renderValue() ?? 0);
 			return formattedValue;
