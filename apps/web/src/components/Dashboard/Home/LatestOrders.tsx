@@ -31,7 +31,7 @@ export const LatestOrders: React.FC<LatestOrdersProps> = ({ orders }) => {
 									{dateFormatter(new Date(order.createdAt))}
 								</Chip>
 								<span className="ml-2 font-mono font-semibold">
-									{currencyFormatter.format(order.total)}
+									{currencyFormatter.format(order.total as unknown as number)}
 								</span>
 								<Link
 									href="/"
