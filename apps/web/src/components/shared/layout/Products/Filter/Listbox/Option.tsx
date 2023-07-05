@@ -2,7 +2,7 @@ import { Listbox } from "@headlessui/react";
 import { Check } from "@phosphor-icons/react";
 import React from "react";
 
-import { Flex } from "../../../../core/Flex";
+import { Flex } from "~/components/shared/core/Flex";
 
 export interface FilterListboxOptionProps {
 	value: string | number;

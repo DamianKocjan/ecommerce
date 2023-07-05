@@ -2,7 +2,7 @@ import { type Icon } from "@phosphor-icons/react";
 import Link from "next/link";
 import React, { useMemo } from "react";
 
-import { classNames } from "../../../utils/classnames";
+import { classNames } from "~/components/shared/utils/classnames";
 import { useSidebar, type Path } from "./store";
 
 export interface MenuItemProps {

@@ -1,19 +1,19 @@
 import { useRouter } from "next/router";
 
-import { NextPageWithLayout } from "../../pages/_app";
-import { trpc } from "../../utils/trpc";
-import { EmptyState } from "../shared/core/EmptyState";
-import { PrettyContainer } from "../shared/core/PrettyContainer";
+import { EmptyState } from "~/components/shared/core/EmptyState";
+import { PrettyContainer } from "~/components/shared/core/PrettyContainer";
 import {
 	useFilter,
 	useParsedFilters,
-} from "../shared/layout/Products/Filter/store";
-import { Filters } from "../shared/layout/Products/Filters";
-import { ProductsList } from "../shared/layout/Products/List";
-import { ListFooter } from "../shared/layout/Products/ListFooter";
-import { usePage } from "../shared/layout/Products/ListFooter/usePage";
-import { usePerPage } from "../shared/layout/Products/ListFooter/usePerPage";
-import { Container } from "../shared/layout/ShopLayout/Container";
+} from "~/components/shared/layout/Products/Filter/store";
+import { Filters } from "~/components/shared/layout/Products/Filters";
+import { ProductsList } from "~/components/shared/layout/Products/List";
+import { ListFooter } from "~/components/shared/layout/Products/ListFooter";
+import { usePage } from "~/components/shared/layout/Products/ListFooter/usePage";
+import { usePerPage } from "~/components/shared/layout/Products/ListFooter/usePerPage";
+import { Container } from "~/components/shared/layout/ShopLayout/Container";
+import { NextPageWithLayout } from "~/pages/_app";
+import { trpc } from "~/utils/trpc";
 
 export const Wishlist: NextPageWithLayout = () => {
 	const router = useRouter();
@@ -58,7 +58,7 @@ export const Wishlist: NextPageWithLayout = () => {
 			<PrettyContainer className="mt-4">
 				<h1 className="text-3xl">Your wishlist</h1>
 			</PrettyContainer>
-			<div className="my-2 mx-4">
+			<div className="mx-4 my-2">
 				<Filters hideCategories />
 				{!wishlisted.isLoading && wishlisted.data?.data.length === 0 ? (
 					<EmptyState

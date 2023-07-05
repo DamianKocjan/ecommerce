@@ -1,7 +1,7 @@
 import type { GetServerSideProps } from "next";
 
-import { DashboardProductEdit } from "../../../../components/Dashboard/Products/Details/Edit";
-import { withAuthRole } from "../../../../utils/withAuth";
+import { DashboardProductEdit } from "~/components/Dashboard/Products/Details/Edit";
+import { withAuthRole } from "~/utils/withAuth";
 
 export default DashboardProductEdit;
 

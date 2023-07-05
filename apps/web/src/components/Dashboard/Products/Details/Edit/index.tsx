@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 
-import { type NextPageWithLayout } from "../../../../../pages/_app";
 import {
 	Container,
 	DashboardLayout,
-} from "../../../../shared/layout/DashboardLayout";
+} from "~/components/shared/layout/DashboardLayout";
+import { type NextPageWithLayout } from "~/pages/_app";
 
 export const DashboardProductEdit: NextPageWithLayout = () => {
 	const router = useRouter();

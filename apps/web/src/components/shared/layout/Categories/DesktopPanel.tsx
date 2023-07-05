@@ -9,9 +9,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { Fragment, useCallback, useMemo, useState } from "react";
 
-import { trpc } from "../../../../utils/trpc";
-import { Flex } from "../../core/Flex";
-import { Spinner } from "../../core/Spinner";
+import { Flex } from "~/components/shared/core/Flex";
+import { Spinner } from "~/components/shared/core/Spinner";
+import { trpc } from "~/utils/trpc";
 import { CategoryListItem } from "./CategoryListItem";
 
 export interface CategoriesDesktopPanelProps {
@@ -106,7 +106,7 @@ export const CategoriesDesktopPanel: React.FC<CategoriesDesktopPanelProps> = ({
 											leaveFrom="opacity-100"
 											leaveTo="opacity-0"
 										>
-											<Flex className="absolute top-0 right-0 -mr-8 pt-4 pl-2 sm:-mr-10 sm:pl-4">
+											<Flex className="absolute right-0 top-0 -mr-8 pl-2 pt-4 sm:-mr-10 sm:pl-4">
 												<button
 													type="button"
 													className="rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
@@ -137,7 +137,7 @@ export const CategoriesDesktopPanel: React.FC<CategoriesDesktopPanelProps> = ({
 															Loading categories...
 														</Flex>
 													) : categories.isError ? (
-														<Flex className="my-4 ml-2 gap-4 py-4 px-2 text-slate-700 outline outline-black">
+														<Flex className="my-4 ml-2 gap-4 px-2 py-4 text-slate-700 outline outline-black">
 															<WarningCircle className="h-8 w-8 text-red-500" />
 															<Flex direction="col">
 																<h4 className="text-bold text-sm text-red-500">
@@ -149,7 +149,7 @@ export const CategoriesDesktopPanel: React.FC<CategoriesDesktopPanelProps> = ({
 															</Flex>
 														</Flex>
 													) : (
-														<ul className="my-4 mx-2">
+														<ul className="mx-2 my-4">
 															{previousCategorySlug !== null &&
 																categories.data?.parentCategory && (
 																	<li className="text-xl font-semibold text-neutral-500 decoration-teal-400 decoration-2 underline-offset-[3px] hover:text-black hover:underline">

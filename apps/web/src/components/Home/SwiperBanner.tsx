@@ -1,8 +1,8 @@
 import Link from "next/link";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
-import { Flex } from "../shared/core/Flex";
-import { useToggleBetween } from "../shared/hooks/useToggleBetween";
+import { Flex } from "~/components/shared/core/Flex";
+import { useToggleBetween } from "~/components/shared/hooks/useToggleBetween";
 
 const TEXTS = [
 	<>
@@ -65,7 +65,7 @@ export const SwiperBanner: React.FC = () => {
 
 	return (
 		<div className="my-2 w-full bg-gray-50">
-			<div className="mx-auto max-w-7xl py-4 px-4 sm:px-6 lg:px-8">
+			<div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
 				<Flex items="center" justify="between" className="flex-1">
 					<Flex
 						items="center"

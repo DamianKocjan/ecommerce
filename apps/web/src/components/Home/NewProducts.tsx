@@ -1,8 +1,8 @@
 import Link from "next/link";
 import React, { useCallback, useState } from "react";
 
-import { trpc } from "../../utils/trpc";
-import { Grid } from "../shared/core/Grid";
+import { Grid } from "~/components/shared/core/Grid";
+import { trpc } from "~/utils/trpc";
 import { ProductCard, ProductCardShimmer } from "./ProductCard";
 
 export const NewProducts: React.FC = () => {

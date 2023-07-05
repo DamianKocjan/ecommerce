@@ -1,7 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { type ElementType } from "react";
 
-import { type PolymorphicProps } from "../../utils/types";
+import { type PolymorphicProps } from "~/utils/types";
 
 const shimmer = cva("animate-pulse bg-black/25", {
 	variants: {

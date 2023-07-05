@@ -1,9 +1,9 @@
 import Link from "next/link";
 import React from "react";
 
-import { RouterOutputs } from "../../utils/trpc";
-import { Flex } from "../shared/core/Flex";
-import { Shimmer } from "../shared/core/Shimmer";
+import { Flex } from "~/components/shared/core/Flex";
+import { Shimmer } from "~/components/shared/core/Shimmer";
+import { RouterOutputs } from "~/utils/trpc";
 
 export interface ProductCardProps {
 	product: RouterOutputs["product"]["new"]["data"][number];

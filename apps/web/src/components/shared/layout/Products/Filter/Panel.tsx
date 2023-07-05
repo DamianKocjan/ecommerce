@@ -3,7 +3,7 @@ import { X } from "@phosphor-icons/react";
 import { Fragment } from "react";
 import { create } from "zustand";
 
-import { Flex } from "../../../core/Flex";
+import { Flex } from "~/components/shared/core/Flex";
 
 interface Store {
 	open: boolean;
@@ -60,7 +60,7 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({ children }) => {
 										leaveFrom="opacity-100"
 										leaveTo="opacity-0"
 									>
-										<div className="absolute top-0 left-0 -ml-8 flex pt-4 pr-2 sm:-ml-10 sm:pr-4">
+										<div className="absolute left-0 top-0 -ml-8 flex pr-2 pt-4 sm:-ml-10 sm:pr-4">
 											<button
 												type="button"
 												className="rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"

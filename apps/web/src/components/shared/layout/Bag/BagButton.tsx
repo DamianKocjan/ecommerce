@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Button } from "../../core/Button";
+import { Button } from "~/components/shared/core/Button";
 import { useBag } from "./useBag";
 
 export interface AddToBagButtonProps {

@@ -2,7 +2,7 @@ import { getServerSession } from "@ecommerce/auth";
 import { Season } from "@ecommerce/db";
 import type { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 
-import { ProductDetail } from "../../components/Products/Detail";
+import { ProductDetail } from "~/components/Products/Detail";
 
 export default ProductDetail;
 

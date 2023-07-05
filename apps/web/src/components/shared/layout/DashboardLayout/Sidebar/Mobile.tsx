@@ -1,7 +1,8 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { X } from "@phosphor-icons/react";
 import React, { Fragment } from "react";
-import { Flex } from "../../../core/Flex";
+
+import { Flex } from "~/components/shared/core/Flex";
 import { navigation } from "../constants";
 import { MenuItem } from "./MenuItem";
 import { useSidebar } from "./store";
@@ -39,7 +40,7 @@ export const SidebarMobile: React.FC = () => {
 				>
 					<Flex
 						direction="col"
-						className="relative w-full max-w-xs flex-1 bg-white pt-5 pb-4"
+						className="relative w-full max-w-xs flex-1 bg-white pb-4 pt-5"
 					>
 						<Flex
 							items="center"

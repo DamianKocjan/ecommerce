@@ -9,10 +9,10 @@ import { signIn, useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import React, { useCallback } from "react";
 
-import { ButtonLink } from "../../../core/ButtonLink";
-import { Flex } from "../../../core/Flex";
-import { IconButton } from "../../../core/IconButton";
-import { IconButtonLink } from "../../../core/IconButtonLink";
+import { ButtonLink } from "~/components/shared/core/ButtonLink";
+import { Flex } from "~/components/shared/core/Flex";
+import { IconButton } from "~/components/shared/core/IconButton";
+import { IconButtonLink } from "~/components/shared/core/IconButtonLink";
 
 const NAVIGATION = [
 	{ name: "Home", href: "/" },
@@ -159,7 +159,7 @@ export const Nav: React.FC = () => {
 						<Flex
 							direction="row"
 							items="baseline"
-							className="space-y-1 px-2 pt-2 pb-3"
+							className="space-y-1 px-2 pb-3 pt-2"
 						>
 							{NAVIGATION.map((item) => (
 								<Disclosure.Button

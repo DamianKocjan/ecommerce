@@ -8,7 +8,7 @@ import React, {
 	useState,
 } from "react";
 
-import { Flex } from "../../../../../../shared/core/Flex";
+import { Flex } from "~/components/shared/core/Flex";
 import { useCategoryMenuOpen } from "./useCategoryMenuOpen";
 
 export interface SubCategory {
@@ -86,7 +86,7 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({
 	//! NEEDS REFACTOR TODO: make this some sort of dialog/popup
 	return (
 		<li
-			className="relative py-1 px-2 before:absolute before:top-0.5 before:left-0.5 before:z-[-1] before:h-full before:w-full hover:bg-black hover:text-white hover:before:bg-teal-400 md:py-2 md:px-4"
+			className="relative px-2 py-1 before:absolute before:left-0.5 before:top-0.5 before:z-[-1] before:h-full before:w-full hover:bg-black hover:text-white hover:before:bg-teal-400 md:px-4 md:py-2"
 			onMouseEnter={handleMouseEnter}
 			onMouseLeave={handleMouseLeave}
 			ref={ref}
@@ -106,7 +106,7 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({
 					// width: `${width.current}px`,
 				}}
 			>
-				<Flex className="relative bg-black p-4 text-white before:absolute before:top-1 before:left-1 before:z-[-1] before:h-full before:w-full before:bg-teal-400">
+				<Flex className="relative bg-black p-4 text-white before:absolute before:left-1 before:top-1 before:z-[-1] before:h-full before:w-full before:bg-teal-400">
 					<Flex className="w-3/4">
 						{columns.map(({ categories, subtitle }) => (
 							<div key={subtitle} className="w-full">

@@ -25,7 +25,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
 				width="600"
 				height="400"
 			/>
-			<h3 className="mt-6 mb-4 text-4xl font-bold text-teal-400">{title}</h3>
+			<h3 className="mb-4 mt-6 text-4xl font-bold text-teal-400">{title}</h3>
 			<p className="text-xl text-neutral-800">{description}</p>
 		</Flex>
 	);

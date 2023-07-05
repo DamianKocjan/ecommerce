@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 
 export function useDelayedHover(
 	callback: (e: React.MouseEvent) => void,
-	delay = 1000
+	delay = 1000,
 ) {
 	const [delayHandler, setDelayHandler] = useState<NodeJS.Timeout | null>(null);
 
@@ -10,7 +10,7 @@ export function useDelayedHover(
 		(e: React.MouseEvent) => {
 			setDelayHandler(setTimeout(() => callback(e), delay));
 		},
-		[callback, delay]
+		[callback, delay],
 	);
 
 	const handleMouseLeave = useCallback(() => {

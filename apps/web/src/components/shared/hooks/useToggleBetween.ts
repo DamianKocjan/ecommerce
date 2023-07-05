@@ -7,7 +7,7 @@ export function useToggleBetween<T>(list: T[]) {
 
 	const next = useCallback(
 		() => setIndex((i) => (i + 1) % listLength),
-		[listLength]
+		[listLength],
 	);
 
 	return [value, next] as const;

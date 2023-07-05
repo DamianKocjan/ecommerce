@@ -17,8 +17,8 @@ export const Heading: React.FC<HeadingProps> = ({
 	return (
 		<Heading
 			className={cx(
-				"py-1 px-2 md:py-2 md:px-4 relative before:absolute before:z-[-1] md:before:top-1 md:before:left-1 before:top-0.5 before:left-0.5 before:w-full before:h-full text-white bg-black before:bg-teal-400",
-				className
+				"relative bg-black px-2 py-1 text-white before:absolute before:left-0.5 before:top-0.5 before:z-[-1] before:h-full before:w-full before:bg-teal-400 md:px-4 md:py-2 md:before:left-1 md:before:top-1",
+				className,
 			)}
 		>
 			{children}

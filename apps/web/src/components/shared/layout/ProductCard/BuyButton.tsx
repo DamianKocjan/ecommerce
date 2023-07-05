@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 
-import { Button } from "../../core/Button";
+import { Button } from "~/components/shared/core/Button";
 import { useBagStore } from "../Bag/store";
 
 export interface BuyButtonProps {

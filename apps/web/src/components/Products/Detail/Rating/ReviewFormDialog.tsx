@@ -5,12 +5,12 @@ import { useSession } from "next-auth/react";
 import React, { Fragment } from "react";
 import { z } from "zod";
 
-import { RouterOutputs, trpc } from "../../../../utils/trpc";
-import { Button } from "../../../shared/core/Button";
-import { Flex } from "../../../shared/core/Flex";
-import { Form, useForm } from "../../../shared/forms/Form";
-import { Input } from "../../../shared/forms/Input";
-import { Textarea } from "../../../shared/forms/Textarea";
+import { Button } from "~/components/shared/core/Button";
+import { Flex } from "~/components/shared/core/Flex";
+import { Form, useForm } from "~/components/shared/forms/Form";
+import { Input } from "~/components/shared/forms/Input";
+import { Textarea } from "~/components/shared/forms/Textarea";
+import { RouterOutputs, trpc } from "~/utils/trpc";
 import { useReviewFormDialog } from "./useReviewFormDialog";
 
 const reviewSchema = z.object({

@@ -1,7 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { type ElementType } from "react";
 
-import { PolymorphicProps } from "../../utils/types";
+import { PolymorphicProps } from "~/utils/types";
 
 export const box = cva("", {
 	variants: {

@@ -5,10 +5,10 @@ import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import React, { useCallback, useMemo } from "react";
 
-import { trpc } from "../../../../utils/trpc";
-import { Flex } from "../../../shared/core/Flex";
-import { Tooltip } from "../../../shared/core/Tooltip";
-import { classNames } from "../../../shared/utils/classnames";
+import { Flex } from "~/components/shared/core/Flex";
+import { Tooltip } from "~/components/shared/core/Tooltip";
+import { classNames } from "~/components/shared/utils/classnames";
+import { trpc } from "~/utils/trpc";
 import { useReviewFormDialog } from "./useReviewFormDialog";
 
 const ReviewFormDialog = dynamic(

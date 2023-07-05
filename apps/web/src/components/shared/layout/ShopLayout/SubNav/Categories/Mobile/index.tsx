@@ -5,10 +5,10 @@ import {
 } from "@phosphor-icons/react";
 import React, { Fragment, useCallback, useState } from "react";
 
-import { Flex } from "../../../../../../shared/core/Flex";
-import { Grid } from "../../../../../../shared/core/Grid";
-import { IconButton } from "../../../../../../shared/core/IconButton";
-import { ButtonLink } from "../../../../../core/ButtonLink";
+import { ButtonLink } from "~/components/shared/core/ButtonLink";
+import { Flex } from "~/components/shared/core/Flex";
+import { Grid } from "~/components/shared/core/Grid";
+import { IconButton } from "~/components/shared/core/IconButton";
 import { CategoryItem } from "./CategoryItem";
 
 export interface CategoryItemProps {
@@ -78,13 +78,13 @@ export const MobileCategories: React.FC<MobileCategoriesProps> = ({
 											className="h-full overflow-y-scroll bg-white py-6 font-mono shadow-xl"
 										>
 											<div className="relative px-4 sm:px-6">
-												<Dialog.Title className="w-fit border-b-2 border-solid border-teal-400 bg-black py-1 px-2 text-xl font-medium text-white md:py-2 md:px-4">
+												<Dialog.Title className="w-fit border-b-2 border-solid border-teal-400 bg-black px-2 py-1 text-xl font-medium text-white md:px-4 md:py-2">
 													Search by categories
 												</Dialog.Title>
 												<IconButton
 													type="button"
 													intent="secondary"
-													className="absolute top-[-4px] right-0 mr-4"
+													className="absolute right-0 top-[-4px] mr-4"
 													onClick={handleCategoriesModalClose}
 												>
 													<span className="sr-only">Close panel</span>

@@ -1,11 +1,11 @@
 import Link from "next/link";
 import React from "react";
 
-import { Box } from "../../shared/core/Box";
-import { Flex } from "../../shared/core/Flex";
-import { Grid } from "../../shared/core/Grid";
-import { PrettyContainer } from "../../shared/core/PrettyContainer";
-import { useCurrencyFormatter } from "../../shared/hooks/useCurrencyFormatter";
+import { Box } from "~/components/shared/core/Box";
+import { Flex } from "~/components/shared/core/Flex";
+import { Grid } from "~/components/shared/core/Grid";
+import { PrettyContainer } from "~/components/shared/core/PrettyContainer";
+import { useCurrencyFormatter } from "~/components/shared/hooks/useCurrencyFormatter";
 
 const products = [
 	{
@@ -40,7 +40,7 @@ export const SimilarProducts: React.FC = () => {
 				</h2>
 				<Grid
 					cols="1"
-					className="mt-6 gap-y-10 gap-x-6 pb-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+					className="mt-6 gap-x-6 gap-y-10 pb-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
 				>
 					{products.map((product) => (
 						<div key={product.id} className="group relative">

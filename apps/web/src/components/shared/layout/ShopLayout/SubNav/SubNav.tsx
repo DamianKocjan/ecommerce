@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Flex } from "../../../core/Flex";
+import { Flex } from "~/components/shared/core/Flex";
 import { Categories } from "./Categories";
 import { Search } from "./Search";
 

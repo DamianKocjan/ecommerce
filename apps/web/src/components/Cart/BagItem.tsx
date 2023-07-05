@@ -2,11 +2,11 @@ import { Check, Clock, X } from "@phosphor-icons/react";
 import Link from "next/link";
 import React, { useMemo } from "react";
 
-import { RouterOutputs } from "../../utils/trpc";
-import { Flex } from "../shared/core/Flex";
-import { IconButton } from "../shared/core/IconButton";
-import { useCurrencyFormatter } from "../shared/hooks/useCurrencyFormatter";
-import { useBag } from "../shared/layout/Bag/useBag";
+import { Flex } from "~/components/shared/core/Flex";
+import { IconButton } from "~/components/shared/core/IconButton";
+import { useCurrencyFormatter } from "~/components/shared/hooks/useCurrencyFormatter";
+import { useBag } from "~/components/shared/layout/Bag/useBag";
+import { RouterOutputs } from "~/utils/trpc";
 
 export interface BagItemProps {
 	product: RouterOutputs["product"]["bag"][number];
@@ -76,7 +76,7 @@ export const BagItem: React.FC<BagItemProps> = ({ product }) => {
 							<option value={8}>8</option>
 						</select>
 
-						<div className="absolute top-0 right-0">
+						<div className="absolute right-0 top-0">
 							<IconButton
 								intent="secondary"
 								type="button"

@@ -1,7 +1,7 @@
 import React from "react";
 
-import { ButtonLink } from "../shared/core/ButtonLink";
-import { Flex } from "../shared/core/Flex";
+import { ButtonLink } from "~/components/shared/core/ButtonLink";
+import { Flex } from "~/components/shared/core/Flex";
 
 export const Hero: React.FC = () => {
 	return (
