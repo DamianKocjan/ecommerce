@@ -44,7 +44,7 @@ export const ProductInfo: React.FC<ProductInfoProps> = ({
 			{/* Reviews */}
 			<div className="mt-3">
 				<h3 className="sr-only">Reviews</h3>
-				<Rating rating={3.6} />
+				<Rating slug={product.slug} />
 			</div>
 
 			<div className="mt-6">
