@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { memo } from "react";
 
-import { ButtonLink } from "../../../shared/core/ButtonLink";
-import { Flex } from "../../../shared/core/Flex";
-import { usePrice } from "../../../shared/hooks/usePrice";
+import { ButtonLink } from "~/components/shared/core/ButtonLink";
+import { Flex } from "~/components/shared/core/Flex";
+import { usePrice } from "~/components/shared/hooks/usePrice";
 
 interface PriceProps {
 	price: number;

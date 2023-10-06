@@ -2,11 +2,11 @@ import { Combobox, Transition } from "@headlessui/react";
 import { MagnifyingGlass } from "@phosphor-icons/react";
 import React, { Fragment } from "react";
 
-import { type RouterOutputs } from "../../../utils/trpc";
-import { Spinner } from "../../shared/core/Spinner";
+import { Spinner } from "~/components/shared/core/Spinner";
+import { type RouterOutputs } from "~/utils/trpc";
 
 const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-	<div className="relative cursor-default select-none py-2 px-4 text-gray-700">
+	<div className="relative cursor-default select-none px-4 py-2 text-gray-700">
 		{children}
 	</div>
 );

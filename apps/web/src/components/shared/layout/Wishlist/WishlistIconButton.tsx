@@ -1,10 +1,10 @@
 import {
-	Heart as HeartIcon,
 	HeartBreak as HeartBreakIcon,
+	Heart as HeartIcon,
 } from "@phosphor-icons/react";
 import React, { useCallback, useState } from "react";
 
-import { IconButton } from "../../core/IconButton";
+import { IconButton } from "~/components/shared/core/IconButton";
 import { useWishlist } from "./useWishlist";
 
 export interface WishlistIconButtonProps {

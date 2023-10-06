@@ -2,9 +2,9 @@ import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 import React from "react";
 import { create } from "zustand";
 
-import { type RouterOutputs } from "../../../utils/trpc";
-import { Flex } from "../../shared/core/Flex";
-import { IconButton } from "../../shared/core/IconButton";
+import { Flex } from "~/components/shared/core/Flex";
+import { IconButton } from "~/components/shared/core/IconButton";
+import { type RouterOutputs } from "~/utils/trpc";
 import { PerPage } from "../PerPage";
 
 interface PaginationState {

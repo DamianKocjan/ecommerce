@@ -1,8 +1,8 @@
 import React, { memo, useMemo } from "react";
 
-import { type RouterOutputs } from "../../../../utils/trpc";
-import { Flex } from "../../../shared/core/Flex";
-import { useNumberFormatter } from "../../../shared/hooks/useNumberFormatter";
+import { Flex } from "~/components/shared/core/Flex";
+import { useNumberFormatter } from "~/components/shared/hooks/useNumberFormatter";
+import { type RouterOutputs } from "~/utils/trpc";
 import { ChartReferrers } from "./Charts/Referrers";
 import { ChartViews } from "./Charts/Views";
 

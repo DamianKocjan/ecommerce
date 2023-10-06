@@ -1,5 +1,6 @@
 import React from "react";
-import { Flex } from "../../core/Flex";
+
+import { Flex } from "~/components/shared/core/Flex";
 import { Nav } from "./Nav";
 import { Sidebar, SidebarMobile } from "./Sidebar";
 import { useCurrentPath } from "./Sidebar/store";

@@ -3,7 +3,7 @@ import { List } from "@phosphor-icons/react";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 
-import { trpc } from "../../../../../utils/trpc";
+import { trpc } from "~/utils/trpc";
 import { FilterComboboxOption } from "./Combobox/Option";
 import { cacheTime } from "./constants";
 import { useFilter } from "./store";

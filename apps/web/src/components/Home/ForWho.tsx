@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-import { Grid } from "../shared/core/Grid";
+import { Grid } from "~/components/shared/core/Grid";
 
 const FOR_WHO = [
 	{

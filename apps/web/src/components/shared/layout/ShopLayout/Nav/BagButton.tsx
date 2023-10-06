@@ -4,12 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { Fragment, useMemo } from "react";
 
-import { trpc } from "../../../../../utils/trpc";
-import { Flex } from "../../../../shared/core/Flex";
-import { IconButton } from "../../../../shared/core/IconButton";
-import { ButtonLink } from "../../../core/ButtonLink";
-import { Spinner } from "../../../core/Spinner";
-import { useBagStore } from "../../Bag/store";
+import { ButtonLink } from "~/components/shared/core/ButtonLink";
+import { Flex } from "~/components/shared/core/Flex";
+import { IconButton } from "~/components/shared/core/IconButton";
+import { Spinner } from "~/components/shared/core/Spinner";
+import { useBagStore } from "~/components/shared/layout/Bag/store";
+import { trpc } from "~/utils/trpc";
 
 export const BagButton: React.FC = () => {
 	const products = useBagStore((state) => state.products);
@@ -47,7 +47,7 @@ export const BagButton: React.FC = () => {
 					leave="transition ease-out duration-100"
 					leaveFrom="transform opacity-100"
 					leaveTo="transform opacity-0"
-					className="absolute top-3 right-2 z-10 h-5 w-5 translate-x-2/4 -translate-y-1/2 rounded-full bg-black text-xs font-bold text-white outline outline-2 outline-teal-400"
+					className="absolute right-2 top-3 z-10 h-5 w-5 -translate-y-1/2 translate-x-2/4 rounded-full bg-black text-xs font-bold text-white outline outline-2 outline-teal-400"
 				>
 					<span>
 						{numOfItems > 9 ? "9+" : numOfItems > 0 ? numOfItems : "1"}
@@ -64,7 +64,7 @@ export const BagButton: React.FC = () => {
 				leaveFrom="opacity-100"
 				leaveTo="opacity-0"
 			>
-				<Popover.Panel className="absolute inset-x-0 top-16 z-20 mt-px bg-white pb-6 shadow-lg sm:px-2 lg:top-full lg:left-auto lg:right-0 lg:mt-3 lg:-mr-1.5 lg:w-80 lg:ring-1 lg:ring-black lg:ring-opacity-5">
+				<Popover.Panel className="absolute inset-x-0 top-16 z-20 mt-px bg-white pb-6 shadow-lg sm:px-2 lg:left-auto lg:right-0 lg:top-full lg:-mr-1.5 lg:mt-3 lg:w-80 lg:ring-1 lg:ring-black lg:ring-opacity-5">
 					<h2 className="sr-only">Bag</h2>
 
 					<form className="mx-auto max-w-2xl px-4">
@@ -81,7 +81,7 @@ export const BagButton: React.FC = () => {
 						) : isError ? (
 							<Flex
 								direction="col"
-								className="mt-6 mb-4 border border-red-600 bg-red-400 p-4 text-center text-sm"
+								className="mb-4 mt-6 border border-red-600 bg-red-400 p-4 text-center text-sm"
 							>
 								<h3 className="font-semibold">Something went wrong!</h3>
 								<p className="mt-1 text-xs">
@@ -89,7 +89,7 @@ export const BagButton: React.FC = () => {
 								</p>
 							</Flex>
 						) : !data || !data.length ? (
-							<div className="mt-6 mb-4 text-center text-sm">
+							<div className="mb-4 mt-6 text-center text-sm">
 								<h3>Your bag is empty!</h3>
 							</div>
 						) : (

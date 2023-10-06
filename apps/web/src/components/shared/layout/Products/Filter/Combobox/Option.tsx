@@ -2,8 +2,8 @@ import { Combobox } from "@headlessui/react";
 import { Check } from "@phosphor-icons/react";
 import React from "react";
 
-import { Flex } from "../../../../core/Flex";
-import { classNames } from "../../../../utils/classnames";
+import { Flex } from "~/components/shared/core/Flex";
+import { classNames } from "~/components/shared/utils/classnames";
 
 interface FilterComboboxOptionsProps {
 	value: unknown;

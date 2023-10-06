@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext } from "next";
 
-import { Category } from "../../components/Category";
+import { Category } from "~/components/Category";
 
 export default Category;
 

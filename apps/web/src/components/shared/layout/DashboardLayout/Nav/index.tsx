@@ -5,10 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { Fragment, useCallback } from "react";
 
-import { Flex } from "../../../core/Flex";
-import { classNames } from "../../../utils/classnames";
-import { userNavigation } from "../constants";
+import { Flex } from "~/components/shared/core/Flex";
+import { classNames } from "~/components/shared/utils/classnames";
 import { useSidebar } from "../Sidebar/store";
+import { userNavigation } from "../constants";
 
 export const Nav: React.FC = () => {
 	const openSidebar = useSidebar((state) => state.open);

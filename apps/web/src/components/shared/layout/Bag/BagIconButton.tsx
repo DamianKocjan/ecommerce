@@ -1,7 +1,7 @@
 import { ShoppingCartSimple as ShoppingCartSimpleIcon } from "@phosphor-icons/react";
 import React from "react";
 
-import { IconButton } from "../../core/IconButton";
+import { IconButton } from "~/components/shared/core/IconButton";
 import { useBag } from "./useBag";
 
 export interface AddToBagIconButtonProps {

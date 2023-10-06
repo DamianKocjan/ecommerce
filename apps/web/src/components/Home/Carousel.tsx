@@ -2,7 +2,7 @@ import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useCallback, useMemo, useState } from "react";
 
-import { Flex } from "../shared/core/Flex";
+import { Flex } from "~/components/shared/core/Flex";
 
 const variants = {
 	enter: (direction: number) => {
@@ -126,7 +126,7 @@ export const Carousel: React.FC<CarouselProps> = ({
 				))}
 			</Flex>
 			<button
-				className="absolute top-[calc(50%-1.25rem)] right-3 z-10 flex h-10 w-10 select-none items-center justify-center border border-black bg-white"
+				className="absolute right-3 top-[calc(50%-1.25rem)] z-10 flex h-10 w-10 select-none items-center justify-center border border-black bg-white"
 				onClick={() => {
 					paginate(1);
 					nextPageCallback?.();
@@ -135,7 +135,7 @@ export const Carousel: React.FC<CarouselProps> = ({
 				<ArrowRight className="h-4 w-4 text-black" />
 			</button>
 			<button
-				className="absolute top-[calc(50%-1.25rem)] left-3 z-10 flex h-10 w-10 select-none items-center justify-center border border-black bg-white"
+				className="absolute left-3 top-[calc(50%-1.25rem)] z-10 flex h-10 w-10 select-none items-center justify-center border border-black bg-white"
 				onClick={() => {
 					paginate(-1);
 					prevPageCallback?.();

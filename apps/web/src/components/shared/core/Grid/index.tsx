@@ -1,7 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { forwardRef, type ElementType, type Ref } from "react";
 
-import { PolymorphicProps } from "../../utils/types";
+import { PolymorphicProps } from "~/utils/types";
 
 const grid = cva("", {
 	variants: {

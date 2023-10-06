@@ -2,9 +2,9 @@ import { Dialog, RadioGroup, Transition } from "@headlessui/react";
 import { Star, X } from "@phosphor-icons/react";
 import React, { Fragment, useState } from "react";
 
-import { Flex } from "../../core/Flex";
-import { Grid } from "../../core/Grid";
-import { classNames } from "../../utils/classnames";
+import { Flex } from "~/components/shared/core/Flex";
+import { Grid } from "~/components/shared/core/Grid";
+import { classNames } from "~/components/shared/utils/classnames";
 
 const product = {
 	name: "Women's Basic Tee",
@@ -88,11 +88,11 @@ export const ProductQuickView: React.FC<ProductQuickViewProps> = ({
 						<Flex className="w-full transform text-left text-base transition md:my-8 md:inline-block md:max-w-2xl md:px-4 md:align-middle lg:max-w-4xl">
 							<Flex
 								items="center"
-								className="relative w-full overflow-hidden bg-white px-4 pt-14 pb-8 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8"
+								className="relative w-full overflow-hidden bg-white px-4 pb-8 pt-14 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8"
 							>
 								<button
 									type="button"
-									className="absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-8 lg:right-8"
+									className="absolute right-4 top-4 text-gray-400 hover:text-gray-500 sm:right-6 sm:top-8 md:right-6 md:top-6 lg:right-8 lg:top-8"
 									onClick={() => setOpen(false)}
 								>
 									<span className="sr-only">Close</span>
@@ -102,7 +102,7 @@ export const ProductQuickView: React.FC<ProductQuickViewProps> = ({
 								<Grid
 									cols="1"
 									items="start"
-									className="w-full gap-y-8 gap-x-6 sm:grid-cols-12 lg:items-center lg:gap-x-8"
+									className="w-full gap-x-6 gap-y-8 sm:grid-cols-12 lg:items-center lg:gap-x-8"
 								>
 									<div className="aspect-w-2 aspect-h-3 overflow-hidden rounded-lg bg-gray-100 sm:col-span-4 lg:col-span-5">
 										<img
@@ -256,7 +256,7 @@ export const ProductQuickView: React.FC<ProductQuickViewProps> = ({
 																			checked
 																				? "border-transparent bg-indigo-600 text-white hover:bg-indigo-700"
 																				: "border-gray-200 bg-white text-gray-900 hover:bg-gray-50",
-																			"flex items-center justify-center rounded-md border py-3 px-3 text-sm font-medium uppercase sm:flex-1",
+																			"flex items-center justify-center rounded-md border px-3 py-3 text-sm font-medium uppercase sm:flex-1",
 																		)
 																	}
 																	disabled={!size.inStock}
@@ -275,12 +275,12 @@ export const ProductQuickView: React.FC<ProductQuickViewProps> = ({
 													items="center"
 													justify="center"
 													type="submit"
-													className="mt-8 w-full rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+													className="mt-8 w-full rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
 												>
 													Add to bag
 												</Flex>
 
-												<p className="absolute top-4 left-4 text-center sm:static sm:mt-8">
+												<p className="absolute left-4 top-4 text-center sm:static sm:mt-8">
 													<a
 														href={product.href}
 														className="font-medium text-indigo-600 hover:text-indigo-500"

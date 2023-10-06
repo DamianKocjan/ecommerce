@@ -1,7 +1,7 @@
 import type { GetServerSideProps } from "next";
 
-import { Dashboard } from "../../components/Dashboard/Home";
-import { withAuthRole } from "../../utils/withAuth";
+import { Dashboard } from "~/components/Dashboard/Home";
+import { withAuthRole } from "~/utils/withAuth";
 
 export default Dashboard;
 

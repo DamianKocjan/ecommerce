@@ -67,6 +67,8 @@ model User {
   orders             Order[]
   wishlistedProducts Wishlist[]
   viewedProducts     View[]
+  reviews            Review[]
+  reviewsLiked       ReviewLike[]
 }
 
 model VerificationToken {
@@ -289,9 +291,49 @@ model Product {
   deliveryOption   DeliveryOption @relation(fields: [deliveryOptionId], references: [id])
   wishlist         Wishlist[]
   views            View[]
+  reviews          Review[]
 
   // Attributes
   @@map("products")
+}
+
+model Review {
+  id      String  @id @default(cuid())
+  rating  Int     @default(0) @db.SmallInt
+  title   String?
+  comment String?
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  productId Int
+  product   Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  likes     ReviewLike[]
+
+  // Attributes
+  @@map("reviews")
+}
+
+model ReviewLike {
+  id    String  @id @default(cuid())
+  liked Boolean
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  ratingId String
+  rating   Review @relation(fields: [ratingId], references: [id], onDelete: Cascade)
+  userId   String
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Attributes
+  @@map("review_likes")
 }
 
 model View {
@@ -409,4 +451,95 @@ model OrderItem {
 
   // Attributes
   @@map("orderItems")
+}
+
+model Prod {
+  id               Int       @id @default(autoincrement())
+  title            String    @unique
+  slug             String    @unique
+  shortDescription String    @db.VarChar(250)
+  description      String
+  thumbnailImage   String
+  price            Decimal   @db.Decimal(8, 2)
+  discount         Decimal?  @db.Decimal(8, 2)
+  quantity         Int
+  activatiedAt     DateTime?
+  multipack        Boolean   @default(false)
+  multipackQty     Int       @default(1)
+  season           Season?
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  skus ProdVariant[]
+  // images           Image[]
+  // categories       Category[]
+  // coupons          Coupon[]
+  // orderItems       OrderItem[]
+  // manufacturerId   Int
+  // manufacturer     Manufacturer   @relation(fields: [manufacturerId], references: [id], onDelete: Cascade)
+  // deliveryOptionId String
+  // deliveryOption   DeliveryOption @relation(fields: [deliveryOptionId], references: [id])
+  // wishlist         Wishlist[]
+  // views            View[]
+
+  @@map("prods")
+}
+
+model ProdVariant {
+  id     Int            @id @default(autoincrement())
+  sku    String         @unique @db.VarChar(50)
+  prod   Prod           @relation(fields: [prodId], references: [id])
+  prodId Int
+  values VariantValue[]
+
+  @@map("prod_variants")
+}
+
+model VariantValue {
+  id Int @id @default(autoincrement())
+
+  variantId Int
+  variant   ProdVariant   @relation(fields: [variantId], references: [id])
+  optionId  Int
+  option    ProductOption @relation(fields: [optionId], references: [id])
+  valueId   Int
+  value     OptionValue   @relation(fields: [valueId], references: [id])
+
+  @@map("variant_values")
+}
+
+model ProductOption {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  optionId Int
+  option   Option @relation(fields: [optionId], references: [id])
+
+  variantValues VariantValue[]
+
+  @@map("product_options")
+}
+
+model Option {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  values         OptionValue[]
+  productOptions ProductOption[]
+
+  @@map("options")
+}
+
+model OptionValue {
+  id        Int    @id @default(autoincrement())
+  valueId   Int
+  value     Option @relation(fields: [valueId], references: [id])
+  valueName String
+
+  variantValues VariantValue[]
+
+  @@map("option_values")
 }

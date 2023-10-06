@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import { Flex } from "../../core/Flex";
-import { IconButton } from "../../core/IconButton";
-import { useCurrencyFormatter } from "../../hooks/useCurrencyFormatter";
+import { Flex } from "~/components/shared/core/Flex";
+import { IconButton } from "~/components/shared/core/IconButton";
+import { useCurrencyFormatter } from "~/components/shared/hooks/useCurrencyFormatter";
 import { AddToBagButton } from "../Bag";
 import { BuyButton } from "./BuyButton";
 import { Size, SizeInput } from "./SizeInput";
@@ -31,7 +31,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
 	return (
 		<Flex className="p-6 font-mono">
-			<div className="relative z-10 mb-10 w-48 flex-none before:absolute before:top-1 before:left-1 before:h-full before:w-full before:bg-teal-400">
+			<div className="relative z-10 mb-10 w-48 flex-none before:absolute before:left-1 before:top-1 before:h-full before:w-full before:bg-teal-400">
 				<img
 					src={image}
 					alt="Product image"
@@ -43,7 +43,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 				<Flex
 					items="baseline"
 					wrap="wrap"
-					className="relative pb-6 before:absolute before:-top-6 before:bottom-0 before:-left-60 before:-right-6 before:bg-black"
+					className="relative pb-6 before:absolute before:-left-60 before:-right-6 before:-top-6 before:bottom-0 before:bg-black"
 				>
 					<h1 className="relative mb-2 w-full flex-none text-2xl font-semibold text-white">
 						{title}

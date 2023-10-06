@@ -8,6 +8,7 @@ import { dashboardRouter } from "./dashboard";
 import { materialRouter } from "./material";
 import { patternRouter } from "./pattern";
 import { productRouter } from "./product";
+import { reviewRouter } from "./review";
 import { sizeRouter } from "./size";
 import { wishlistRouter } from "./wishlist";
 
@@ -21,6 +22,7 @@ export const appRouter = router({
 	material: materialRouter,
 	pattern: patternRouter,
 	product: productRouter,
+	review: reviewRouter,
 	size: sizeRouter,
 	wishlist: wishlistRouter,
 });

@@ -2,8 +2,8 @@ import { MagnifyingGlass as SearchIcon } from "@phosphor-icons/react";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
-import { Flex } from "../../../../../shared/core/Flex";
-import { IconButton } from "../../../../../shared/core/IconButton";
+import { Flex } from "~/components/shared/core/Flex";
+import { IconButton } from "~/components/shared/core/IconButton";
 
 export const DesktopSearch: React.FC = () => {
 	const [search, setSearch] = useState("");

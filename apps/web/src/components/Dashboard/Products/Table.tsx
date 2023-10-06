@@ -10,11 +10,11 @@ import {
 import Link from "next/link";
 import React from "react";
 
-import { type RouterOutputs } from "../../../utils/trpc";
-import { Spinner } from "../../shared/core/Spinner";
-import { Table, TBody, Td, Th, THead } from "../../shared/core/Table";
-import { useCurrencyFormatter } from "../../shared/hooks/useCurrencyFormatter";
-import { useNumberFormatter } from "../../shared/hooks/useNumberFormatter";
+import { Spinner } from "~/components/shared/core/Spinner";
+import { Table, TBody, Td, Th, THead } from "~/components/shared/core/Table";
+import { useCurrencyFormatter } from "~/components/shared/hooks/useCurrencyFormatter";
+import { useNumberFormatter } from "~/components/shared/hooks/useNumberFormatter";
+import { type RouterOutputs } from "~/utils/trpc";
 
 type ProductsQuery = RouterOutputs["dashboard"]["products"];
 

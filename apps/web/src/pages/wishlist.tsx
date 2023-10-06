@@ -1,6 +1,7 @@
 import { getServerSession } from "@ecommerce/auth";
 import { GetServerSideProps } from "next";
-import { Wishlist } from "../components/Wishlist";
+
+import { Wishlist } from "~/components/Wishlist";
 
 export default Wishlist;
 

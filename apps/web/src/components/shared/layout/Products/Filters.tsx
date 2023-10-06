@@ -2,8 +2,10 @@ import { FunnelSimple } from "@phosphor-icons/react";
 import dynamic from "next/dynamic";
 import React from "react";
 
-import { Flex } from "../../core/Flex";
-import MediaQuery, { useMediaQuery } from "../../hooks/useMediaQuery";
+import { Flex } from "~/components/shared/core/Flex";
+import MediaQuery, {
+	useMediaQuery,
+} from "~/components/shared/hooks/useMediaQuery";
 import { CategoriesDesktopPanelProps } from "../Categories/DesktopPanel";
 import { BrandFilter } from "./Filter/Brand";
 import { CollectionFilter } from "./Filter/Collection";

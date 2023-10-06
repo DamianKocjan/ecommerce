@@ -1,7 +1,7 @@
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 import React from "react";
 
-import { Flex } from "../../../core/Flex";
+import { Flex } from "~/components/shared/core/Flex";
 
 export interface PaginationProps {
 	onChange: (page?: number) => void;

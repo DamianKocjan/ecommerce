@@ -1,7 +1,7 @@
 import { useSession } from "next-auth/react";
 import { useCallback } from "react";
 
-import { trpc } from "../../../../utils/trpc";
+import { trpc } from "~/utils/trpc";
 
 const cacheTime = 1000 * 60 * 60 * 24 * 7; // 7 days
 

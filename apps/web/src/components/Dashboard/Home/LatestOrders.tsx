@@ -1,10 +1,10 @@
 import Link from "next/link";
 import React from "react";
 
-import type { RouterOutputs } from "../../../utils/trpc";
-import { Chip } from "../../shared/core/Chip";
-import { useCurrencyFormatter } from "../../shared/hooks/useCurrencyFormatter";
-import { useFormatRelativeDate } from "../../shared/hooks/useFormatRelativeDate";
+import { Chip } from "~/components/shared/core/Chip";
+import { useCurrencyFormatter } from "~/components/shared/hooks/useCurrencyFormatter";
+import { useFormatRelativeDate } from "~/components/shared/hooks/useFormatRelativeDate";
+import type { RouterOutputs } from "~/utils/trpc";
 
 interface LatestOrdersProps {
 	orders?: RouterOutputs["dashboard"]["analytics"]["latestOrders"];

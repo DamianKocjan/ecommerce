@@ -2,7 +2,7 @@ import { Listbox } from "@headlessui/react";
 import { Check } from "@phosphor-icons/react";
 import React, { useCallback, useSyncExternalStore } from "react";
 
-import { Flex } from "../shared/core/Flex";
+import { Flex } from "~/components/shared/core/Flex";
 
 export const PER_PAGE = [10, 25, 50, 100] as const;
 
@@ -50,7 +50,7 @@ export const PerPage: React.FC = () => {
 		<Listbox value={value} onChange={onChange}>
 			<div className="relative w-fit">
 				<Listbox.Button className="focus-visible:ring-teal relative cursor-default focus:outline-none focus-visible:border-teal-500 focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-600 sm:ml-2 sm:text-sm">
-					<span className="relative cursor-pointer bg-black py-1 px-2 text-white before:absolute before:top-0.5 before:left-0.5 before:z-[-1] before:h-full before:w-full before:bg-teal-400 md:py-2 md:px-4 md:before:top-1 md:before:left-1">
+					<span className="relative cursor-pointer bg-black px-2 py-1 text-white before:absolute before:left-0.5 before:top-0.5 before:z-[-1] before:h-full before:w-full before:bg-teal-400 md:px-4 md:py-2 md:before:left-1 md:before:top-1">
 						{value} per page
 					</span>
 				</Listbox.Button>

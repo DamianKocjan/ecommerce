@@ -2,9 +2,9 @@ import { Question } from "@phosphor-icons/react";
 import Link from "next/link";
 import React, { useMemo } from "react";
 
-import { Button } from "../shared/core/Button";
-import { Flex } from "../shared/core/Flex";
-import { useCurrencyFormatter } from "../shared/hooks/useCurrencyFormatter";
+import { Button } from "~/components/shared/core/Button";
+import { Flex } from "~/components/shared/core/Flex";
+import { useCurrencyFormatter } from "~/components/shared/hooks/useCurrencyFormatter";
 
 export interface OrderSummaryProps {
 	subtotal: number;

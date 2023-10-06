@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { useState } from "react";
 
-import type { NextPageWithLayout } from "../../../pages/_app";
-import { trpc } from "../../../utils/trpc";
-import { Flex } from "../../shared/core/Flex";
-import { useDebounce } from "../../shared/hooks/useDebounce";
+import { Flex } from "~/components/shared/core/Flex";
+import { useDebounce } from "~/components/shared/hooks/useDebounce";
 import {
 	Container,
 	DashboardLayout,
-} from "../../shared/layout/DashboardLayout";
+} from "~/components/shared/layout/DashboardLayout";
+import type { NextPageWithLayout } from "~/pages/_app";
+import { trpc } from "~/utils/trpc";
 import { usePerPage } from "../PerPage";
 import { Pagination, usePagination } from "./Pagination";
 import { Search } from "./Search";

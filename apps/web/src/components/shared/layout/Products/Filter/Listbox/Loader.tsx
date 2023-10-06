@@ -2,7 +2,7 @@ import { Listbox } from "@headlessui/react";
 import { SpinnerGap } from "@phosphor-icons/react";
 import React from "react";
 
-import { Flex } from "../../../../core/Flex";
+import { Flex } from "~/components/shared/core/Flex";
 
 export const FilterListboxOptionsLoader: React.FC = () => {
 	return (

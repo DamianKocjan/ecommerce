@@ -2,9 +2,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 
-import { Flex } from "../../core/Flex";
-import { PrettyImage } from "../../core/PrettyImage";
-import { useCurrencyFormatter } from "../../hooks/useCurrencyFormatter";
+import { Flex } from "~/components/shared/core/Flex";
+import { PrettyImage } from "~/components/shared/core/PrettyImage";
+import { useCurrencyFormatter } from "~/components/shared/hooks/useCurrencyFormatter";
 import { AddToBagIconButton } from "../Bag";
 import { WishlistIconButton } from "../Wishlist";
 import { Product } from "./types";

@@ -3,10 +3,10 @@ import { User as UserIcon } from "@phosphor-icons/react";
 import { signOut } from "next-auth/react";
 import React, { Fragment, useCallback } from "react";
 
-import { Button } from "../../../../shared/core/Button";
-import { IconButton } from "../../../../shared/core/IconButton";
-import { classNames } from "../../../../shared/utils/classnames";
-import { ButtonLink } from "../../../core/ButtonLink";
+import { Button } from "~/components/shared/core/Button";
+import { ButtonLink } from "~/components/shared/core/ButtonLink";
+import { IconButton } from "~/components/shared/core/IconButton";
+import { classNames } from "~/components/shared/utils/classnames";
 
 export const AccountMenu: React.FC = () => {
 	const handleSignOut = useCallback(

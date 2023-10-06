@@ -1,24 +1,27 @@
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 
-import { NextPageWithLayout } from "../../pages/_app";
-import { trpc } from "../../utils/trpc";
-import { EmptyState } from "../shared/core/EmptyState";
-import { Flex } from "../shared/core/Flex";
-import { useMediaQuery } from "../shared/hooks/useMediaQuery";
+import { EmptyState } from "~/components/shared/core/EmptyState";
+import { Flex } from "~/components/shared/core/Flex";
+import { useMediaQuery } from "~/components/shared/hooks/useMediaQuery";
 import {
 	useFilter,
 	useParsedFilters,
-} from "../shared/layout/Products/Filter/store";
-import { Filters } from "../shared/layout/Products/Filters";
-import { ProductsList } from "../shared/layout/Products/List";
-import { ListFooter } from "../shared/layout/Products/ListFooter";
-import { usePage } from "../shared/layout/Products/ListFooter/usePage";
-import { usePerPage } from "../shared/layout/Products/ListFooter/usePerPage";
-import { Container } from "../shared/layout/ShopLayout/Container";
+} from "~/components/shared/layout/Products/Filter/store";
+import { Filters } from "~/components/shared/layout/Products/Filters";
+import { ProductsList } from "~/components/shared/layout/Products/List";
+import { ListFooter } from "~/components/shared/layout/Products/ListFooter";
+import { usePage } from "~/components/shared/layout/Products/ListFooter/usePage";
+import { usePerPage } from "~/components/shared/layout/Products/ListFooter/usePerPage";
+import { Container } from "~/components/shared/layout/ShopLayout/Container";
+import { NextPageWithLayout } from "~/pages/_app";
+import { trpc } from "~/utils/trpc";
 
 const Categories = dynamic(
-	() => import("../shared/layout/Categories").then((mod) => mod.Categories),
+	() =>
+		import("~/components/shared/layout/Categories").then(
+			(mod) => mod.Categories,
+		),
 	{
 		ssr: false,
 	},
@@ -60,7 +63,7 @@ export const Category: NextPageWithLayout<{ previousUrl?: string }> = ({
 
 	return (
 		<Container title="Products">
-			<Flex className="gap-4 py-4 px-2 sm:px-0">
+			<Flex className="gap-4 px-2 py-4 sm:px-0">
 				{isMediumScreen && (
 					<Categories parentCategory={category} previousUrl={previousUrl} />
 				)}

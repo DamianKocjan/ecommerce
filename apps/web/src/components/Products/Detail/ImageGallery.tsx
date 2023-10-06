@@ -1,9 +1,9 @@
 import { Tab } from "@headlessui/react";
 import React from "react";
 
-import { Flex } from "../../shared/core/Flex";
-import { Grid } from "../../shared/core/Grid";
-import { classNames } from "../../shared/utils/classnames";
+import { Flex } from "~/components/shared/core/Flex";
+import { Grid } from "~/components/shared/core/Grid";
+import { classNames } from "~/components/shared/utils/classnames";
 
 export interface ImageGalleryProps {
 	images: { id: string; src: string; alt: string }[];

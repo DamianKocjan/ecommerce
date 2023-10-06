@@ -1,7 +1,7 @@
 import type { GetServerSideProps } from "next";
 
-import { DashboardReviews } from "../../../components/Dashboard/Reviews";
-import { withAuthRole } from "../../../utils/withAuth";
+import { DashboardReviews } from "~/components/Dashboard/Reviews";
+import { withAuthRole } from "~/utils/withAuth";
 
 export default DashboardReviews;
 

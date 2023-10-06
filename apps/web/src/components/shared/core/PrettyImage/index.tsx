@@ -16,7 +16,7 @@ export const PrettyImage: React.FC<PrettyImageProps> = ({
 	return (
 		<div
 			className={cx(
-				"relative w-full bg-black before:absolute before:top-0.5 before:left-0.5 before:z-[-1] before:h-full before:w-full before:bg-teal-400 md:before:top-1 md:before:left-1",
+				"relative w-full bg-black before:absolute before:left-0.5 before:top-0.5 before:z-[-1] before:h-full before:w-full before:bg-teal-400 md:before:left-1 md:before:top-1",
 				className,
 			)}
 		>

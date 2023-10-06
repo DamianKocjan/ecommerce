@@ -2,8 +2,8 @@ import { Disclosure } from "@headlessui/react";
 import { Minus, Plus } from "@phosphor-icons/react";
 import React from "react";
 
-import { Flex } from "../../shared/core/Flex";
-import { classNames } from "../../shared/utils/classnames";
+import { Flex } from "~/components/shared/core/Flex";
+import { classNames } from "~/components/shared/utils/classnames";
 
 export interface ProductDetailsProps {
 	details: {

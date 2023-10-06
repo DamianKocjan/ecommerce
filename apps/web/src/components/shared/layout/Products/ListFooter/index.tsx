@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Flex } from "../../../core/Flex";
+import { Flex } from "~/components/shared/core/Flex";
 import { Pagination } from "./Pagination";
 import { PerPage } from "./PerPage";
 

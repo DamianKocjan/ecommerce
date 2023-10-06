@@ -1,4 +1,4 @@
-import { NextPageWithLayout } from "../../pages/_app";
+import { NextPageWithLayout } from "~/pages/_app";
 
 export const SizeGuide: NextPageWithLayout = () => {
 	return (

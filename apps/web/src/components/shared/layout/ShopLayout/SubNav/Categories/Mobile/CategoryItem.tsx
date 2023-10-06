@@ -2,9 +2,9 @@ import { Dialog, Transition } from "@headlessui/react";
 import { ArrowLeft as ArrowLeftIcon, X as XIcon } from "@phosphor-icons/react";
 import React, { Fragment, useCallback, useState } from "react";
 
-import { Flex } from "../../../../../../shared/core/Flex";
-import { Grid } from "../../../../../../shared/core/Grid";
-import { IconButton } from "../../../../../../shared/core/IconButton";
+import { Flex } from "~/components/shared/core/Flex";
+import { Grid } from "~/components/shared/core/Grid";
+import { IconButton } from "~/components/shared/core/IconButton";
 
 export interface CategoryItemProps {
 	category: {
@@ -83,14 +83,14 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({
 															aria-hidden="true"
 														/>
 													</IconButton>
-													<Dialog.Title className="w-fit border-b-2 border-solid border-teal-400 bg-black py-1 px-2 text-xl font-medium text-white md:py-2 md:px-4">
+													<Dialog.Title className="w-fit border-b-2 border-solid border-teal-400 bg-black px-2 py-1 text-xl font-medium text-white md:px-4 md:py-2">
 														{category.name}
 													</Dialog.Title>
 												</Flex>
 												<IconButton
 													type="button"
 													intent="secondary"
-													className="absolute top-[-4px] right-0 mr-4"
+													className="absolute right-0 top-[-4px] mr-4"
 													onClick={handleCloseAllPanels}
 												>
 													<span className="sr-only">Close panel</span>

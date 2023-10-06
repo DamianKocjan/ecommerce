@@ -1,10 +1,10 @@
 import React, { useMemo } from "react";
 
-import { RouterOutputs } from "../../../utils/trpc";
-import { Flex } from "../../shared/core/Flex";
-import { useCurrencyFormatter } from "../../shared/hooks/useCurrencyFormatter";
-import { AddToBagButton } from "../../shared/layout/Bag";
-import { WishlistIconButton } from "../../shared/layout/Wishlist";
+import { Flex } from "~/components/shared/core/Flex";
+import { useCurrencyFormatter } from "~/components/shared/hooks/useCurrencyFormatter";
+import { AddToBagButton } from "~/components/shared/layout/Bag";
+import { WishlistIconButton } from "~/components/shared/layout/Wishlist";
+import { RouterOutputs } from "~/utils/trpc";
 import { ProductColors } from "./Colors";
 import { ProductDetails } from "./Details";
 import { Rating } from "./Rating";
@@ -44,7 +44,7 @@ export const ProductInfo: React.FC<ProductInfoProps> = ({
 			{/* Reviews */}
 			<div className="mt-3">
 				<h3 className="sr-only">Reviews</h3>
-				<Rating rating={3.6} />
+				<Rating slug={product.slug} />
 			</div>
 
 			<div className="mt-6">

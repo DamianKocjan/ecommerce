@@ -1,5 +1,5 @@
-import { NextPageWithLayout } from "../../pages/_app";
-import { Container } from "../shared/layout/ShopLayout/Container";
+import { Container } from "~/components/shared/layout/ShopLayout/Container";
+import { NextPageWithLayout } from "~/pages/_app";
 import { ForWho } from "./ForWho";
 import { Hero } from "./Hero";
 import { NewProducts } from "./NewProducts";

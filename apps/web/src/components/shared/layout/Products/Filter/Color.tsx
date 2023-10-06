@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect } from "react";
 
-import { trpc } from "../../../../../utils/trpc";
-import { cacheTime } from "./constants";
+import { trpc } from "~/utils/trpc";
 import { FilterListbox } from "./Listbox";
+import { cacheTime } from "./constants";
 import { useFilter } from "./store";
 
 export const ColorFilter: React.FC = () => {

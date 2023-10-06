@@ -1,10 +1,10 @@
 import { NextSeo } from "next-seo";
 import { useState } from "react";
-import { NextPageWithLayout } from "../../../pages/_app";
 
-import { RouterOutputs } from "../../../utils/trpc";
-import { Grid } from "../../shared/core/Grid";
-import { Container } from "../../shared/layout/ShopLayout/Container";
+import { Grid } from "~/components/shared/core/Grid";
+import { Container } from "~/components/shared/layout/ShopLayout/Container";
+import { NextPageWithLayout } from "~/pages/_app";
+import { RouterOutputs } from "~/utils/trpc";
 import { ProductDescription } from "./Description";
 import { ImageGallery } from "./ImageGallery";
 import { ProductInfo } from "./Info";

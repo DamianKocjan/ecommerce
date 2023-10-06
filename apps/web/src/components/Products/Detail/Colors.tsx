@@ -1,9 +1,9 @@
 import { RadioGroup } from "@headlessui/react";
 import React from "react";
 
-import { RouterOutputs } from "../../../utils/trpc";
-import { Flex } from "../../shared/core/Flex";
-import { classNames } from "../../shared/utils/classnames";
+import { Flex } from "~/components/shared/core/Flex";
+import { classNames } from "~/components/shared/utils/classnames";
+import { RouterOutputs } from "~/utils/trpc";
 
 type Colors = RouterOutputs["product"]["get"]["colors"];
 type Color = Colors[number];

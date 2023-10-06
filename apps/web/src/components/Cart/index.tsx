@@ -1,11 +1,11 @@
 import { useMemo } from "react";
 
-import { NextPageWithLayout } from "../../pages/_app";
-import { trpc } from "../../utils/trpc";
-import { Flex } from "../shared/core/Flex";
-import { Spinner } from "../shared/core/Spinner";
-import { useBagStore } from "../shared/layout/Bag/store";
-import { Container } from "../shared/layout/ShopLayout/Container";
+import { Flex } from "~/components/shared/core/Flex";
+import { Spinner } from "~/components/shared/core/Spinner";
+import { useBagStore } from "~/components/shared/layout/Bag/store";
+import { Container } from "~/components/shared/layout/ShopLayout/Container";
+import { NextPageWithLayout } from "~/pages/_app";
+import { trpc } from "~/utils/trpc";
 import { BagItem } from "./BagItem";
 import { OrderSummary } from "./OrderSummary";
 
@@ -56,7 +56,7 @@ export const Cart: NextPageWithLayout = () => {
 					) : (
 						<ul
 							role="list"
-							className="divide-y divide-gray-200 border-t border-b border-gray-200"
+							className="divide-y divide-gray-200 border-b border-t border-gray-200"
 						>
 							{data.map((product) => (
 								<BagItem key={product.slug} product={product} />
