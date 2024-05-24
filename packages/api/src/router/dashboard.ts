@@ -152,7 +152,6 @@ export const dashboardRouter = router({
 								name: true,
 							},
 						},
-						quantity: true,
 					},
 				}),
 			]);
@@ -225,7 +224,11 @@ export const dashboardRouter = router({
 					price: true,
 					discount: true,
 					shortDescription: true,
-					thumbnailImage: true,
+					skus: {
+						select: {
+							thumbnailImage: true,
+						},
+					},
 				},
 			});
 			if (!product) {

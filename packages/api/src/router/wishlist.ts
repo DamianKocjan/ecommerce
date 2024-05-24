@@ -99,13 +99,15 @@ export const wishlistRouter = router({
 			const { page, perPage } = input;
 
 			const where = {
-				product: productPaginationWithFilters(input),
+				product: {
+					product: productPaginationWithFilters(input),
+				},
 				userId: ctx.session.user?.id,
 			};
 			const orderBy = getOrderBy(input.sortBy);
 
 			const skip = page > 0 ? perPage * (page - 1) : 0;
-			const [total, data] = await Promise.all([
+			const [total, data] = await ctx.prisma.$transaction([
 				ctx.prisma.wishlist.count({ where }),
 				ctx.prisma.wishlist.findMany({
 					take: perPage,
@@ -121,18 +123,22 @@ export const wishlistRouter = router({
 						product: {
 							select: {
 								id: true,
-								slug: true,
+								product: {
+									select: {
+										slug: true,
+										description: true,
+										manufacturer: {
+											select: {
+												id: true,
+												name: true,
+											},
+										},
+									},
+								},
 								title: true,
-								description: true,
 								thumbnailImage: true,
 								price: true,
 								discount: true,
-								manufacturer: {
-									select: {
-										id: true,
-										name: true,
-									},
-								},
 							},
 						},
 					},
@@ -145,7 +151,7 @@ export const wishlistRouter = router({
 					...item,
 					product: {
 						...item.product,
-						price: item.product.price.toNumber(),
+						price: item.product.price?.toNumber(),
 						discount: item.product.discount?.toNumber(),
 					},
 				})),

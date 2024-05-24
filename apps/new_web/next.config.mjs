@@ -1,0 +1,39 @@
+// @ts-check
+/**
+ * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
+ * This is especially useful for Docker builds.
+ */
+!process.env.SKIP_ENV_VALIDATION && (await import("./src/env/server.mjs"));
+
+/** @type {import("next").NextConfig} */
+const config = {
+	reactStrictMode: true,
+	swcMinify: true,
+	// Enables hot-reload and easy integration for local packages
+	transpilePackages: ["@ecommerce/api", "@ecommerce/auth", "@ecommerce/db"],
+	// We already do linting on GH actions
+	eslint: {
+		ignoreDuringBuilds: !!process.env.CI,
+	},
+	images: {
+		remotePatterns: [
+			{
+				hostname: "tailwindui.com",
+			},
+			{
+				hostname: "tailwindcss.com",
+			},
+			{
+				hostname: "images.unsplash.com",
+			},
+			{
+				hostname: "source.unsplash.com",
+			},
+			{
+				hostname: "picsum.photos",
+			},
+		],
+	},
+};
+
+export default config;

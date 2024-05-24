@@ -16,7 +16,12 @@ export function getOrderBy(
 				price: "desc",
 			};
 		case "sales":
-			return;
+			return {
+				discount: {
+					sort: "desc",
+					nulls: "last",
+				},
+			};
 		default:
 			return;
 	}
@@ -25,17 +30,11 @@ export function getOrderBy(
 export const productPaginationWithFiltersSchema = {
 	q: z.string().optional(),
 	sortBy: z.string().optional(),
-	sizes: z.array(z.number()).optional(),
 	brands: z.array(z.number()).optional(),
-	colors: z.array(z.number()).optional(),
 	priceMin: z.number().optional(),
 	priceMax: z.number().optional(),
 	onSaleRequired: z.boolean().optional(),
-	materials: z.array(z.number()).optional(),
 	multipack: z.boolean().optional(),
-	patterns: z.array(z.number()).optional(),
-	cuts: z.array(z.number()).optional(),
-	collectionType: z.number().optional(),
 	season: z.nativeEnum(Season).optional(),
 	delivery: z.boolean().optional(),
 	perPage: z.number(),
@@ -69,70 +68,6 @@ export function productPaginationWithFilters<T extends z.infer<typeof obj>>(
 						},
 					},
 			  ]
-			: undefined,
-		size: input.sizes
-			? {
-					is: {
-						id: {
-							in: input.sizes,
-						},
-					},
-			  }
-			: undefined,
-		manufacturer: input.brands
-			? {
-					is: {
-						id: {
-							in: input.brands,
-						},
-					},
-			  }
-			: undefined,
-		colors: input.colors
-			? {
-					some: {
-						id: {
-							in: input.colors,
-						},
-					},
-			  }
-			: undefined,
-		materials: input.materials
-			? {
-					some: {
-						id: {
-							in: input.materials,
-						},
-					},
-			  }
-			: undefined,
-		multipack: input.multipack || undefined,
-		patterns: input.patterns
-			? {
-					some: {
-						id: {
-							in: input.patterns,
-						},
-					},
-			  }
-			: undefined,
-		cuts: input.cuts
-			? {
-					some: {
-						id: {
-							in: input.cuts,
-						},
-					},
-			  }
-			: undefined,
-		collections: input.collectionType
-			? {
-					some: {
-						id: {
-							in: input.collectionType,
-						},
-					},
-			  }
 			: undefined,
 		season:
 			input.season && input.season !== "ALL"

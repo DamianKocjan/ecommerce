@@ -20,3 +20,19 @@ export function randomBool(min: number): boolean {
 export function randomElement<T>(array: T[]): T {
 	return array[Math.floor(Math.random() * array.length)] as T;
 }
+
+export function randomUniqueElements<T>(array: T[], count: number): T[] {
+	const shuffled = array.sort(() => 0.5 - Math.random());
+	return shuffled.slice(0, count);
+}
+
+export function slugify(text: string): string {
+	return text
+		.toString()
+		.toLowerCase()
+		.replace(/\s+/g, "-") // Replace spaces with -
+		.replace(/[^\w-]+/g, "") // Remove all non-word chars
+		.replace(/--+/g, "-") // Replace multiple - with single -
+		.replace(/^-+/, "") // Trim - from start of text
+		.replace(/-+$/, ""); // Trim - from end of text
+}

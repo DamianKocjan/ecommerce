@@ -2,9 +2,9 @@
 	"name": "@ecommerce/constants",
 	"version": "0.1.0",
 	"license": "MIT",
-	"files": [
-		"./seed/categories.json"
-	],
+	"publishConfig": {
+		"access": "public"
+	},
 	"scripts": {
 		"lint": "eslint"
 	}

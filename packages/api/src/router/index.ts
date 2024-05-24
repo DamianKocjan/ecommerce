@@ -1,29 +1,19 @@
 import { router } from "../trpc";
 import { brandRouter } from "./brand";
 import { categoryRouter } from "./category";
-import { collectionRouter } from "./collection";
-import { colorRouter } from "./color";
-import { cutRouter } from "./cut";
 import { dashboardRouter } from "./dashboard";
-import { materialRouter } from "./material";
-import { patternRouter } from "./pattern";
+import { filtersRouter } from "./filters";
 import { productRouter } from "./product";
 import { reviewRouter } from "./review";
-import { sizeRouter } from "./size";
 import { wishlistRouter } from "./wishlist";
 
 export const appRouter = router({
 	brand: brandRouter,
 	category: categoryRouter,
-	collection: collectionRouter,
-	color: colorRouter,
-	cut: cutRouter,
 	dashboard: dashboardRouter,
-	material: materialRouter,
-	pattern: patternRouter,
+	filters: filtersRouter,
 	product: productRouter,
 	review: reviewRouter,
-	size: sizeRouter,
 	wishlist: wishlistRouter,
 });
 

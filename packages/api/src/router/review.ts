@@ -15,7 +15,9 @@ export const reviewRouter = router({
 				ctx.prisma.review.aggregate({
 					where: {
 						product: {
-							slug: input.slug,
+							product: {
+								slug: input.slug,
+							},
 						},
 					},
 					_avg: {
@@ -25,7 +27,9 @@ export const reviewRouter = router({
 				ctx.prisma.review.findFirst({
 					where: {
 						product: {
-							slug: input.slug,
+							product: {
+								slug: input.slug,
+							},
 						},
 						userId: ctx.session?.user?.id,
 					},

@@ -34,25 +34,22 @@ export const productRouter = router({
 			const orderBy = getOrderBy(input.sortBy);
 
 			const skip = page > 0 ? perPage * (page - 1) : 0;
-			const [total, data] = await Promise.all([
+			const [total, data] = await ctx.prisma.$transaction([
 				ctx.prisma.product.count({ where }),
 				ctx.prisma.product.findMany({
 					take: perPage,
 					skip,
 					where,
 					orderBy,
-					select: {
-						id: true,
-						slug: true,
-						title: true,
-						description: true,
-						thumbnailImage: true,
-						price: true,
-						discount: true,
-						manufacturer: {
-							select: {
-								id: true,
-								name: true,
+					include: {
+						manufacturer: true,
+						categories: true,
+						attributeValues: true,
+						deliveryOption: true,
+						skus: {
+							include: {
+								attributes: true,
+								images: true,
 							},
 						},
 					},
@@ -64,7 +61,12 @@ export const productRouter = router({
 				data: data.map((item) => ({
 					...item,
 					price: item.price.toNumber(),
-					discount: item.discount?.toNumber(),
+					discount: item.discount?.toNumber() || null,
+					skus: item.skus.map((sku) => ({
+						...sku,
+						price: sku.price?.toNumber() || null,
+						discount: sku.discount?.toNumber() || null,
+					})),
 				})),
 				meta: {
 					total,
@@ -86,16 +88,8 @@ export const productRouter = router({
 			const data = await ctx.prisma.product.findFirst({
 				where: {
 					slug: input.slug,
-					activatiedAt: {
+					activatedAt: {
 						lte: new Date(),
-					},
-				},
-				include: {
-					colors: {
-						select: {
-							id: true,
-							name: true,
-						},
 					},
 				},
 			});
@@ -140,26 +134,15 @@ export const productRouter = router({
 					id: true,
 					slug: true,
 					title: true,
-					thumbnailImage: true,
+					skus: {
+						select: {
+							thumbnailImage: true,
+							multiPack: true,
+							multiPackQuantity: true,
+							attributes: true,
+						},
+					},
 					price: true,
-					// images: {
-					// 	select: {
-					// 		id: true,
-					// 		url: true,
-					// 	},
-					// },
-					quantity: true,
-					colors: {
-						select: {
-							id: true,
-							name: true,
-						},
-					},
-					size: {
-						select: {
-							name: true,
-						},
-					},
 				},
 			});
 
@@ -179,7 +162,7 @@ export const productRouter = router({
 			const { page, perPage } = input;
 
 			const where: Prisma.ProductWhereInput = {
-				activatiedAt: {
+				activatedAt: {
 					lte: new Date(),
 				},
 				categories: {
@@ -193,21 +176,33 @@ export const productRouter = router({
 			};
 
 			const skip = page > 0 ? perPage * (page - 1) : 0;
-			const [total, data] = await Promise.all([
+			const [total, data] = await ctx.prisma.$transaction([
 				ctx.prisma.product.count({ where }),
 				ctx.prisma.product.findMany({
 					take: perPage,
 					skip,
 					where: {},
 					orderBy: {
-						activatiedAt: "desc",
+						activatedAt: "desc",
 					},
 					select: {
 						id: true,
 						slug: true,
 						title: true,
 						description: true,
-						thumbnailImage: true,
+						skus: {
+							select: {
+								id: true,
+								thumbnailImage: true,
+								images: {
+									select: {
+										url: true,
+									},
+								},
+								price: true,
+								discount: true,
+							},
+						},
 						price: true,
 						discount: true,
 						manufacturer: {

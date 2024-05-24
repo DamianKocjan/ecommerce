@@ -1,6 +1,7 @@
 packages:
   - apps/mobile
   - apps/web
+  - apps/new_web
   - packages/api
   - packages/auth
   - packages/constants
