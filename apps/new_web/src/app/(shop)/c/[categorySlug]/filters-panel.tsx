@@ -27,7 +27,7 @@ export function FiltersPanel({
 		values: {
 			id: number;
 			_count: {
-				products: number;
+				productVariants: number;
 			};
 			value: string;
 		}[];
@@ -122,7 +122,7 @@ export function FiltersPanel({
 									>
 										{value.value}{" "}
 									</label>
-									<Muted>({value._count.products})</Muted>
+									<Muted>({value._count.productVariants})</Muted>
 								</li>
 							);
 						})}

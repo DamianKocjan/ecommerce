@@ -2,7 +2,6 @@
 
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 import { usePerPage } from "~/components/shared/layout/Products/ListFooter/usePerPage";
-
 import { Button } from "~/components/ui/button";
 import {
 	Select,

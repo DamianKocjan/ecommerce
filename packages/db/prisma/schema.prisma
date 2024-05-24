@@ -176,8 +176,6 @@ model Product {
   manufacturer     Manufacturer     @relation(fields: [manufacturerId], references: [id], onDelete: Cascade)
   deliveryOptionId String
   deliveryOption   DeliveryOption   @relation(fields: [deliveryOptionId], references: [id])
-  attributeValues  AttributeValue[]
-	attributes       Attribute[]
 }
 
 model ProductVariant {
@@ -219,7 +217,6 @@ model Attribute {
   values     AttributeValue[]
   categoryId Int
   category   Category         @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-	products  Product[]
 }
 
 model AttributeValue {
@@ -233,9 +230,7 @@ model AttributeValue {
   // Relations
   attributeId      Int
   attribute        Attribute       @relation(fields: [attributeId], references: [id], onDelete: Cascade)
-  products         Product[]
-  productVariantId Int?
-  productVariant   ProductVariant? @relation(fields: [productVariantId], references: [id])
+	productVariants  ProductVariant[]
 
   // Attributes
   @@unique([attributeId, value], map: "attribute_values_attribute_id_value_unique")

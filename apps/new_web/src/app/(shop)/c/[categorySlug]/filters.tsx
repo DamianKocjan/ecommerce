@@ -9,11 +9,13 @@ export async function Filters({
 	>;
 }) {
 	const data = await getFilters();
+	console.log({ data: JSON.stringify(data, null, 2) });
+
 	return (
 		<div>
-			{/* {JSON.stringify(filters)} */}
+			{JSON.stringify(filters)}
 
-			{/* {JSON.stringify(data, null, 2)} */}
+			{JSON.stringify(data, null, 2)}
 
 			<FiltersPanel
 				filters={filters}
@@ -46,13 +48,21 @@ async function getFilters() {
 	const [filters, prices] = await prisma!.$transaction([
 		prisma!.attribute.findMany({
 			where: {
-				products: {
+				values: {
 					some: {
-						categories: {
-							some: {
-								// slug: input.category,
-							},
-						},
+						productVariants: false
+							? undefined
+							: {
+									some: {
+										product: {
+											categories: {
+												some: {
+													// slug: input.category,
+												},
+											},
+										},
+									},
+								},
 					},
 				},
 			},
@@ -60,37 +70,71 @@ async function getFilters() {
 				id: true,
 				name: true,
 				values: {
-					where: {
-						products: {
-							some: {
-								categories: {
-									some: {
-										// slug: input.category,
-									},
-								},
-							},
-						},
-					},
 					select: {
 						id: true,
 						value: true,
 						_count: {
 							select: {
-								products: {
-									where: {
-										categories: {
-											some: {
-												// slug: input.category,
+								productVariants: false
+									? true
+									: {
+											where: {
+												product: {
+													categories: {
+														some: {
+															// slug: input.category,
+														},
+													},
+												},
 											},
 										},
-									},
-								},
 							},
 						},
 					},
 				},
 			},
 		}),
+		// prisma!.attributeValue.findMany({
+		// 	where: {
+		// 		productVariants: {
+		// 			some: {
+		// 				product: {
+		// 					categories: {
+		// 						some: {
+		// 							// slug: input.category,
+		// 						},
+		// 					},
+		// 				},
+		// 			},
+		// 		},
+		// 	},
+		// 	select: {
+		// 		id: true,
+		// 		value: true,
+		// 		attributeId: true,
+		// 		attribute: {
+		// 			select: {
+		// 				id: true,
+		// 				name: true,
+		// 			},
+		// 		},
+		// 		_count: {
+		// 			select: {
+		// 				productVariants: {
+		// 					where: {
+		// 						product: {
+		// 							categories: {
+		// 								some: {
+		// 									// slug: input.category,
+		// 								},
+		// 							},
+		// 						},
+		// 					},
+		// 				},
+		// 			},
+		// 		},
+		// 	},
+		// }),
 		prisma!.product.aggregate({
 			where: {
 				categories: {

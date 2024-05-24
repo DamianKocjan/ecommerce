@@ -105,28 +105,22 @@ export async function seedProducts(prisma: PrismaClient): Promise<void> {
 								category: {
 									connect: randomElement(categoriesForProduct),
 								},
-								products: {
-									connect: product,
-								},
 							},
 							select: {
 								id: true,
 							},
-					  })
+						})
 					: await prisma.attribute.create({
 							data: {
 								name: attributeData.name,
 								category: {
 									connect: randomElement(categoriesForProduct),
 								},
-								products: {
-									connect: product,
-								},
 							},
 							select: {
 								id: true,
 							},
-					  });
+						});
 
 				const attributeValue = await prisma.attributeValue.findFirst({
 					where: {
@@ -143,14 +137,7 @@ export async function seedProducts(prisma: PrismaClient): Promise<void> {
 						where: {
 							id: attributeValue.id,
 						},
-						data: {
-							productVariant: {
-								connect: productVariant,
-							},
-							products: {
-								connect: product,
-							},
-						},
+						data: {},
 					});
 				} else {
 					await prisma.attributeValue.create({
@@ -158,12 +145,6 @@ export async function seedProducts(prisma: PrismaClient): Promise<void> {
 							value: attributeData.value,
 							attribute: {
 								connect: attribute,
-							},
-							productVariant: {
-								connect: productVariant,
-							},
-							products: {
-								connect: product,
 							},
 						},
 					});
