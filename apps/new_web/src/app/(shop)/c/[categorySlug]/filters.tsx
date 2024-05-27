@@ -1,22 +1,15 @@
+import { type Arrayish } from "~/utils/primitives";
 import { FiltersPanel } from "./filters-panel";
 
 export async function Filters({
 	filters,
 }: {
-	filters: Record<
-		string | number,
-		string | number | string[] | number[] | boolean
-	>;
+	filters: Record<string | number, Arrayish<string | number | boolean>>;
 }) {
 	const data = await getFilters();
-	console.log({ data: JSON.stringify(data, null, 2) });
 
 	return (
 		<div>
-			{JSON.stringify(filters)}
-
-			{JSON.stringify(data, null, 2)}
-
 			<FiltersPanel
 				filters={filters}
 				attributeFilters={data.filters}
@@ -50,19 +43,17 @@ async function getFilters() {
 			where: {
 				values: {
 					some: {
-						productVariants: false
-							? undefined
-							: {
-									some: {
-										product: {
-											categories: {
-												some: {
-													// slug: input.category,
-												},
-											},
+						productVariants: {
+							some: {
+								product: {
+									categories: {
+										some: {
+											// slug: input.category,
 										},
 									},
 								},
+							},
+						},
 					},
 				},
 			},
@@ -75,19 +66,17 @@ async function getFilters() {
 						value: true,
 						_count: {
 							select: {
-								productVariants: false
-									? true
-									: {
-											where: {
-												product: {
-													categories: {
-														some: {
-															// slug: input.category,
-														},
-													},
+								productVariants: {
+									where: {
+										product: {
+											categories: {
+												some: {
+													// slug: input.category,
 												},
 											},
 										},
+									},
+								},
 							},
 						},
 					},
