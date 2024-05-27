@@ -6,10 +6,6 @@ const NUMBER_OF_PRODUCTS = 2000;
 const MAX_NUMBER_OF_CATEGORIES = 5;
 
 export async function seedProducts(prisma: PrismaClient): Promise<void> {
-	const productsData = Array.from({ length: NUMBER_OF_PRODUCTS }, (_, index) =>
-		generateProductData(index),
-	);
-
 	const deliveryOption = await prisma.deliveryOption.create({
 		data: {
 			storePickup: true,
@@ -31,6 +27,12 @@ export async function seedProducts(prisma: PrismaClient): Promise<void> {
 			id: true,
 		},
 	});
+
+	const attributes = await generateAttributes(prisma, categories);
+
+	const productsData = Array.from({ length: NUMBER_OF_PRODUCTS }, (_, index) =>
+		generateProductData(index, attributes),
+	);
 
 	for (const [index, productData] of productsData.entries()) {
 		// FIXME: Improve offset calculation
@@ -67,7 +69,7 @@ export async function seedProducts(prisma: PrismaClient): Promise<void> {
 
 		// Create Product Variants, Images, Attributes, and Attribute Values
 		for (const variantData of productData.variants) {
-			const productVariant = await prisma.productVariant.create({
+			await prisma.productVariant.create({
 				data: {
 					sku: variantData.sku,
 					title: variantData.title,
@@ -83,78 +85,140 @@ export async function seedProducts(prisma: PrismaClient): Promise<void> {
 							})),
 						},
 					},
+					attributes: {
+						connect: variantData.attributes.map((attr) => ({
+							id: attr,
+						})),
+					},
+				},
+				select: {
+					id: true,
+				},
+			});
+		}
+	}
+}
+
+const ATTRIBUTES_DATA = [
+	{
+		name: "Size",
+		values: ["XS", "S", "M", "L", "XL", "XXL"],
+	},
+	{
+		name: "Color",
+		values: [
+			"Red",
+			"Green",
+			"Blue",
+			"Yellow",
+			"Black",
+			"White",
+			"Gray",
+			"Orange",
+			"Purple",
+			"Brown",
+		],
+	},
+	{
+		name: "Material",
+		values: ["Cotton", "Polyester", "Silk", "Wool", "Leather"],
+	},
+	{
+		name: "Pattern",
+		values: ["Solid", "Striped", "Checkered", "Floral", "Abstract"],
+	},
+	{
+		name: "Fit",
+		values: ["Slim", "Regular", "Loose"],
+	},
+	{
+		name: "Style",
+		values: ["Formal", "Casual", "Sportswear", "Streetwear", "Bohemian"],
+	},
+	{
+		name: "Neckline",
+		values: ["V-Neck", "Round Neck", "Square Neck", "Boat Neck", "Halter Neck"],
+	},
+	{
+		name: "Sleeve Length",
+		values: [
+			"Sleeveless",
+			"Short Sleeve",
+			"Half Sleeve",
+			"3/4 Sleeve",
+			"Long Sleeve",
+		],
+	},
+	{
+		name: "Occasion",
+		values: ["Work", "Casual", "Party", "Formal", "Wedding"],
+	},
+];
+
+type Attribute = {
+	id: number;
+	name: string;
+	values: {
+		id: number;
+		value: string;
+	}[];
+};
+
+async function generateAttributes(
+	prisma: PrismaClient,
+	categories: {
+		id: number;
+	}[],
+) {
+	const attributes: Attribute[] = [];
+
+	for (const attributeData of ATTRIBUTES_DATA) {
+		const attr = {
+			id: 0,
+			name: attributeData.name,
+			values: [],
+		} as Attribute;
+
+		const attribute = await prisma.attribute.create({
+			data: {
+				name: attributeData.name,
+				category: {
+					connect: randomElement(categories),
+				},
+			},
+			select: {
+				id: true,
+			},
+		});
+
+		attr.id = attribute.id;
+
+		for (const value of attributeData.values) {
+			const attributeValue = await prisma.attributeValue.create({
+				data: {
+					value,
+					attribute: {
+						connect: attribute,
+					},
 				},
 				select: {
 					id: true,
 				},
 			});
 
-			// Create Attributes and AttributeValues for each variant
-			for (const attributeData of variantData.attributes) {
-				const existingAttribute = await prisma.attribute.findFirst({
-					where: { name: attributeData.name },
-					select: {
-						id: true,
-					},
-				});
-
-				const attribute = existingAttribute
-					? await prisma.attribute.update({
-							where: { id: existingAttribute.id },
-							data: {
-								category: {
-									connect: randomElement(categoriesForProduct),
-								},
-							},
-							select: {
-								id: true,
-							},
-						})
-					: await prisma.attribute.create({
-							data: {
-								name: attributeData.name,
-								category: {
-									connect: randomElement(categoriesForProduct),
-								},
-							},
-							select: {
-								id: true,
-							},
-						});
-
-				const attributeValue = await prisma.attributeValue.findFirst({
-					where: {
-						attributeId: attribute.id,
-						value: attributeData.value,
-					},
-					select: {
-						id: true,
-					},
-				});
-
-				if (attributeValue) {
-					await prisma.attributeValue.update({
-						where: {
-							id: attributeValue.id,
-						},
-						data: {},
-					});
-				} else {
-					await prisma.attributeValue.create({
-						data: {
-							value: attributeData.value,
-							attribute: {
-								connect: attribute,
-							},
-						},
-					});
-				}
-			}
+			attr.values.push({
+				id: attributeValue.id,
+				value,
+			});
 		}
+
+		attributes.push(attr);
 	}
+
+	return attributes;
 }
 
-function generateProductData(index: number) {
+function generateProductData(index: number, attributes: Attribute[]) {
 	const numVariants = faker.number.int({ min: 1, max: 3 });
 	const variants = [];
 
@@ -173,10 +237,16 @@ function generateProductData(index: number) {
 			title: `Product ${index + 1} - Variant ${i + 1}`,
 			thumbnailImage: 0,
 			images,
-			attributes: [
-				{ name: "Size", value: faker.helpers.arrayElement(["S", "M", "L"]) },
-				{ name: "Color", value: faker.color.human() },
-			],
+			attributes: faker.helpers
+				.shuffle(attributes)
+				.slice(0, faker.number.int({ min: 2, max: 5 }))
+				.map(
+					(attr) =>
+						faker.helpers
+							.shuffle(attr.values)
+							.slice(0, 1)
+							.map((v) => v.id)[0]!,
+				),
 			price: faker.datatype.boolean({
 				probability: 0.2,
 			})
