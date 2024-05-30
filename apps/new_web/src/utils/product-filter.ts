@@ -1,5 +1,5 @@
-import { type Prisma } from "@ecommerce/db";
-import { type ProductPaginationWithFilters } from "~/schemas/filters";
+import type { Prisma } from "@ecommerce/db";
+import type { ProductPaginationWithFilters } from "~/schemas/filters";
 import { isNumber, tryToNumber, type Arrayish } from "./primitives";
 
 export function parseFilters(searchParams: Record<string, string>) {
@@ -40,10 +40,12 @@ export function parseFilters(searchParams: Record<string, string>) {
 export function assembleWhereProductStatement<
 	T extends ProductPaginationWithFilters,
 >(
+	categorySlug: string,
 	standardFilters: T,
 	restFilters: Record<string, Arrayish<number>>,
 ): Prisma.ProductWhereInput {
-	const or = [] as NonNullable<Prisma.ProductWhereInput["OR"]>;
+	const or = [] as Prisma.ProductWhereInput[];
+	const and = [] as Prisma.ProductWhereInput[];
 
 	if (standardFilters.q) {
 		or.push({
@@ -68,7 +70,7 @@ export function assembleWhereProductStatement<
 
 	if (Object.entries(restFilters).length) {
 		Object.entries(restFilters).forEach(([key, value]) => {
-			or.push({
+			and.push({
 				skus: {
 					some: {
 						attributes: {
@@ -88,40 +90,58 @@ export function assembleWhereProductStatement<
 	}
 
 	return {
-		OR: Object.entries(or).length ? or : undefined,
+		OR: Object.entries(or).length > 0 ? or : undefined,
+		AND: Object.entries(and).length > 0 ? and : undefined,
 		season:
 			standardFilters.season && standardFilters.season !== "ALL"
 				? {
 						equals: standardFilters.season,
 					}
 				: undefined,
-		price: {
-			gte: standardFilters.priceMin,
-			lte: standardFilters.priceMax,
+		skus: {
+			some: {
+				price: {
+					gte: standardFilters.priceMin,
+					lte: standardFilters.priceMax,
+				},
+			},
+		},
+		categories: {
+			some: {
+				slug: categorySlug,
+			},
+		},
+		manufacturer: {
+			id: {
+				in: standardFilters.brands,
+			},
+		},
+		deliveryOption: {
+			id: standardFilters.delivery,
 		},
 	};
 }
 
 export function getOrderBy(
 	orderBy?: string | null,
-): Prisma.Enumerable<Prisma.ProductOrderByWithRelationInput> | undefined {
+): Arrayish<Prisma.ProductOrderByWithRelationInput> | undefined {
 	switch (orderBy) {
 		case "popularity":
-			return;
+			return {};
 		case "priceLowToHigh":
 			return {
-				price: "asc",
+				// price: "asc",
 			};
 		case "priceHighToLow":
 			return {
-				price: "desc",
+				// price: "desc",
 			};
 		case "sales":
 			return {
-				discount: {
-					sort: "desc",
-					nulls: "last",
-				},
+				// discount: {
+				// 	sort: "desc",
+				// 	nulls: "last",
+				// },
 			};
 		default:
 			return;

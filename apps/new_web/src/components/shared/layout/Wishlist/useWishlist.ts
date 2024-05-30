@@ -3,7 +3,7 @@ import { useCallback } from "react";
 
 import { trpc } from "~/utils/trpc";
 
-export function useWishlist(productSkuId: string) {
+export function useWishlist(productSkuId: number) {
 	const { data: session } = useSession();
 	const addToWishlist = trpc.wishlist.add.useMutation();
 	const removeFromWishlist = trpc.wishlist.remove.useMutation();

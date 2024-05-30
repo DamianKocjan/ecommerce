@@ -3,7 +3,7 @@ import React from "react";
 import { useWishlist } from "~/components/shared/layout/Wishlist/useWishlist";
 import { Button } from "../ui/button";
 
-export function WishlistButton({ productSkuId }: { productSkuId: string }) {
+export function WishlistButton({ productSkuId }: { productSkuId: number }) {
 	const { handleToggleWishlist, isInWishlist } = useWishlist(productSkuId);
 	const [additionalClasses, setAdditionalClasses] = React.useState("");
 

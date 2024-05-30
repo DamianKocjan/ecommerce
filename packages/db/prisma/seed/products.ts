@@ -48,10 +48,7 @@ export async function seedProducts(prisma: PrismaClient): Promise<void> {
 				slug: slugify(productData.title + "-" + index),
 				description: productData.description,
 				shortDescription: productData.shortDescription,
-				multiPack: productData.multiPack,
-				multiPackQuantity: productData.multiPackQuantity,
 				season: productData.season,
-				price: productData.price,
 				deliveryOption: {
 					connect: deliveryOption,
 				},
@@ -72,8 +69,9 @@ export async function seedProducts(prisma: PrismaClient): Promise<void> {
 			await prisma.productVariant.create({
 				data: {
 					sku: variantData.sku,
-					title: variantData.title,
-					price: variantData.price || productData.price,
+					price: variantData.price,
+					multiPack: variantData.multiPack,
+					multiPackQuantity: variantData.multiPackQuantity,
 					thumbnailImage: variantData.thumbnailImage,
 					product: {
 						connect: product,
@@ -232,9 +230,13 @@ function generateProductData(index: number, attributes: Attribute[]) {
 			});
 		}
 
+		const multiPack = faker.datatype.boolean();
+
 		variants.push({
 			sku: `SKU-${index + 1}-${i + 1}`,
-			title: `Product ${index + 1} - Variant ${i + 1}`,
+			price: faker.commerce.price({ min: 50, max: 500, dec: 2 }),
+			multiPack,
+			multiPackQuantity: multiPack ? faker.number.int({ min: 1, max: 5 }) : 1,
 			thumbnailImage: 0,
 			images,
 			attributes: faker.helpers
@@ -247,22 +249,13 @@ function generateProductData(index: number, attributes: Attribute[]) {
 							.slice(0, 1)
 							.map((v) => v.id)[0]!,
 				),
-			price: faker.datatype.boolean({
-				probability: 0.2,
-			})
-				? faker.commerce.price({ min: 50, max: 500, dec: 2 })
-				: undefined,
 		});
 	}
-
-	const multiPack = faker.datatype.boolean();
 
 	return {
 		title: faker.commerce.productName() + " " + index,
 		description: faker.commerce.productDescription(),
 		shortDescription: faker.lorem.sentence(),
-		multiPack,
-		multiPackQuantity: multiPack ? faker.number.int({ min: 1, max: 5 }) : 1,
 		season: faker.helpers.arrayElement([
 			"SUMMER",
 			"WINTER",
@@ -270,7 +263,6 @@ function generateProductData(index: number, attributes: Attribute[]) {
 			"AUTUMN",
 			"SPRING",
 		]) as Season,
-		price: faker.commerce.price({ min: 50, max: 500, dec: 2 }),
 		defaultVariant: 0,
 		variants,
 	};

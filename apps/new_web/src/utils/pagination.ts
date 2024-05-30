@@ -5,7 +5,7 @@ function getPreviousPage({
 	page: number;
 	lastPage: number;
 }) {
-	return page > 0 ? page - 1 : lastPage;
+	return page > 1 ? page - 1 : lastPage;
 }
 
 function getNextPage({ page, lastPage }: { page: number; lastPage: number }) {

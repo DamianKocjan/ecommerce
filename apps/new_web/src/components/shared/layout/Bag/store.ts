@@ -2,10 +2,10 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface BagState {
-	products: string[];
-	addToBag: (productSlug: string) => void;
+	products: number[];
+	addToBag: (productSlug: number) => void;
 	clearBag: () => void;
-	removeFromBag: (productSlug: string) => void;
+	removeFromBag: (productSlug: number) => void;
 }
 
 export const useBagStore = create(

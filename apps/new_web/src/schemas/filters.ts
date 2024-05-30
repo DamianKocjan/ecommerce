@@ -35,15 +35,15 @@ export const productPaginationWithFiltersSchema = z.object({
 		.optional()
 		.catch(() => undefined),
 	delivery: z
-		.boolean()
+		.string()
 		.optional()
 		.catch(() => undefined),
-	perPage: z.number().catch(() => 10),
+	perPage: z.number().catch(() => 6),
 	page: z
 		.number()
 		.optional()
-		.default(0)
-		.catch(() => 0),
+		.default(1)
+		.catch(() => 1),
 });
 
 export type ProductPaginationWithFilters = z.infer<

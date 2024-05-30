@@ -85,7 +85,7 @@ model Wishlist {
 
   // Relations
   userId    String
-  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   productId Int
   product   ProductVariant @relation(fields: [productId], references: [id], onDelete: Cascade)
 
@@ -153,17 +153,13 @@ model Image {
 }
 
 model Product {
-  id                Int       @id @default(autoincrement())
-  slug              String    @unique // This is the unique identifier for the product (e.g. "title-of-product-ID")
-  title             String    @unique
-  shortDescription  String    @db.VarChar(250)
-  description       String
-  price             Decimal   @db.Decimal(8, 2)
-  discount          Decimal?  @db.Decimal(8, 2)
-  activatedAt       DateTime?
-  multiPack         Boolean   @default(false)
-  multiPackQuantity Int       @default(1)
-  season            Season?
+  id               Int       @id @default(autoincrement())
+  slug             String    @unique // This is the unique identifier for the product (e.g. "title-of-product-ID")
+  title            String    @unique
+  shortDescription String    @db.VarChar(250)
+  description      String
+  activatedAt      DateTime?
+  season           Season?
 
   // Timestamps
   createdAt DateTime @default(now())
@@ -181,9 +177,7 @@ model Product {
 model ProductVariant {
   id                Int      @id @default(autoincrement())
   sku               String   @unique @db.VarChar(50)
-  title             String?
-  // if price is not set it will be the same as root product's price
-  price             Decimal? @db.Decimal(8, 2)
+  price             Decimal  @db.Decimal(8, 2)
   discount          Decimal? @db.Decimal(8, 2)
   multiPack         Boolean  @default(false)
   multiPackQuantity Int      @default(1)
@@ -198,11 +192,11 @@ model ProductVariant {
   product    Product          @relation(fields: [productId], references: [id], onDelete: Cascade)
   images     Image[]
   attributes AttributeValue[]
-	reviews    Review[]
-	wishlist   Wishlist[]
-	views      View[]
-	orders     OrderItem[]
-	coupons    Coupon[]
+  reviews    Review[]
+  wishlist   Wishlist[]
+  views      View[]
+  orders     OrderItem[]
+  coupons    Coupon[]
 }
 
 model Attribute {
@@ -220,7 +214,7 @@ model Attribute {
 }
 
 model AttributeValue {
-  id   Int    @id @default(autoincrement())
+  id    Int    @id @default(autoincrement())
   value String
 
   // Timestamps
@@ -228,9 +222,9 @@ model AttributeValue {
   updatedAt DateTime @updatedAt
 
   // Relations
-  attributeId      Int
-  attribute        Attribute       @relation(fields: [attributeId], references: [id], onDelete: Cascade)
-	productVariants  ProductVariant[]
+  attributeId     Int
+  attribute       Attribute        @relation(fields: [attributeId], references: [id], onDelete: Cascade)
+  productVariants ProductVariant[]
 
   // Attributes
   @@unique([attributeId, value], map: "attribute_values_attribute_id_value_unique")
@@ -248,9 +242,9 @@ model Review {
 
   // Relations
   productId Int
-  product   ProductVariant      @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product   ProductVariant @relation(fields: [productId], references: [id], onDelete: Cascade)
   userId    String
-  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   likes     ReviewLike[]
 }
 
@@ -281,7 +275,7 @@ model View {
   productId Int
   product   ProductVariant @relation(fields: [productId], references: [id], onDelete: Cascade)
   userId    String
-  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Category {
@@ -350,7 +344,7 @@ model OrderItem {
   updatedAt DateTime @updatedAt
 
   // Relations
-  order     Order   @relation(fields: [orderId], references: [id])
+  order     Order          @relation(fields: [orderId], references: [id])
   orderId   String
   product   ProductVariant @relation(fields: [productId], references: [id])
   productId Int

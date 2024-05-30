@@ -2,7 +2,7 @@ import { ShoppingCartSimple } from "@phosphor-icons/react";
 import { useBag } from "~/components/shared/layout/Bag/useBag";
 import { Button } from "../ui/button";
 
-export function CartButton({ productSkuId }: { productSkuId: string }) {
+export function CartButton({ productSkuId }: { productSkuId: number }) {
 	const { handleToggleBag, isInBag } = useBag(productSkuId);
 
 	return (

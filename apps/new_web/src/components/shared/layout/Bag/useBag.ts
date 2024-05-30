@@ -2,7 +2,7 @@ import { useCallback, useMemo } from "react";
 
 import { useBagStore } from "./store";
 
-export function useBag(productSkuId: string) {
+export function useBag(productSkuId: number) {
 	const { addToBag, removeFromBag } = useBagStore();
 	const products = useBagStore((state) => state.products);
 

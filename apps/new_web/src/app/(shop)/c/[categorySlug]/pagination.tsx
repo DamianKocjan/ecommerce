@@ -1,6 +1,8 @@
 "use client";
 
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useMemo } from "react";
 import { usePerPage } from "~/components/shared/layout/Products/ListFooter/usePerPage";
 import { Button } from "~/components/ui/button";
 import {
@@ -24,6 +26,8 @@ export function Pagination({
 	hasNextPage: boolean;
 	hasPreviousPage: boolean;
 }) {
+	const [page, handleSetPage] = usePage();
+
 	return (
 		<div className="col-span-3 flex">
 			<PerPage />
@@ -32,7 +36,7 @@ export function Pagination({
 				<Button
 					variant="ghost"
 					size="icon"
-					onClick={() => {}}
+					onClick={() => handleSetPage(page - 1)}
 					disabled={!hasPreviousPage}
 				>
 					<span className="sr-only">Previous page</span>
@@ -42,7 +46,7 @@ export function Pagination({
 				<Button
 					variant="ghost"
 					size="icon"
-					onClick={() => {}}
+					onClick={() => handleSetPage(page + 1)}
 					disabled={!hasNextPage}
 				>
 					<span className="sr-only">Next page</span>
@@ -51,6 +55,34 @@ export function Pagination({
 			</div>
 		</div>
 	);
+}
+
+function usePage() {
+	const searchParams = useSearchParams();
+	const router = useRouter();
+	const queryPage = searchParams.get("page");
+
+	const page = useMemo(
+		() => (queryPage ? parseInt(queryPage, 10) : 1),
+		[queryPage],
+	);
+
+	const handleSetPage = useCallback(
+		(page = 1) => {
+			const query = {} as Record<string, string>;
+			searchParams.forEach((value, key) => {
+				query[key] = value;
+			});
+			query["page"] = page.toString();
+			const search = new URLSearchParams(query).toString();
+			const url = `${window.location.pathname}?${search}`;
+
+			router.push(url);
+		},
+		[router, searchParams],
+	);
+
+	return [page, handleSetPage] as const;
 }
 
 function PerPage() {

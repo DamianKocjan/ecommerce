@@ -7,3 +7,14 @@ export function isNumber(value: string): boolean {
 export function tryToNumber(value: string): number | string {
 	return isNumber(value) ? Number(value) : value;
 }
+
+export function stringifyValue<
+	T extends {
+		toString(): string;
+	},
+>(value: T): string {
+	if (Array.isArray(value)) {
+		return `[${value.join(",")}]`;
+	}
+	return value.toString();
+}

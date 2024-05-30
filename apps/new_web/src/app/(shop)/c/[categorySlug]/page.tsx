@@ -1,14 +1,8 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { productPaginationWithFiltersSchema } from "~/schemas/filters";
-import { createPaginationMeta } from "~/utils/pagination";
-import { isNumber, type Arrayish } from "~/utils/primitives";
-import {
-	assembleWhereProductStatement,
-	getOrderBy,
-	parseFilters,
-} from "~/utils/product-filter";
+import { getProducts } from "~/server/products";
+import { parseFilters } from "~/utils/product-filter";
 import { Filters } from "./filters";
 import { Pagination } from "./pagination";
 import { ProductCard } from "./product-card";
@@ -33,16 +27,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	if (!category) {
 		return notFound();
 	}
-
 	return {
 		title: category.name,
 	};
 }
 
-export default async function Category({ searchParams }: Props) {
+export default async function Category({ searchParams, params }: Props) {
 	const filters = parseFilters(searchParams);
 
 	const { data, meta } = await getProducts({
+		categorySlug: params.categorySlug,
 		page: 1,
 		perPage: 6,
 		...filters,
@@ -61,118 +55,23 @@ export default async function Category({ searchParams }: Props) {
 				</div>
 			) : (
 				<div className="grid grid-cols-5 gap-4">
-					<Filters filters={filters} />
+					<Filters categorySlug={params.categorySlug} filters={filters} />
 
-					<div className="col-span-4 grid grid-cols-3 gap-4">
-						{data.map((product) => (
-							<ProductCard key={product.id} product={product} />
-						))}
+					<div className="col-span-4 flex flex-col gap-4">
+						<div className="grid grid-cols-3 gap-4">
+							{data.map((product) => (
+								<ProductCard key={product.id} product={product} />
+							))}
+						</div>
 
 						<Pagination
 							currentPage={meta.currentPage}
 							hasNextPage={meta.next !== undefined}
-							hasPreviousPage={meta.prev !== undefined}
+							hasPreviousPage={meta.prev !== meta.currentPage}
 						/>
 					</div>
 				</div>
 			)}
 		</div>
 	);
-}
-
-async function getProducts({
-	page,
-	perPage,
-	...filters
-}: {
-	page: number;
-	perPage: number;
-} & Record<string | number, Arrayish<string | number>>) {
-	const standardFilters = await productPaginationWithFiltersSchema.parseAsync({
-		q: filters.q,
-		sortBy: filters.sortBy,
-		brands: filters.brands,
-		priceMin: filters.priceMin,
-		priceMax: filters.priceMax,
-		onSaleRequired: filters.onSaleRequired,
-		multiPack: filters.multiPack,
-		season: filters.season,
-		delivery: filters.delivery,
-		page,
-		perPage,
-	});
-	// rest filters include attributes, which are not standard filters
-	const restFilters = (
-		Object.entries(filters)
-			.map(([key]) => {
-				if (Object.hasOwn(standardFilters, key) || !isNumber(key)) {
-					return;
-				} else if (!isNumber(filters[key]! as string)) {
-					return;
-				}
-				return [key, filters[key]];
-			})
-			.filter(Boolean) as [string, Arrayish<number>][]
-	).reduce(
-		(acc, [key, value]) => {
-			acc[key] = value;
-			return acc;
-		},
-		{} as Record<string, Arrayish<number>>,
-	);
-
-	const where = assembleWhereProductStatement(standardFilters, restFilters);
-	const orderBy = getOrderBy(filters.sortBy as string | null | undefined);
-
-	const skip = page > 0 ? perPage * (page - 1) : 0;
-	const [total, data] = await prisma!.$transaction([
-		prisma!.product.count({ where }),
-		prisma!.product.findMany({
-			take: perPage,
-			skip,
-			where,
-			orderBy,
-			select: {
-				id: true,
-				slug: true,
-				title: true,
-				price: true,
-				manufacturer: {
-					select: {
-						id: true,
-						name: true,
-					},
-				},
-				skus: {
-					select: {
-						id: true,
-						sku: true,
-						title: true,
-						thumbnailImage: true,
-						images: {
-							select: {
-								url: true,
-							},
-						},
-						price: true,
-						discount: true,
-					},
-					// where: {
-					// 	price: {
-					// 		gte: filters.priceMin as number,
-					// 		lte: filters.priceMax as number,
-					// 	},
-					// 	OR: where?.OR!.map((or) => or.skus!.some!),
-					// },
-				},
-			},
-		}),
-	]);
-
-	return {
-		data: data.map((item) => ({
-			...item,
-		})),
-		meta: createPaginationMeta({ total, page, perPage }),
-	};
 }
