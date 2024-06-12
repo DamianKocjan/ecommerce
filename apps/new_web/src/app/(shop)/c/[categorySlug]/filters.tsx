@@ -1,26 +1,31 @@
+"use client";
+
+import type { CheckedState } from "@radix-ui/react-checkbox";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import { Checkbox } from "~/components/ui/checkbox";
 import { H3, Muted, Ul } from "~/components/ui/typography";
 import { getFilters } from "~/server/products";
-import { stringifyValue, type Arrayish } from "~/utils/primitives";
+import {
+	stringifyValue,
+	type Arrayish,
+	type AsyncReturnType,
+	type Maybe,
+} from "~/utils/primitives";
 import { Slider } from "./slider";
 
 type FilterValue = Arrayish<string | number | boolean>;
+type FilterValues = (string | number | boolean)[];
 
-export async function Filters({
-	categorySlug,
+export function Filters({
 	filters,
+	filtersData,
 }: {
-	categorySlug: string;
 	filters: Record<string | number, FilterValue>;
+	filtersData: AsyncReturnType<typeof getFilters>;
 }) {
-	const data = await getFilters(categorySlug);
-
 	const router = useRouter();
 	const path = usePathname();
-
-	const filtersCopy = structuredClone(filters);
 
 	// FIXME: URL search params jump around when filters are updated.
 	// e.g. filters with ids `1` and `2` are placed like `?2=[2]&1=[1]` in the URL
@@ -37,8 +42,7 @@ export async function Filters({
 				if (
 					values[key] === undefined ||
 					values[key] === null ||
-					(Array.isArray(values[key]) &&
-						!(values[key] as (string | number | boolean)[])?.length)
+					(Array.isArray(values[key]) && !(values[key] as FilterValues)?.length)
 				) {
 					searchParams.delete(key);
 					return;
@@ -58,12 +62,10 @@ export async function Filters({
 	);
 
 	const handleFilterChange = React.useCallback(
-		(checked: string | boolean, filterId: number, valueId: number) => {
-			const filterValues = new Set(
-				(filters[filterId] as (string | number | boolean)[]) || [],
-			);
+		(checked: CheckedState, filterId: number, valueId: number) => {
+			const filterValues = new Set((filters[filterId] as FilterValues) || []);
 
-			if (checked === true || checked === "true") {
+			if (checked === true) {
 				filterValues.add(valueId);
 			} else {
 				filterValues.delete(valueId);
@@ -78,7 +80,7 @@ export async function Filters({
 
 	return (
 		<div>
-			{data.filters.map((filter) => (
+			{filtersData.filters.map((filter) => (
 				<div key={filter.id}>
 					<H3>{filter.name}</H3>
 					<Ul>
@@ -86,9 +88,7 @@ export async function Filters({
 							const isChecked =
 								filters[filter.id] === value.id ||
 								(Array.isArray(filters[filter.id]) &&
-									(
-										filters[filter.id] as (string | number | boolean)[]
-									).includes(value.id));
+									(filters[filter.id] as FilterValues).includes(value.id));
 
 							return (
 								<li key={value.id} className="flex items-center space-x-2">
@@ -113,18 +113,14 @@ export async function Filters({
 			))}
 
 			<Slider
-				min={data.prices.min || 0}
+				min={filtersData.prices.min || 0}
 				step={1}
 				minStepsBetweenThumbs={0}
 				value={[
-					(filtersCopy["priceMin"] as number | undefined) ||
-						data.prices.min ||
-						0,
-					(filtersCopy["priceMax"] as number | undefined) ||
-						data.prices.max ||
-						0,
+					(filters["priceMin"] as Maybe<number>) || filtersData.prices.min || 0,
+					(filters["priceMax"] as Maybe<number>) || filtersData.prices.max || 0,
 				]}
-				max={data.prices.max || 0}
+				max={filtersData.prices.max || 0}
 				// FIXME: maybe we should use a debounce here or show button to apply the filter instead of updating on every change
 				onValueChange={(values) =>
 					updateFilters({

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { getProducts } from "~/server/products";
+import { getFilters, getProducts } from "~/server/products";
 import { parseFilters } from "~/utils/product-filter";
 import { Filters } from "./filters";
 import { Pagination } from "./pagination";
@@ -35,12 +35,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Category({ searchParams, params }: Props) {
 	const filters = parseFilters(searchParams);
 
-	const { data, meta } = await getProducts({
-		categorySlug: params.categorySlug,
-		page: 1,
-		perPage: 6,
-		...filters,
-	});
+	const [{ data, meta }, filtersData] = await Promise.all([
+		getProducts({
+			categorySlug: params.categorySlug,
+			page: 1,
+			perPage: 6,
+			...filters,
+		}),
+		getFilters(params.categorySlug),
+	]);
 
 	return (
 		<div className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
@@ -55,7 +58,7 @@ export default async function Category({ searchParams, params }: Props) {
 				</div>
 			) : (
 				<div className="grid grid-cols-5 gap-4">
-					<Filters categorySlug={params.categorySlug} filters={filters} />
+					<Filters filters={filters} filtersData={filtersData} />
 
 					<div className="col-span-4 flex flex-col gap-4">
 						<div className="grid grid-cols-3 gap-4">
