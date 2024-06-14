@@ -3,6 +3,7 @@
 import type { CheckedState } from "@radix-ui/react-checkbox";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
+
 import { Checkbox } from "~/components/ui/checkbox";
 import { H3, Muted, Ul } from "~/components/ui/typography";
 import { getFilters } from "~/server/products";

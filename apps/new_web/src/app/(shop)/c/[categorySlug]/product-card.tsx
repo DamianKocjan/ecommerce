@@ -5,11 +5,11 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import React from "react";
 
-import { useCurrencyFormatter } from "~/components/shared/hooks/useCurrencyFormatter";
 import { CartButton } from "~/components/shop/cart-button";
 import { WishlistButton } from "~/components/shop/wishlist-button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Large, Muted } from "~/components/ui/typography";
+import { useCurrencyFormatter } from "~/hooks/use-formatter";
 import { isNumber } from "~/utils/primitives";
 
 const DEFAULT_SKU_INDEX = 0;

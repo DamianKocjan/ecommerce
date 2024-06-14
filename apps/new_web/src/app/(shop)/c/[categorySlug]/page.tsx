@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+
 import { getFilters, getProducts } from "~/server/products";
 import { parseFilters } from "~/utils/product-filter";
 import { Filters } from "./filters";

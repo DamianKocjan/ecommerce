@@ -3,7 +3,7 @@
 import { GoogleLogo } from "@phosphor-icons/react";
 import { Loader2 } from "lucide-react";
 import { signIn } from "next-auth/react";
-import * as React from "react";
+import React from "react";
 
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";

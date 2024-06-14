@@ -2,7 +2,8 @@
 
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useMemo } from "react";
+import React from "react";
+
 import { usePerPage } from "~/components/shared/layout/Products/ListFooter/usePerPage";
 import { Button } from "~/components/ui/button";
 import {
@@ -62,12 +63,12 @@ function usePage() {
 	const router = useRouter();
 	const queryPage = searchParams.get("page");
 
-	const page = useMemo(
+	const page = React.useMemo(
 		() => (queryPage ? parseInt(queryPage, 10) : 1),
 		[queryPage],
 	);
 
-	const handleSetPage = useCallback(
+	const handleSetPage = React.useCallback(
 		(page = 1) => {
 			const query = {} as Record<string, string>;
 			searchParams.forEach((value, key) => {
