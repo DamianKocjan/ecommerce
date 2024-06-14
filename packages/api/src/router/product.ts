@@ -28,7 +28,7 @@ export const productRouter = router({
 							some: {
 								slug: input.category,
 							},
-					  }
+						}
 					: undefined,
 			};
 			const orderBy = getOrderBy(input.sortBy);
@@ -120,28 +120,41 @@ export const productRouter = router({
 	bag: publicProcedure
 		.input(
 			z.object({
-				products: z.array(z.string()),
+				products: z.array(z.number()),
 			}),
 		)
 		.query(async ({ ctx, input }) => {
-			const data = await ctx.prisma.product.findMany({
+			const data = await ctx.prisma.productVariant.findMany({
 				where: {
-					slug: {
+					id: {
 						in: input.products,
 					},
 				},
 				select: {
 					id: true,
-					slug: true,
-					title: true,
-					skus: {
+					product: {
 						select: {
-							thumbnailImage: true,
-							multiPack: true,
-							multiPackQuantity: true,
-							attributes: true,
+							title: true,
 						},
 					},
+					attributes: {
+						select: {
+							attribute: {
+								select: {
+									name: true,
+								},
+							},
+							value: true,
+						},
+					},
+					thumbnailImage: true,
+					images: {
+						select: {
+							url: true,
+						},
+					},
+					multiPack: true,
+					multiPackQuantity: true,
 					price: true,
 				},
 			});

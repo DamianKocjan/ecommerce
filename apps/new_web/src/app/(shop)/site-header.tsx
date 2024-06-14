@@ -9,6 +9,7 @@ import { Button } from "~/components/ui/button";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet";
 import { cn } from "~/lib/utils";
+import { BagDropdown } from "./bag-dropdown";
 import { UserNav } from "./user-nav";
 
 export function SiteHeader() {
@@ -20,7 +21,9 @@ export function SiteHeader() {
 				<MainNav />
 				<MobileNav />
 				<div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-					<nav className="flex items-center">
+					<nav className="flex items-center space-x-2">
+						<BagDropdown session={session} />
+
 						{session ? (
 							<UserNav session={session} />
 						) : (

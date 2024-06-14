@@ -1,5 +1,6 @@
 "use client";
 
+import { BagProvider } from "~/contexts/bag-context";
 import { SiteHeader } from "./site-header";
 
 interface LayoutProps {
@@ -8,9 +9,9 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
 	return (
-		<>
+		<BagProvider>
 			<SiteHeader />
 			<div className="flex-1">{children}</div>
-		</>
+		</BagProvider>
 	);
 }
