@@ -21,6 +21,89 @@ import { BagProductItem, BagProductsSkeleton, type Product } from "./bag-item";
 const MAX_ITEMS = 9 as const;
 
 export function BagDropdown({ session }: { session: Session | null }) {
+	const {
+		numberOfItems,
+		combinedProductsData,
+		subtotal,
+		isLoading,
+		isError,
+		error,
+	} = useBagData();
+
+	return (
+		<Popover>
+			<PopoverTrigger asChild>
+				<Button
+					variant="ghost"
+					size="icon"
+					className="relative h-8 w-8 rounded-full"
+				>
+					<span className="sr-only">Your bag</span>
+					<ShoppingBag className="h-6 w-6" aria-hidden="true" />
+					{numberOfItems > 0 ? (
+						<span className="bg-primary absolute right-1 top-1 z-10 h-2 w-2 rounded-full" />
+					) : null}
+				</Button>
+			</PopoverTrigger>
+			<PopoverContent className="w-80">
+				<div className="grid gap-4">
+					{numberOfItems === 0 ? (
+						<>
+							<BagEmptyState />
+
+							<Button asChild className="w-full">
+								<Link href="/cart">View Shopping Bag</Link>
+							</Button>
+						</>
+					) : (
+						<>
+							<BagHeader />
+
+							{isLoading ? (
+								<>
+									<BagProductsSkeleton />
+									<BagValueInfoSkeleton />
+								</>
+							) : isError ? (
+								<BagErrorState
+									error={
+										error?.message ||
+										"An error occurred while loading your shopping bag"
+									}
+								/>
+							) : (
+								<>
+									<ScrollArea className="max-h-80">
+										<div className="grid gap-4">
+											{combinedProductsData.map((product) => (
+												<BagProductItem key={product.id} product={product} />
+											))}
+
+											{numberOfItems > MAX_ITEMS ? (
+												<div className="flex justify-center">
+													<Muted>
+														And {numberOfItems - MAX_ITEMS} more items
+													</Muted>
+												</div>
+											) : null}
+										</div>
+										<ScrollBar orientation="vertical" />
+									</ScrollArea>
+
+									<BagValueInfo subtotal={subtotal} />
+								</>
+							)}
+
+							<BagLinks isDisabled={!session || isLoading || isError} />
+						</>
+					)}
+				</div>
+			</PopoverContent>
+		</Popover>
+	);
+}
+
+function useBagData() {
 	const { products } = useBag();
 	const itemsSlice = React.useMemo(
 		() => products.slice(0, MAX_ITEMS),
@@ -60,77 +143,14 @@ export function BagDropdown({ session }: { session: Session | null }) {
 		[combinedProductsData],
 	);
 
-	return (
-		<Popover>
-			<PopoverTrigger asChild>
-				<Button
-					variant="ghost"
-					size="icon"
-					className="relative h-8 w-8 rounded-full"
-				>
-					<span className="sr-only">Your bag</span>
-					<ShoppingBag className="h-6 w-6" aria-hidden="true" />
-					{products.length > 0 ? (
-						<span className="bg-primary absolute right-1 top-1 z-10 h-2 w-2 rounded-full" />
-					) : null}
-				</Button>
-			</PopoverTrigger>
-			<PopoverContent className="w-80">
-				<div className="grid gap-4">
-					{products.length === 0 ? (
-						<>
-							<BagEmptyState />
-
-							<Button asChild className="w-full">
-								<Link href="/cart">View Shopping Bag</Link>
-							</Button>
-						</>
-					) : (
-						<>
-							<BagHeader />
-
-							{isLoading ? (
-								<>
-									<BagProductsSkeleton />
-									<BagValueInfoSkeleton />
-								</>
-							) : isError ? (
-								<BagErrorState
-									error={
-										error?.message ||
-										"An error occurred while loading your shopping bag"
-									}
-								/>
-							) : (
-								<>
-									<ScrollArea className="max-h-80">
-										<div className="grid gap-4">
-											{combinedProductsData.map((product) => (
-												<BagProductItem key={product.id} product={product} />
-											))}
-
-											{products.length > MAX_ITEMS ? (
-												<div className="flex justify-center">
-													<Muted>
-														And {products.length - MAX_ITEMS} more items
-													</Muted>
-												</div>
-											) : null}
-										</div>
-										<ScrollBar orientation="vertical" />
-									</ScrollArea>
-
-									<BagValueInfo subtotal={subtotal} />
-								</>
-							)}
-
-							<BagLinks isDisabled={!session || isLoading || isError} />
-						</>
-					)}
-				</div>
-			</PopoverContent>
-		</Popover>
-	);
+	return {
+		numberOfItems: products.length,
+		combinedProductsData,
+		subtotal,
+		isLoading,
+		isError,
+		error,
+	};
 }
 
 function BagHeader() {
