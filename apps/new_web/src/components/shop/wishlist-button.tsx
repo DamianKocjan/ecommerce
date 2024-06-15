@@ -1,6 +1,7 @@
 import { Heart, HeartBreak } from "@phosphor-icons/react";
 import React from "react";
-import { useWishlist } from "~/components/shared/layout/Wishlist/useWishlist";
+
+import { useWishlist } from "~/hooks/use-wishlist";
 import { Button } from "../ui/button";
 
 export function WishlistButton({ productSkuId }: { productSkuId: number }) {
