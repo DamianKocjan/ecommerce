@@ -17,7 +17,7 @@ export function CartButton({ productSkuId }: { productSkuId: number }) {
 				})
 			}
 		>
-			<span className="sr-only">Add to cart</span>
+			<span className="sr-only">{isInBag ? "Remove from" : "Add to"} cart</span>
 			<ShoppingCartSimple
 				className="h-6 w-6"
 				aria-hidden="true"
