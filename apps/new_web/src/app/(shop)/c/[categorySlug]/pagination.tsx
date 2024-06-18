@@ -1,10 +1,7 @@
 "use client";
 
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
-import { useRouter, useSearchParams } from "next/navigation";
-import React from "react";
 
-import { usePerPage } from "~/components/shared/layout/Products/ListFooter/usePerPage";
 import { Button } from "~/components/ui/button";
 import {
 	Select,
@@ -15,8 +12,8 @@ import {
 	SelectValue,
 } from "~/components/ui/select";
 import { Muted } from "~/components/ui/typography";
-
-const PER_PAGE = [6, 12, 24, 48] as const;
+import { usePage } from "~/hooks/use-page";
+import { PER_PAGE_OPTIONS, usePerPage } from "~/hooks/use-per-page";
 
 export function Pagination({
 	currentPage,
@@ -58,34 +55,6 @@ export function Pagination({
 	);
 }
 
-function usePage() {
-	const searchParams = useSearchParams();
-	const router = useRouter();
-	const queryPage = searchParams.get("page");
-
-	const page = React.useMemo(
-		() => (queryPage ? parseInt(queryPage, 10) : 1),
-		[queryPage],
-	);
-
-	const handleSetPage = React.useCallback(
-		(page = 1) => {
-			const query = {} as Record<string, string>;
-			searchParams.forEach((value, key) => {
-				query[key] = value;
-			});
-			query["page"] = page.toString();
-			const search = new URLSearchParams(query).toString();
-			const url = `${window.location.pathname}?${search}`;
-
-			router.push(url);
-		},
-		[router, searchParams],
-	);
-
-	return [page, handleSetPage] as const;
-}
-
 function PerPage() {
 	const [perPage, handlePerPageChange] = usePerPage();
 
@@ -100,7 +69,7 @@ function PerPage() {
 			</SelectTrigger>
 			<SelectContent>
 				<SelectGroup>
-					{PER_PAGE.map((option) => (
+					{PER_PAGE_OPTIONS.map((option) => (
 						<SelectItem key={option} value={option.toString()}>
 							{option}
 						</SelectItem>

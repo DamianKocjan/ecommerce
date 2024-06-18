@@ -1,7 +1,6 @@
 "use client";
 
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
-import { usePerPage } from "~/components/shared/layout/Products/ListFooter/usePerPage";
 
 import { Button } from "~/components/ui/button";
 import {
@@ -13,8 +12,7 @@ import {
 	SelectValue,
 } from "~/components/ui/select";
 import { Muted } from "~/components/ui/typography";
-
-const PER_PAGE = [6, 12, 24, 48] as const;
+import { PER_PAGE_OPTIONS, usePerPage } from "~/hooks/use-per-page";
 
 export function Pagination({
 	currentPage,
@@ -68,7 +66,7 @@ function PerPage() {
 			</SelectTrigger>
 			<SelectContent>
 				<SelectGroup>
-					{PER_PAGE.map((option) => (
+					{PER_PAGE_OPTIONS.map((option) => (
 						<SelectItem key={option} value={option.toString()}>
 							{option}
 						</SelectItem>
