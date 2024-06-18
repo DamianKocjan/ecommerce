@@ -42,6 +42,7 @@ export function BagProductItem({ product }: { product: Product }) {
 						})
 					}
 				>
+					<span className="sr-only">Decrease quantity</span>
 					<Minus className="h-4 w-4" />
 				</Button>
 				<p className="tabular-nums leading-7">{product.quantity}</p>
@@ -55,6 +56,7 @@ export function BagProductItem({ product }: { product: Product }) {
 						})
 					}
 				>
+					<span className="sr-only">Increase quantity</span>
 					<Plus className="h-4 w-4" />
 				</Button>
 			</div>
