@@ -6,26 +6,9 @@ import { Skeleton } from "~/components/ui/skeleton";
 import { Muted } from "~/components/ui/typography";
 import { useBagDispatch } from "~/contexts/bag-context";
 import { useCurrencyFormatter } from "~/hooks/use-formatter";
+import type { RouterOutputs } from "~/utils/trpc";
 
-export type Product = {
-	price: number;
-	id: number;
-	sku: string;
-	product: {
-		title: string;
-	};
-	multiPack: boolean;
-	multiPackQuantity: number;
-	thumbnailImage: number;
-	images: {
-		url: string;
-	}[];
-	attributes: {
-		value: string;
-		attribute: {
-			name: string;
-		};
-	}[];
+export type Product = RouterOutputs["product"]["bag"][number] & {
 	quantity: number;
 };
 
