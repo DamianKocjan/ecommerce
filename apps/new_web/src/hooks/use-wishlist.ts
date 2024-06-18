@@ -73,6 +73,6 @@ export function useWishlist(productSkuId: number) {
 
 	return {
 		handleToggleWishlist,
-		isInWishlist: isInWishlistQuery.data ? true : false,
+		isInWishlist: !!isInWishlistQuery.data,
 	};
 }
