@@ -2,7 +2,7 @@
 
 import { useBag } from "~/contexts/bag-context";
 import { useBagData } from "~/hooks/use-bag-data";
-import { BagProductsCard, BagProductsCardSkeleton } from "./bag-products.card";
+import { BagProductsCard, BagProductsCardSkeleton } from "./bag-products-card";
 import {
 	OrderSummaryCard,
 	OrderSummaryCardSkeleton,
