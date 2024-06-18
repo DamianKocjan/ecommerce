@@ -5,12 +5,8 @@ import { Button } from "~/components/ui/button";
 import { Skeleton } from "~/components/ui/skeleton";
 import { Muted } from "~/components/ui/typography";
 import { useBagDispatch } from "~/contexts/bag-context";
+import type { Product } from "~/hooks/use-bag-data";
 import { useCurrencyFormatter } from "~/hooks/use-formatter";
-import type { RouterOutputs } from "~/utils/trpc";
-
-export type Product = RouterOutputs["product"]["bag"][number] & {
-	quantity: number;
-};
 
 export function BagProductItem({ product }: { product: Product }) {
 	const dispatch = useBagDispatch();

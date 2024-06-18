@@ -1,5 +1,5 @@
 import { ShoppingBag, WarningCircle } from "@phosphor-icons/react";
-import { Session } from "next-auth";
+import type { Session } from "next-auth";
 import Link from "next/link";
 import React from "react";
 
@@ -14,21 +14,24 @@ import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
 import { Skeleton } from "~/components/ui/skeleton";
 import { H4, Muted } from "~/components/ui/typography";
 import { useBag } from "~/contexts/bag-context";
+import { useBagData } from "~/hooks/use-bag-data";
 import { useCurrencyFormatter } from "~/hooks/use-formatter";
-import { trpc } from "~/utils/trpc";
-import { BagProductItem, BagProductsSkeleton, type Product } from "./bag-item";
+import { BagProductItem, BagProductsSkeleton } from "./bag-item";
 
 const MAX_ITEMS = 9 as const;
 
 export function BagDropdown({ session }: { session: Session | null }) {
+	const { products } = useBag();
+	const itemsSlice = React.useMemo(
+		() => products.slice(0, MAX_ITEMS),
+		[products],
+	);
+	const numberOfItems = products.length;
 	const {
-		numberOfItems,
+		query: { isLoading, isError, error },
 		combinedProductsData,
 		subtotal,
-		isLoading,
-		isError,
-		error,
-	} = useBagData();
+	} = useBagData(itemsSlice);
 
 	return (
 		<Popover>
@@ -101,56 +104,6 @@ export function BagDropdown({ session }: { session: Session | null }) {
 			</PopoverContent>
 		</Popover>
 	);
-}
-
-function useBagData() {
-	const { products } = useBag();
-	const itemsSlice = React.useMemo(
-		() => products.slice(0, MAX_ITEMS),
-		[products],
-	);
-
-	const { data, isLoading, isError, error } = trpc.product.bag.useQuery(
-		{ products: itemsSlice.map((prod) => prod.id) },
-		{
-			enabled: !!products.length,
-			refetchOnWindowFocus: false,
-		},
-	);
-
-	const combinedProductsData = React.useMemo(() => {
-		if (!data) {
-			return [];
-		}
-		return products.reduce((acc, prod) => {
-			const product = data.find((p) => p.id === prod.id);
-
-			if (product) {
-				acc.push({
-					...product,
-					quantity: prod.quantity,
-				});
-			}
-			return acc;
-		}, [] as Product[]);
-	}, [data, products]);
-	const subtotal = React.useMemo(
-		() =>
-			combinedProductsData.reduce(
-				(acc, prod) => acc + prod.price * prod.quantity,
-				0,
-			),
-		[combinedProductsData],
-	);
-
-	return {
-		numberOfItems: products.length,
-		combinedProductsData,
-		subtotal,
-		isLoading,
-		isError,
-		error,
-	};
 }
 
 function BagHeader() {
