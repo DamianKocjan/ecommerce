@@ -28,7 +28,9 @@ export function WishlistButton({ productSkuId }: { productSkuId: number }) {
 			onClick={handleToggleWishlist}
 			onMouseUp={handleMouseUp}
 		>
-			<span className="sr-only">Add to wishlist</span>
+			<span className="sr-only">
+				{isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
+			</span>
 			{isInWishlist ? (
 				<>
 					<HeartBreak
