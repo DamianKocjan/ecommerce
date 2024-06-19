@@ -2,7 +2,7 @@ import { Metadata, Viewport } from "next";
 
 import "~/styles/globals.css";
 
-import { ThemeProvider } from "~/components/theme-provider";
+import { Providers } from "~/app/providers";
 import { Toaster } from "~/components/ui/sonner";
 import { fontMono, fontSans } from "~/lib/fonts";
 import { cn } from "~/lib/utils";
@@ -67,13 +67,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
 					fontMono.variable,
 				)}
 			>
-				<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+				<Providers>
 					<div className="relative flex min-h-screen flex-col">
 						{children}
 						<Analytics />
 						<Toaster />
 					</div>
-				</ThemeProvider>
+				</Providers>
 			</body>
 		</html>
 	);
