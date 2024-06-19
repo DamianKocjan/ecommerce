@@ -122,6 +122,98 @@ export function assembleWhereProductStatement<
 	};
 }
 
+export function assembleWhereWishlistProductStatement<
+	T extends ProductPaginationWithFilters & { categories?: string[] },
+>(
+	userId: string,
+	standardFilters: T,
+	restFilters: Record<string, Arrayish<number>>,
+): Prisma.WishlistWhereInput {
+	const or = [] as Prisma.ProductWhereInput[];
+	const and = [] as Prisma.ProductWhereInput[];
+
+	if (standardFilters.q) {
+		or.push({
+			title: {
+				contains: standardFilters.q,
+				mode: "insensitive",
+			},
+		});
+		or.push({
+			shortDescription: {
+				contains: standardFilters.q,
+				mode: "insensitive",
+			},
+		});
+		or.push({
+			description: {
+				contains: standardFilters.q,
+				mode: "insensitive",
+			},
+		});
+	}
+
+	if (Object.entries(restFilters).length) {
+		Object.entries(restFilters).forEach(([key, value]) => {
+			and.push({
+				skus: {
+					some: {
+						attributes: {
+							some: {
+								attribute: {
+									id: Number(key),
+								},
+								id: {
+									in: Array.isArray(value) ? value : [value],
+								},
+							},
+						},
+					},
+				},
+			});
+		});
+	}
+
+	return {
+		userId,
+		product: {
+			product: {
+				OR: Object.entries(or).length > 0 ? or : undefined,
+				AND: Object.entries(and).length > 0 ? and : undefined,
+				season:
+					standardFilters.season && standardFilters.season !== "ALL"
+						? {
+								equals: standardFilters.season,
+							}
+						: undefined,
+				skus: {
+					some: {
+						price: {
+							gte: standardFilters.priceMin,
+							lte: standardFilters.priceMax,
+						},
+					},
+				},
+				manufacturer: {
+					id: {
+						in: standardFilters.brands,
+					},
+				},
+				categories: {
+					some: {
+						slug: {
+							in: standardFilters.categories,
+						},
+					},
+				},
+				deliveryOption: {
+					id: standardFilters.delivery,
+				},
+			},
+		},
+	};
+}
+
 export function getOrderBy(
 	orderBy?: string | null,
 ): Arrayish<Prisma.ProductOrderByWithRelationInput> | undefined {
@@ -146,4 +238,30 @@ export function getOrderBy(
 		default:
 			return;
 	}
+}
+
+export type RestFilters = Record<number | string, Arrayish<number | string>>;
+
+export function getRestFilters(
+	standardFilters: ProductPaginationWithFilters,
+	filters: RestFilters,
+) {
+	return (
+		Object.entries(filters)
+			.map(([key]) => {
+				if (Object.hasOwn(standardFilters, key) || !isNumber(key)) {
+					return;
+				} else if (!isNumber(filters[key]! as string)) {
+					return;
+				}
+				return [key, filters[key]];
+			})
+			.filter(Boolean) as [string, Arrayish<number>][]
+	).reduce(
+		(acc, [key, value]) => {
+			acc[key] = value;
+			return acc;
+		},
+		{} as Record<string, Arrayish<number>>,
+	);
 }
