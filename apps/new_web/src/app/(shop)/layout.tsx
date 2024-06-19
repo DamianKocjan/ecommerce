@@ -1,6 +1,7 @@
 "use client";
 
 import { BagProvider } from "~/contexts/bag-context";
+import { Analytics } from "./analytics";
 import { SiteHeader } from "./site-header";
 
 interface LayoutProps {
@@ -12,6 +13,7 @@ export default function Layout({ children }: LayoutProps) {
 		<BagProvider>
 			<SiteHeader />
 			<div className="flex-1">{children}</div>
+			<Analytics />
 		</BagProvider>
 	);
 }

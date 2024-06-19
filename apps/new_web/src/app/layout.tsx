@@ -6,7 +6,6 @@ import { Providers } from "~/app/providers";
 import { Toaster } from "~/components/ui/sonner";
 import { fontMono, fontSans } from "~/lib/fonts";
 import { cn } from "~/lib/utils";
-import { Analytics } from "./analytics";
 
 export const metadata: Metadata = {
 	title: {
@@ -70,7 +69,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
 				<Providers>
 					<div className="relative flex min-h-screen flex-col">
 						{children}
-						<Analytics />
 						<Toaster />
 					</div>
 				</Providers>
