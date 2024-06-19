@@ -2,11 +2,14 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
+import { Filters } from "~/components/shop/filters";
+import { Pagination } from "~/components/shop/pagination";
+import {
+	ProductCard,
+	ProductCardSkeleton,
+} from "~/components/shop/product-card";
 import { getFilters, getProducts } from "~/server/products";
 import { parseFilters } from "~/utils/product-filter";
-import { Filters } from "./filters";
-import { Pagination } from "./pagination";
-import { ProductCard } from "./product-card";
 
 type Props = {
 	params: { categorySlug: string };
@@ -64,7 +67,10 @@ export default async function Category({ searchParams, params }: Props) {
 					<div className="col-span-4 flex flex-col gap-4">
 						<div className="grid grid-cols-3 gap-4">
 							{data.map((product) => (
-								<ProductCard key={product.id} product={product} />
+								<>
+									<ProductCard key={product.id} product={product} />
+									<ProductCardSkeleton key={product.id + 100} />
+								</>
 							))}
 						</div>
 

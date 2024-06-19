@@ -8,6 +8,7 @@ import React from "react";
 import { CartButton } from "~/components/shop/cart-button";
 import { WishlistButton } from "~/components/shop/wishlist-button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import { Skeleton } from "~/components/ui/skeleton";
 import { Large, Muted } from "~/components/ui/typography";
 import { useCurrencyFormatter } from "~/hooks/use-formatter";
 import { isNumber } from "~/utils/primitives";
@@ -42,7 +43,7 @@ type Props = {
 	product: Product;
 };
 
-export const ProductCard = React.memo(function ProductCard({ product }: Props) {
+export function ProductCard({ product }: Props) {
 	const { format } = useCurrencyFormatter();
 	const newPathWithProductManufacturerId = useNewPathWithProductManufacturerId(
 		product.manufacturer.id,
@@ -52,13 +53,14 @@ export const ProductCard = React.memo(function ProductCard({ product }: Props) {
 	const onlyOneVariant = product.skus.length === 1;
 
 	return (
-		<Card className="h-96">
+		<Card>
 			<CardHeader>
 				<Image
 					src={sku.images[sku.thumbnailImage]!.url}
 					alt={`Thumbnail image of ${product.title}`}
 					width={800}
 					height={600}
+					className="h-64 w-full object-cover object-center"
 				/>
 			</CardHeader>
 			<CardContent>
@@ -72,24 +74,24 @@ export const ProductCard = React.memo(function ProductCard({ product }: Props) {
 						</Link>
 					</CardTitle>
 				</div>
-				<div className="text-muted-foreground text-sm">
-					<Muted>
-						<Link href={newPathWithProductManufacturerId}>
-							{product.manufacturer.name}
-						</Link>
-					</Muted>
-					<div className="mt-4 flex items-center">
-						<Large className="font-mono">{format(sku.price)}</Large>
-						<div className="mr-auto" />
 
-						<WishlistButton productSkuId={sku.id} />
-						<CartButton productSkuId={sku.id} />
-					</div>
+				<Muted>
+					<Link href={newPathWithProductManufacturerId}>
+						{product.manufacturer.name}
+					</Link>
+				</Muted>
+
+				<div className="mt-4 flex items-center gap-2">
+					<Large className="font-mono">{format(sku.price)}</Large>
+					<div className="mr-auto" />
+
+					<WishlistButton productSkuId={sku.id} />
+					<CartButton productSkuId={sku.id} />
 				</div>
 			</CardContent>
 		</Card>
 	);
-});
+}
 
 function useNewPathWithProductManufacturerId(productManufacturerId: number) {
 	const searchParams = useSearchParams();
@@ -121,4 +123,24 @@ function useNewPathWithProductManufacturerId(productManufacturerId: number) {
 	}, [path, productManufacturerId, searchParams]);
 
 	return manufacturerPath;
+}
+
+export function ProductCardSkeleton() {
+	return (
+		<Card>
+			<CardHeader>
+				<Skeleton className="h-64 w-full" />
+			</CardHeader>
+			<CardContent>
+				<Skeleton className="h-6 w-3/4" />
+
+				<Skeleton className="mt-2 h-3 w-1/3" />
+
+				<div className="mt-4 flex items-center">
+					<Skeleton className="h-8 w-20" />
+					<Skeleton className="ml-auto h-10 w-20" />
+				</div>
+			</CardContent>
+		</Card>
+	);
 }

@@ -1,10 +1,11 @@
 import type { Prisma } from "@ecommerce/db";
 import { productPaginationWithFiltersSchema } from "~/schemas/filters";
 import { createPaginationMeta } from "~/utils/pagination";
-import { isNumber, type Arrayish } from "~/utils/primitives";
 import {
 	assembleWhereProductStatement,
 	getOrderBy,
+	getRestFilters,
+	type RestFilters,
 } from "~/utils/product-filter";
 
 export async function getProducts({
@@ -16,7 +17,7 @@ export async function getProducts({
 	page: number;
 	perPage: number;
 	categorySlug: string;
-} & Record<string | number, Arrayish<string | number>>) {
+} & RestFilters) {
 	const standardFilters = await productPaginationWithFiltersSchema.parseAsync({
 		q: filters.q,
 		sortBy: filters.sortBy,
@@ -31,24 +32,7 @@ export async function getProducts({
 		perPage,
 	});
 	// rest filters include attributes, which are not standard filters
-	const restFilters = (
-		Object.entries(filters)
-			.map(([key]) => {
-				if (Object.hasOwn(standardFilters, key) || !isNumber(key)) {
-					return;
-				} else if (!isNumber(filters[key]! as string)) {
-					return;
-				}
-				return [key, filters[key]];
-			})
-			.filter(Boolean) as [string, Arrayish<number>][]
-	).reduce(
-		(acc, [key, value]) => {
-			acc[key] = value;
-			return acc;
-		},
-		{} as Record<string, Arrayish<number>>,
-	);
+	const restFilters = getRestFilters(standardFilters, filters);
 
 	const where = assembleWhereProductStatement(
 		categorySlug,

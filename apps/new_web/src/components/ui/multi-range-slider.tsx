@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 
 import { cn } from "~/lib/utils";
 
-type SliderProps = {
+type MultiRangeSliderProps = {
 	className?: string;
 	min: number;
 	max: number;
@@ -16,7 +16,7 @@ type SliderProps = {
 	onValueChange?: (values: number[]) => void;
 };
 
-const Slider = React.forwardRef(
+const MultiRangeSlider = React.forwardRef(
 	(
 		{
 			className,
@@ -27,7 +27,7 @@ const Slider = React.forwardRef(
 			value,
 			onValueChange,
 			...props
-		}: SliderProps,
+		}: MultiRangeSliderProps,
 		ref,
 	) => {
 		const initialValue = Array.isArray(value) ? value : [min, max];
@@ -83,6 +83,6 @@ const Slider = React.forwardRef(
 	},
 );
 
-Slider.displayName = SliderPrimitive.Root.displayName;
+MultiRangeSlider.displayName = SliderPrimitive.Root.displayName;
 
-export { Slider };
+export { MultiRangeSlider };

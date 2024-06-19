@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
 import { Checkbox } from "~/components/ui/checkbox";
+import { MultiRangeSlider } from "~/components/ui/multi-range-slider";
 import { H3, Muted, Ul } from "~/components/ui/typography";
 import { getFilters } from "~/server/products";
 import {
@@ -13,7 +14,6 @@ import {
 	type AsyncReturnType,
 	type Maybe,
 } from "~/utils/primitives";
-import { Slider } from "./slider";
 
 type FilterValue = Arrayish<string | number | boolean>;
 type FilterValues = (string | number | boolean)[];
@@ -113,7 +113,7 @@ export function Filters({
 				</div>
 			))}
 
-			<Slider
+			<MultiRangeSlider
 				min={filtersData.prices.min || 0}
 				step={1}
 				minStepsBetweenThumbs={0}
