@@ -10,6 +10,8 @@ export function CartButton({ productSkuId }: { productSkuId: number }) {
 	return (
 		<Button
 			variant="ghost"
+			size="icon"
+			type="button"
 			onClick={() =>
 				dispatch({
 					productSkuId,

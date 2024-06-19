@@ -23,8 +23,9 @@ export function WishlistButton({ productSkuId }: { productSkuId: number }) {
 	return (
 		<Button
 			variant="ghost"
-			className="group"
+			size="icon"
 			type="button"
+			className="group"
 			onClick={handleToggleWishlist}
 			onMouseUp={handleMouseUp}
 		>
