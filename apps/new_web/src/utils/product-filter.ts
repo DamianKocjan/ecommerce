@@ -18,12 +18,12 @@ export async function parseFilters<T extends boolean>(
 > {
 	const filters = getFiltersFromSearchParams(searchParams);
 
-	if (withCategoriesInFilters) {
-		return await productPaginationWithCategoriesFiltersSchema.parseAsync(
-			filters,
-		);
-	}
-	return await productPaginationWithFiltersSchema.parseAsync(filters);
+	const result = withCategoriesInFilters
+		? await productPaginationWithCategoriesFiltersSchema.parseAsync(filters)
+		: await productPaginationWithFiltersSchema.parseAsync(filters);
+
+	// NOTE: to prevent removal of the rest filters, we need to merge the filters
+	return Object.assign(filters, result);
 }
 
 function getFiltersFromSearchParams(searchParams: Record<string, string>) {
