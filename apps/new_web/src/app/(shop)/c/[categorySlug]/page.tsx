@@ -37,13 +37,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function Category({ searchParams, params }: Props) {
-	const filters = parseFilters(searchParams);
+	const filters = await parseFilters(searchParams);
 
 	const [{ data, meta }, filtersData] = await Promise.all([
 		getProducts({
 			categorySlug: params.categorySlug,
-			page: 1,
-			perPage: 6,
 			...filters,
 		}),
 		getFilters(params.categorySlug),

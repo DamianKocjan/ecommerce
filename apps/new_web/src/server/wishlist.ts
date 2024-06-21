@@ -1,6 +1,6 @@
 import type { Prisma } from "@ecommerce/db";
 
-import { productPaginationWithFiltersSchema } from "~/schemas/filters";
+import { type ProductPaginationWithCategoriesFilters } from "~/schemas/filters";
 import { createPaginationMeta } from "~/utils/pagination";
 import {
 	assembleWhereWishlistProductStatement,
@@ -11,27 +11,37 @@ import {
 
 export async function getWishlistedProducts({
 	userId,
-	page,
+	q,
+	sortBy,
+	brands,
+	priceMin,
+	priceMax,
+	onSaleRequired,
+	multiPack,
+	season,
+	delivery,
+	categories,
 	perPage,
+	page,
 	...filters
 }: {
 	userId: string;
-	page: number;
-	perPage: number;
-} & RestFilters) {
-	const standardFilters = await productPaginationWithFiltersSchema.parseAsync({
-		q: filters.q,
-		sortBy: filters.sortBy,
-		brands: filters.brands,
-		priceMin: filters.priceMin,
-		priceMax: filters.priceMax,
-		onSaleRequired: filters.onSaleRequired,
-		multiPack: filters.multiPack,
-		season: filters.season,
-		delivery: filters.delivery,
+} & ProductPaginationWithCategoriesFilters &
+	RestFilters) {
+	const standardFilters = {
+		q,
+		sortBy,
+		brands,
+		priceMin,
+		priceMax,
+		onSaleRequired,
+		multiPack,
+		season,
+		delivery,
+		categories,
 		page,
 		perPage,
-	});
+	};
 	// rest filters include attributes, which are not standard filters
 	const restFilters = getRestFilters(standardFilters, filters);
 

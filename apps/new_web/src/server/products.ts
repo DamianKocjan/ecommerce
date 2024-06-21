@@ -1,7 +1,11 @@
 import type { Prisma } from "@ecommerce/db";
 
-import { productPaginationWithFiltersSchema } from "~/schemas/filters";
+import type {
+	ProductPaginationWithCategoriesFilters,
+	ProductPaginationWithFilters,
+} from "~/schemas/filters";
 import { createPaginationMeta } from "~/utils/pagination";
+import type { Arrayish, AsyncReturnType, Maybe } from "~/utils/primitives";
 import {
 	assembleWhereProductStatement,
 	getOrderBy,
@@ -9,44 +13,23 @@ import {
 	type RestFilters,
 } from "~/utils/product-filter";
 
-export async function getProducts({
-	page,
-	perPage,
-	categorySlug,
-	...filters
+async function queryProducts({
+	take,
+	skip,
+	where,
+	orderBy,
+	standardFilters,
 }: {
-	page: number;
-	perPage: number;
-	categorySlug: string;
-} & RestFilters) {
-	const standardFilters = await productPaginationWithFiltersSchema.parseAsync({
-		q: filters.q,
-		sortBy: filters.sortBy,
-		brands: filters.brands,
-		priceMin: filters.priceMin,
-		priceMax: filters.priceMax,
-		onSaleRequired: filters.onSaleRequired,
-		multiPack: filters.multiPack,
-		season: filters.season,
-		delivery: filters.delivery,
-		page,
-		perPage,
-	});
-	// rest filters include attributes, which are not standard filters
-	const restFilters = getRestFilters(standardFilters, filters);
-
-	const where = assembleWhereProductStatement(
-		categorySlug,
-		standardFilters,
-		restFilters,
-	);
-	const orderBy = getOrderBy(filters.sortBy as string | null | undefined);
-
-	const skip = page > 1 ? perPage * (page - 1) : 0;
-	const [total, data] = await prisma!.$transaction([
+	take: number;
+	skip: number;
+	where: Prisma.ProductWhereInput;
+	orderBy: ReturnType<typeof getOrderBy>;
+	standardFilters: ProductPaginationWithFilters;
+}) {
+	return await prisma!.$transaction([
 		prisma!.product.count({ where }),
 		prisma!.product.findMany({
-			take: perPage,
+			take,
 			skip,
 			where,
 			orderBy,
@@ -86,21 +69,157 @@ export async function getProducts({
 			},
 		}),
 	]);
+}
+
+function reshapeProducts(products: AsyncReturnType<typeof queryProducts>[1]) {
+	return products.map((item) => ({
+		...item,
+		skus: item.skus.map((sku) => ({
+			...sku,
+			price: sku.price.toNumber(),
+			discount: sku.discount?.toNumber(),
+		})),
+	}));
+}
+
+type SingleCategory = ProductPaginationWithFilters &
+	RestFilters & {
+		categorySlug: string;
+	};
+type MultipleOptionalCategories = ProductPaginationWithCategoriesFilters &
+	RestFilters;
+
+export async function getProducts({
+	q,
+	sortBy,
+	brands,
+	priceMin,
+	priceMax,
+	onSaleRequired,
+	multiPack,
+	season,
+	delivery,
+	perPage,
+	page,
+	categorySlug,
+	...filters
+}: SingleCategory) {
+	const standardFilters = {
+		q,
+		sortBy,
+		brands,
+		priceMin,
+		priceMax,
+		onSaleRequired,
+		multiPack,
+		season,
+		delivery,
+		page,
+		perPage,
+	};
+	// rest filters include attributes, which are not standard filters
+	const restFilters = getRestFilters(standardFilters, filters);
+
+	const where = assembleWhereProductStatement(
+		standardFilters,
+		restFilters,
+		categorySlug,
+	);
+	const orderBy = getOrderBy(filters.sortBy as string | null | undefined);
+
+	const skip =
+		standardFilters.page > 1
+			? standardFilters.perPage * (standardFilters.page - 1)
+			: 0;
+	const [total, data] = await queryProducts({
+		take: standardFilters.perPage,
+		skip,
+		where,
+		orderBy,
+		standardFilters,
+	});
 
 	return {
-		data: data.map((item) => ({
-			...item,
-			skus: item.skus.map((sku) => ({
-				...sku,
-				price: sku.price.toNumber(),
-				discount: sku.discount?.toNumber(),
-			})),
-		})),
-		meta: createPaginationMeta({ total, page, perPage }),
+		data: reshapeProducts(data),
+		meta: createPaginationMeta({
+			total,
+			page: standardFilters.page,
+			perPage: standardFilters.perPage,
+		}),
 	};
 }
 
-export async function getFilters(categorySlug: string) {
+export async function getProductsWithOptionalCategories({
+	q,
+	sortBy,
+	brands,
+	priceMin,
+	priceMax,
+	onSaleRequired,
+	multiPack,
+	season,
+	delivery,
+	categories,
+	perPage,
+	page,
+	...filters
+}: MultipleOptionalCategories) {
+	const standardFilters = {
+		q,
+		sortBy,
+		brands,
+		priceMin,
+		priceMax,
+		onSaleRequired,
+		multiPack,
+		season,
+		delivery,
+		categories,
+		page,
+		perPage,
+	};
+	// rest filters include attributes, which are not standard filters
+	const restFilters = getRestFilters(standardFilters, filters);
+
+	const where = assembleWhereProductStatement(
+		standardFilters,
+		restFilters,
+		standardFilters.categories,
+	);
+	const orderBy = getOrderBy(filters.sortBy as string | null | undefined);
+
+	const skip =
+		standardFilters.page > 1
+			? standardFilters.perPage * (standardFilters.page - 1)
+			: 0;
+	const [total, data] = await queryProducts({
+		take: standardFilters.perPage,
+		skip,
+		where,
+		orderBy,
+		standardFilters,
+	});
+
+	return {
+		data: reshapeProducts(data),
+		meta: createPaginationMeta({
+			total,
+			page: standardFilters.page,
+			perPage: standardFilters.perPage,
+		}),
+	};
+}
+
+export async function getFilters(categories: Maybe<Arrayish<string>>) {
+	const categoriesQuery: Prisma.CategoryListRelationFilter | undefined =
+		categories
+			? {
+					some: {
+						slug: { in: Array.isArray(categories) ? categories : [categories] },
+					},
+				}
+			: undefined;
+
 	const [filters, prices] = await prisma!.$transaction([
 		prisma!.attribute.findMany({
 			where: {
@@ -109,11 +228,7 @@ export async function getFilters(categorySlug: string) {
 						productVariants: {
 							some: {
 								product: {
-									categories: {
-										some: {
-											slug: categorySlug,
-										},
-									},
+									categories: categoriesQuery,
 								},
 							},
 						},
@@ -132,11 +247,7 @@ export async function getFilters(categorySlug: string) {
 								productVariants: {
 									where: {
 										product: {
-											categories: {
-												some: {
-													slug: categorySlug,
-												},
-											},
+											categories: categoriesQuery,
 										},
 									},
 								},
@@ -149,11 +260,7 @@ export async function getFilters(categorySlug: string) {
 		prisma!.productVariant.aggregate({
 			where: {
 				product: {
-					categories: {
-						some: {
-							slug: categorySlug,
-						},
-					},
+					categories: categoriesQuery,
 				},
 			},
 			_min: {

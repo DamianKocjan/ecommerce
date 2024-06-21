@@ -7,7 +7,7 @@ export const productPaginationWithFiltersSchema = z.object({
 		.optional()
 		.catch(() => undefined),
 	sortBy: z
-		.string()
+		.enum(["popularity", "priceLowToHigh", "priceHighToLow", "sales"])
 		.optional()
 		.catch(() => undefined),
 	brands: z
@@ -48,4 +48,16 @@ export const productPaginationWithFiltersSchema = z.object({
 
 export type ProductPaginationWithFilters = z.infer<
 	typeof productPaginationWithFiltersSchema
+>;
+
+export const productPaginationWithCategoriesFiltersSchema =
+	productPaginationWithFiltersSchema.extend({
+		categories: z
+			.array(z.string())
+			.optional()
+			.catch(() => undefined),
+	});
+
+export type ProductPaginationWithCategoriesFilters = z.infer<
+	typeof productPaginationWithCategoriesFiltersSchema
 >;

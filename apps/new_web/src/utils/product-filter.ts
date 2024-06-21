@@ -1,9 +1,32 @@
 import type { Prisma } from "@ecommerce/db";
 
-import type { ProductPaginationWithFilters } from "~/schemas/filters";
-import { isNumber, tryToNumber, type Arrayish } from "./primitives";
+import {
+	productPaginationWithCategoriesFiltersSchema,
+	productPaginationWithFiltersSchema,
+	type ProductPaginationWithCategoriesFilters,
+	type ProductPaginationWithFilters,
+} from "~/schemas/filters";
+import { isNumber, tryToNumber, type Arrayish, type Maybe } from "./primitives";
 
-export function parseFilters(searchParams: Record<string, string>) {
+export async function parseFilters<T extends boolean>(
+	searchParams: Record<string, string>,
+	withCategoriesInFilters?: T,
+): Promise<
+	T extends true
+		? ProductPaginationWithCategoriesFilters
+		: ProductPaginationWithFilters
+> {
+	const filters = getFiltersFromSearchParams(searchParams);
+
+	if (withCategoriesInFilters) {
+		return await productPaginationWithCategoriesFiltersSchema.parseAsync(
+			filters,
+		);
+	}
+	return await productPaginationWithFiltersSchema.parseAsync(filters);
+}
+
+function getFiltersFromSearchParams(searchParams: Record<string, string>) {
 	// Types of filters:
 	// - [key]: [ints]
 	// - [key]: [strings]
@@ -41,9 +64,9 @@ export function parseFilters(searchParams: Record<string, string>) {
 export function assembleWhereProductStatement<
 	T extends ProductPaginationWithFilters,
 >(
-	categorySlug: string,
 	standardFilters: T,
 	restFilters: Record<string, Arrayish<number>>,
+	categories: Maybe<Arrayish<string>>,
 ): Prisma.ProductWhereInput {
 	const or = [] as Prisma.ProductWhereInput[];
 	const and = [] as Prisma.ProductWhereInput[];
@@ -107,11 +130,15 @@ export function assembleWhereProductStatement<
 				},
 			},
 		},
-		categories: {
-			some: {
-				slug: categorySlug,
-			},
-		},
+		categories: categories
+			? {
+					some: {
+						slug: {
+							in: Array.isArray(categories) ? categories : [categories],
+						},
+					},
+				}
+			: undefined,
 		manufacturer: {
 			id: {
 				in: standardFilters.brands,
@@ -241,7 +268,10 @@ export function getOrderBy(
 	}
 }
 
-export type RestFilters = Record<number | string, Arrayish<number | string>>;
+export type RestFilters = Record<
+	number | string,
+	Arrayish<number | string | boolean>
+>;
 
 export function getRestFilters(
 	standardFilters: ProductPaginationWithFilters,

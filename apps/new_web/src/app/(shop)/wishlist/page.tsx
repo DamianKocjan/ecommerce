@@ -29,14 +29,9 @@ export default async function Wishlist({
 		return redirect("/login?callbackUrl=/wishlist");
 	}
 
-	const filters = parseFilters(searchParams);
+	const filters = await parseFilters(searchParams, true);
 	const [{ data, meta }, filtersData] = await Promise.all([
-		getWishlistedProducts({
-			userId: session.user.id,
-			page: 1,
-			perPage: 6,
-			...filters,
-		}),
+		getWishlistedProducts(Object.assign({ userId: session.user.id }, filters)),
 		getWishlistFilters(session.user.id),
 	]);
 

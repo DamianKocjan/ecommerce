@@ -1,0 +1,67 @@
+import type { Metadata } from "next";
+import Image from "next/image";
+
+import { Filters } from "~/components/shop/filters";
+import { Pagination } from "~/components/shop/pagination";
+import {
+	ProductCard,
+	ProductCardSkeleton,
+} from "~/components/shop/product-card";
+import {
+	getFilters,
+	getProductsWithOptionalCategories,
+} from "~/server/products";
+import { parseFilters } from "~/utils/product-filter";
+
+export const metadata: Metadata = {
+	title: "Catalog",
+};
+
+type Props = {
+	searchParams: Record<string, string>;
+};
+
+export default async function Catalog({ searchParams }: Props) {
+	const filters = await parseFilters(searchParams, true);
+
+	const [{ data, meta }, filtersData] = await Promise.all([
+		getProductsWithOptionalCategories(filters),
+		getFilters(filters.categories),
+	]);
+
+	return (
+		<div className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
+			{data.length === 0 && Object.keys(filters).length === 0 ? (
+				<div className="flex flex-col items-center gap-4">
+					<Image
+						src="/undraw_web_search_re_efla.svg"
+						alt=""
+						width="600"
+						height="400"
+					/>
+				</div>
+			) : (
+				<div className="grid grid-cols-5 gap-4">
+					<Filters filters={filters} filtersData={filtersData} />
+
+					<div className="col-span-4 flex flex-col gap-4">
+						<div className="grid grid-cols-3 gap-4">
+							{data.map((product) => (
+								<>
+									<ProductCard key={product.id} product={product} />
+									<ProductCardSkeleton key={product.id + 100} />
+								</>
+							))}
+						</div>
+
+						<Pagination
+							currentPage={meta.currentPage}
+							hasNextPage={meta.next !== undefined}
+							hasPreviousPage={meta.prev !== meta.currentPage}
+						/>
+					</div>
+				</div>
+			)}
+		</div>
+	);
+}
