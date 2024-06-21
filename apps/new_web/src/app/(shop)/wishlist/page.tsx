@@ -26,7 +26,7 @@ export default async function Wishlist({
 	const session = await getServerSession(authOptions);
 
 	if (!session) {
-		return redirect("/api/auth/signin");
+		return redirect("/login?callbackUrl=/wishlist");
 	}
 
 	const filters = parseFilters(searchParams);
