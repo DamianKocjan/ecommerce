@@ -74,7 +74,7 @@ export function UserNav({ session }: { session: Session }) {
 					) : null}
 					<Link href="/wishlist">
 						<DropdownMenuItem>Wishlist</DropdownMenuItem>
-					</Link>{" "}
+					</Link>
 					<Link href="/settings">
 						<DropdownMenuItem>Settings</DropdownMenuItem>
 					</Link>

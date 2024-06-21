@@ -2,6 +2,7 @@ import { useSession } from "next-auth/react";
 import React from "react";
 import { toast } from "sonner";
 
+import { showErrorToast } from "~/lib/handle-error";
 import { trpc } from "~/utils/trpc";
 
 export function useWishlist(productSkuId: number) {
@@ -30,7 +31,7 @@ export function useWishlist(productSkuId: number) {
 			removeFromWishlist.mutate(
 				{ id: isInWishlistQuery.data },
 				{
-					onSuccess: () => {
+					onSuccess() {
 						toast("Removed from wishlist", {
 							description: "This product has been removed from your wishlist",
 						});
@@ -41,6 +42,10 @@ export function useWishlist(productSkuId: number) {
 							null,
 						);
 					},
+					onError(error) {
+						console.error(error);
+						showErrorToast(error);
+					},
 				},
 			);
 			return;
@@ -49,7 +54,7 @@ export function useWishlist(productSkuId: number) {
 		addToWishlist.mutate(
 			{ productId: productSkuId },
 			{
-				onSuccess: (data) => {
+				onSuccess(data) {
 					toast("Added to wishlist", {
 						description: "This product has been added to your wishlist",
 					});
@@ -59,6 +64,10 @@ export function useWishlist(productSkuId: number) {
 						},
 						data,
 					);
+				},
+				onError(error) {
+					console.error(error);
+					showErrorToast(error);
 				},
 			},
 		);
