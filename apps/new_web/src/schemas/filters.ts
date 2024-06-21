@@ -26,7 +26,7 @@ export const productPaginationWithFiltersSchema = z.object({
 		.boolean()
 		.optional()
 		.catch(() => undefined),
-	multipack: z
+	multiPack: z
 		.boolean()
 		.optional()
 		.catch(() => undefined),
