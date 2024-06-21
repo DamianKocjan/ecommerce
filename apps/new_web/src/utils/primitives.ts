@@ -21,7 +21,7 @@ export function stringifyValue<
 	},
 >(value: T): string {
 	if (Array.isArray(value)) {
-		return `[${value.join(",")}]`;
+		return `[${value.toSorted().join(",")}]`;
 	}
 	return value.toString();
 }

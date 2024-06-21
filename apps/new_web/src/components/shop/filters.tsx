@@ -28,10 +28,6 @@ export function Filters({
 	const router = useRouter();
 	const path = usePathname();
 
-	// FIXME: URL search params jump around when filters are updated.
-	// e.g. filters with ids `1` and `2` are placed like `?2=[2]&1=[1]` in the URL
-	// and when the filter with id `1` is updated, it becomes `?1=[1,3]&2=[2]`
-	// so it's jumping around in the URL. Slightly annoying but not a big deal.
 	const updateFilters = React.useCallback(
 		(values: Record<string, FilterValue>) => {
 			const searchParams = new Map();
