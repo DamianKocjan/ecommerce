@@ -59,11 +59,11 @@ export default async function Category({ searchParams, params }: Props) {
 					/>
 				</div>
 			) : (
-				<div className="grid grid-cols-5 gap-4">
+				<div className="grid gap-4 md:grid-cols-5">
 					<Filters filters={filters} filtersData={filtersData} />
 
 					<div className="col-span-4 flex flex-col gap-4">
-						<div className="grid grid-cols-3 gap-4">
+						<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 							{data.map((product) => (
 								<>
 									<ProductCard key={product.id} product={product} />

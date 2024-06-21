@@ -80,7 +80,7 @@ export function Filters({
 	);
 
 	return (
-		<div>
+		<div className="hidden md:block">
 			{filtersData.filters.map((filter) => (
 				<div key={filter.id}>
 					<H3>{filter.name}</H3>
