@@ -1,26 +1,25 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "paths": {
-      "~/*": [
-        "./src/*"
-      ]
-    },
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "strictNullChecks": true
-  },
-  "exclude": [],
-  "include": [
-    "next-env.d.ts",
-    "../../packages/auth/next-auth.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.cjs",
-    "**/*.mjs",
-    ".next/types/**/*.ts"
-  ]
+	"extends": "../../tsconfig.json",
+	"compilerOptions": {
+		"paths": {
+			"~/*": ["./src/*"]
+		},
+		"plugins": [
+			{
+				"name": "next"
+			}
+		],
+		"types": ["vitest/globals"],
+		"strictNullChecks": true
+	},
+	"exclude": [],
+	"include": [
+		"next-env.d.ts",
+		"../../packages/auth/next-auth.d.ts",
+		"**/*.ts",
+		"**/*.tsx",
+		"**/*.cjs",
+		"**/*.mjs",
+		".next/types/**/*.ts"
+	]
 }
