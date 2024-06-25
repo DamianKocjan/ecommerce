@@ -1,79 +1,38 @@
 "use client";
 
-import type { CheckedState } from "@radix-ui/react-checkbox";
-import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
+import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
+import { Label } from "~/components/ui/label";
 import { MultiRangeSlider } from "~/components/ui/multi-range-slider";
 import { H3, Muted, Ul } from "~/components/ui/typography";
-import { getFilters } from "~/server/products";
 import {
-	stringifyValue,
-	type Arrayish,
-	type AsyncReturnType,
-	type Maybe,
-} from "~/utils/primitives";
+	useUpdateFilter,
+	type FilterValue,
+	type FilterValues,
+	type Filters as FiltersType,
+} from "~/hooks/use-update-filter";
+import { getFilters } from "~/server/products";
+import type { AsyncReturnType, Maybe } from "~/utils/primitives";
 
-type FilterValue = Arrayish<string | number | boolean>;
-type FilterValues = (string | number | boolean)[];
+type FiltersData = AsyncReturnType<typeof getFilters>;
+type FilterValueData = FiltersData["filters"][number]["values"][number];
 
 export function Filters({
 	filters,
 	filtersData,
 }: {
-	filters: Record<string | number, FilterValue>;
-	filtersData: AsyncReturnType<typeof getFilters>;
+	filters: FiltersType;
+	filtersData: FiltersData;
 }) {
-	const router = useRouter();
-	const path = usePathname();
-
-	const updateFilters = React.useCallback(
-		(values: Record<string, FilterValue>) => {
-			const searchParams = new Map();
-			Object.keys(filters).forEach((key) => {
-				searchParams.set(key, stringifyValue(filters[key]!));
-			});
-
-			Object.keys(values).forEach((key) => {
-				if (
-					values[key] === undefined ||
-					values[key] === null ||
-					(Array.isArray(values[key]) && !(values[key] as FilterValues)?.length)
-				) {
-					searchParams.delete(key);
-					return;
-				}
-
-				searchParams.set(key, stringifyValue(values[key]!));
-			});
-
-			const searchParamsArray = [];
-			for (const [key, value] of searchParams) {
-				searchParamsArray.push(`${key}=${value}`);
-			}
-
-			router.replace(`${path}?${searchParamsArray.join("&")}`);
-		},
-		[filters, path, router],
-	);
-
-	const handleFilterChange = React.useCallback(
-		(checked: CheckedState, filterId: number, valueId: number) => {
-			const filterValues = new Set((filters[filterId] as FilterValues) || []);
-
-			if (checked === true) {
-				filterValues.add(valueId);
-			} else {
-				filterValues.delete(valueId);
-			}
-
-			updateFilters({
-				[filterId]: [...filterValues],
-			});
-		},
-		[filters, updateFilters],
-	);
+	const {
+		newFilters,
+		handleFilterChange,
+		handleCheckFilterChange,
+		updateFilters,
+		areFiltersEqual,
+	} = useUpdateFilter(filters);
 
 	return (
 		<div className="hidden md:block">
@@ -81,30 +40,15 @@ export function Filters({
 				<div key={filter.id}>
 					<H3>{filter.name}</H3>
 					<Ul>
-						{filter.values.map((value) => {
-							const isChecked =
-								filters[filter.id] === value.id ||
-								(Array.isArray(filters[filter.id]) &&
-									(filters[filter.id] as FilterValues).includes(value.id));
-
-							return (
-								<li key={value.id} className="flex items-center space-x-2">
-									<Checkbox
-										checked={isChecked}
-										onCheckedChange={(checked) =>
-											handleFilterChange(checked, filter.id, value.id)
-										}
-									/>
-									<label
-										htmlFor="terms"
-										className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-									>
-										{value.value}{" "}
-									</label>
-									<Muted>({value._count.productVariants})</Muted>
-								</li>
-							);
-						})}
+						{filter.values.map((value) => (
+							<FilterValue
+								key={`filter-${filter.id}-value-${value.id}`}
+								value={value}
+								filterId={filter.id}
+								filterValue={newFilters[filter.id]}
+								handleFilterChange={handleCheckFilterChange}
+							/>
+						))}
 					</Ul>
 				</div>
 			))}
@@ -114,18 +58,62 @@ export function Filters({
 				step={1}
 				minStepsBetweenThumbs={0}
 				value={[
-					(filters["priceMin"] as Maybe<number>) || filtersData.prices.min || 0,
-					(filters["priceMax"] as Maybe<number>) || filtersData.prices.max || 0,
+					(newFilters["priceMin"] as Maybe<number>) ||
+						filtersData.prices.min ||
+						0,
+					(newFilters["priceMax"] as Maybe<number>) ||
+						filtersData.prices.max ||
+						0,
 				]}
 				max={filtersData.prices.max || 0}
-				// FIXME: maybe we should use a debounce here or show button to apply the filter instead of updating on every change
 				onValueChange={(values) =>
-					updateFilters({
+					handleFilterChange({
 						priceMin: values[0]!,
 						priceMax: values[1]!,
 					})
 				}
 			/>
+
+			{areFiltersEqual ? null : (
+				<Button className="mt-4 w-full" onClick={updateFilters}>
+					Apply filters
+				</Button>
+			)}
 		</div>
+	);
+}
+
+function FilterValue({
+	filterId,
+	filterValue,
+	value,
+	handleFilterChange,
+}: {
+	filterId: number;
+	filterValue: FilterValue | undefined;
+	value: FilterValueData;
+	handleFilterChange: ReturnType<
+		typeof useUpdateFilter
+	>["handleCheckFilterChange"];
+}) {
+	const isChecked = React.useMemo(
+		() =>
+			filterValue === value.id ||
+			(Array.isArray(filterValue) &&
+				(filterValue as FilterValues).includes(value.id)),
+		[filterValue, value.id],
+	);
+
+	return (
+		<li className="flex items-center space-x-2">
+			<Checkbox
+				checked={isChecked}
+				onCheckedChange={(checked) =>
+					handleFilterChange(checked, filterId, value.id)
+				}
+			/>
+			<Label>{value.value} </Label>
+			<Muted>({value._count.productVariants})</Muted>
+		</li>
 	);
 }

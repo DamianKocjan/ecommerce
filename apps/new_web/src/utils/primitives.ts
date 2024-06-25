@@ -8,10 +8,16 @@ export type AsyncReturnType<T extends (...args: never) => Promise<unknown>> =
 	FromPromise<ReturnType<T>>;
 
 export function isNumber(value: string): boolean {
+	if (value === "") {
+		return false;
+	}
 	return !isNaN(Number(value));
 }
 
 export function tryToNumber(value: string): number | string {
+	if (value === "") {
+		return "";
+	}
 	return isNumber(value) ? Number(value) : value;
 }
 
@@ -24,4 +30,47 @@ export function stringifyValue<
 		return `[${value.toSorted().join(",")}]`;
 	}
 	return value.toString();
+}
+
+export function isNothing(value: unknown): boolean {
+	if (Array.isArray(value)) {
+		return value.length === 0;
+	}
+	return value === null || value === undefined;
+}
+
+export function deepCompare<T, U>(a: T, b: U): boolean {
+	return JSON.stringify(a) === JSON.stringify(b);
+}
+
+type AnyObjectPrimitiveValue = Arrayish<number | string | boolean>;
+type AnyObject = Record<string, AnyObjectPrimitiveValue>;
+
+export function combineObjects<T extends AnyObject, U extends AnyObject>(
+	a: T,
+	b: U,
+): T & U {
+	const obj: AnyObject = {};
+
+	for (const key in a) {
+		obj[key] = a[key]!;
+	}
+
+	for (const key in b) {
+		const bValue = b[key]!;
+
+		if (key in obj) {
+			const aValue = obj[key]!;
+
+			if (Array.isArray(aValue) && Array.isArray(bValue)) {
+				obj[key] = [...new Set([...aValue, ...bValue])];
+				continue;
+			} else if (["string", "number", "boolean"].includes(typeof obj[key])) {
+				obj[key] = bValue;
+				continue;
+			}
+		}
+		obj[key] = bValue;
+	}
+	return obj as T & U;
 }
