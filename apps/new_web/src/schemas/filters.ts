@@ -1,4 +1,3 @@
-import { Season } from "@ecommerce/db";
 import { z } from "zod";
 
 export const productPaginationWithFiltersSchema = z.object({
@@ -31,7 +30,7 @@ export const productPaginationWithFiltersSchema = z.object({
 		.optional()
 		.catch(() => undefined),
 	season: z
-		.nativeEnum(Season)
+		.enum(["SPRING", "SUMMER", "AUTUMN", "WINTER", "ALL"])
 		.optional()
 		.catch(() => undefined),
 	delivery: z
