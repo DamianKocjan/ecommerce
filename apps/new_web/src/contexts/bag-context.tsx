@@ -39,8 +39,7 @@ const BagDispatchContext =
 	React.createContext<React.Dispatch<BagAction> | null>(null);
 BagDispatchContext.displayName = "BagDispatchContext";
 
-// TODO: change to `cart`
-const LOCAL_STORAGE_KEY = "cart_next";
+const LOCAL_STORAGE_KEY = "cart" as const;
 const DEFAULT_BAG_STATE: BagContextValue = { products: [] };
 
 function saveToLocalStorage(state: BagContextValue) {
