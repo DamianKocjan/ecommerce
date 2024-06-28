@@ -109,10 +109,5 @@ export default {
 			},
 		},
 	},
-	plugins: [
-		require("tailwindcss-animate"),
-		require("@tailwindcss/aspect-ratio"),
-		require("@tailwindcss/typography"),
-		require("tailwind-scrollbar")({ nocompatible: true }),
-	],
+	plugins: [require("tailwindcss-animate")],
 } satisfies Config;
