@@ -36,7 +36,7 @@ export function isNothing(value: unknown): boolean {
 	if (Array.isArray(value)) {
 		return value.length === 0;
 	}
-	return value === null || value === undefined;
+	return value === null || value === undefined || value === "";
 }
 
 export function deepCompare<T, U>(a: T, b: U): boolean {
@@ -73,4 +73,16 @@ export function combineObjects<T extends AnyObject, U extends AnyObject>(
 		obj[key] = bValue;
 	}
 	return obj as T & U;
+}
+
+export function cleanUpObject<T extends AnyObject>(obj: Partial<T>): T {
+	const newObj: AnyObject = {};
+
+	for (const key in obj) {
+		if (!isNothing(obj[key])) {
+			newObj[key] = obj[key]!;
+		}
+	}
+
+	return newObj as T;
 }

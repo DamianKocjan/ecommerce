@@ -118,7 +118,7 @@ export async function getWishlistedProducts({
 }
 
 export async function getWishlistFilters(userId?: string) {
-	const [filters, prices] = await prisma!.$transaction([
+	const [filters, prices, manufacturers] = await prisma!.$transaction([
 		prisma!.attribute.findMany({
 			where: {
 				values: {
@@ -174,6 +174,44 @@ export async function getWishlistFilters(userId?: string) {
 				price: true,
 			},
 		}),
+		prisma!.manufacturer.findMany({
+			where: {
+				products: {
+					some: {
+						skus: {
+							some: {
+								wishlist: {
+									some: {
+										userId,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			select: {
+				id: true,
+				name: true,
+				_count: {
+					select: {
+						products: {
+							where: {
+								skus: {
+									some: {
+										wishlist: {
+											some: {
+												userId,
+											},
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		}),
 	]);
 
 	return {
@@ -182,5 +220,6 @@ export async function getWishlistFilters(userId?: string) {
 			min: prices._min.price?.toNumber(),
 			max: prices._max.price?.toNumber(),
 		},
+		manufacturers,
 	};
 }

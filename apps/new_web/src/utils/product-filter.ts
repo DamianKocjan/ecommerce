@@ -26,6 +26,22 @@ export async function parseFilters<T extends boolean>(
 	return Object.assign(filters, result);
 }
 
+export function syncParseFilters<T extends boolean>(
+	searchParams: Record<string, string>,
+	withCategoriesInFilters?: T,
+): T extends true
+	? ProductPaginationWithCategoriesFilters
+	: ProductPaginationWithFilters {
+	const filters = getFiltersFromSearchParams(searchParams);
+
+	const result = withCategoriesInFilters
+		? productPaginationWithCategoriesFiltersSchema.parse(filters)
+		: productPaginationWithFiltersSchema.parse(filters);
+
+	// NOTE: to prevent removal of the rest filters, we need to merge the filters
+	return Object.assign(filters, result);
+}
+
 function getFiltersFromSearchParams(searchParams: Record<string, string>) {
 	// Types of filters:
 	// - [key]: [ints]

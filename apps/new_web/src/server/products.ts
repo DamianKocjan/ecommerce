@@ -220,7 +220,7 @@ export async function getFilters(categories: Maybe<Arrayish<string>>) {
 				}
 			: undefined;
 
-	const [filters, prices] = await prisma!.$transaction([
+	const [filters, prices, manufacturers] = await prisma!.$transaction([
 		prisma!.attribute.findMany({
 			where: {
 				values: {
@@ -270,6 +270,28 @@ export async function getFilters(categories: Maybe<Arrayish<string>>) {
 				price: true,
 			},
 		}),
+		prisma!.manufacturer.findMany({
+			where: {
+				products: {
+					some: {
+						categories: categoriesQuery,
+					},
+				},
+			},
+			select: {
+				id: true,
+				name: true,
+				_count: {
+					select: {
+						products: {
+							where: {
+								categories: categoriesQuery,
+							},
+						},
+					},
+				},
+			},
+		}),
 	]);
 
 	return {
@@ -278,5 +300,6 @@ export async function getFilters(categories: Maybe<Arrayish<string>>) {
 			min: prices._min.price?.toNumber(),
 			max: prices._max.price?.toNumber(),
 		},
+		manufacturers,
 	};
 }

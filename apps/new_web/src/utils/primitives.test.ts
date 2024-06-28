@@ -1,4 +1,5 @@
 import {
+	cleanUpObject,
 	combineObjects,
 	deepCompare,
 	isNothing,
@@ -68,11 +69,11 @@ describe("primitives", () => {
 			expect(isNothing(null)).toBe(true);
 			expect(isNothing(undefined)).toBe(true);
 			expect(isNothing([])).toBe(true);
+			expect(isNothing("")).toBe(true);
 		});
 
 		it("should return false for something", () => {
 			expect(isNothing(0)).toBe(false);
-			expect(isNothing("")).toBe(false);
 			expect(isNothing({})).toBe(false);
 			expect(isNothing([0])).toBe(false);
 		});
@@ -102,6 +103,23 @@ describe("primitives", () => {
 				a: [1, 2, 3],
 				b: "a",
 				c: "b",
+			});
+		});
+	});
+
+	describe("cleanUpObject", () => {
+		it("should remove empty values", () => {
+			expect(
+				cleanUpObject({
+					a: [1, 2],
+					b: "a",
+					c: [],
+					d: undefined,
+					e: "",
+				}),
+			).toEqual({
+				a: [1, 2],
+				b: "a",
 			});
 		});
 	});
