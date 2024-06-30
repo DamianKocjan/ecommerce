@@ -28,7 +28,7 @@ import {
 	type FilterValues,
 	type Filters as FiltersType,
 } from "~/contexts/filters-context";
-import { getFilters } from "~/server/products";
+import type { getFilters } from "~/server/products";
 import type { AsyncReturnType, Maybe } from "~/utils/primitives";
 import { SEASONS, SORT_OPTIONS } from "./constants";
 
