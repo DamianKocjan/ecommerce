@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
 import React from "react";
 
 import { CartButton } from "~/components/shop/cart-button";
@@ -10,8 +9,8 @@ import { WishlistButton } from "~/components/shop/wishlist-button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Skeleton } from "~/components/ui/skeleton";
 import { Large, Muted } from "~/components/ui/typography";
+import { useFilters } from "~/contexts/filters-context";
 import { useCurrencyFormatter } from "~/hooks/use-formatter";
-import { isNumber } from "~/utils/primitives";
 
 const DEFAULT_SKU_INDEX = 0;
 
@@ -45,8 +44,13 @@ type Props = {
 
 export function ProductCard({ product }: Props) {
 	const { format } = useCurrencyFormatter();
-	const newPathWithProductManufacturerId = useNewPathWithProductManufacturerId(
-		product.manufacturer.id,
+	const { newPathFrom } = useFilters();
+	const path = React.useMemo(
+		() =>
+			newPathFrom({
+				brands: [product.manufacturer.id],
+			}),
+		[newPathFrom, product.manufacturer.id],
 	);
 
 	const sku = product.skus[DEFAULT_SKU_INDEX]!;
@@ -76,9 +80,7 @@ export function ProductCard({ product }: Props) {
 				</div>
 
 				<Muted>
-					<Link href={newPathWithProductManufacturerId}>
-						{product.manufacturer.name}
-					</Link>
+					<Link href={path}>{product.manufacturer.name}</Link>
 				</Muted>
 
 				<div className="mt-4 flex items-center gap-2">
@@ -91,38 +93,6 @@ export function ProductCard({ product }: Props) {
 			</CardContent>
 		</Card>
 	);
-}
-
-function useNewPathWithProductManufacturerId(productManufacturerId: number) {
-	const searchParams = useSearchParams();
-	const path = usePathname();
-
-	const manufacturerPath = React.useMemo(() => {
-		// join other query params
-		const otherParams = new URLSearchParams(searchParams);
-		let str = "";
-		otherParams.forEach(
-			(value, key) => (str += key !== "brands" ? `&${key}=${value}` : ""),
-		);
-
-		if (searchParams.get("brands")) {
-			const brands = searchParams
-				.get("brands")!
-				.slice(1, -1)
-				.split(",")
-				.filter(isNumber)
-				.map(Number);
-			brands.push(productManufacturerId);
-
-			// remove duplicates
-			const uniqueBrands = [...new Set(brands)];
-
-			return `${path}?brands=[${uniqueBrands.join(",")}]${str}`;
-		}
-		return `${path}?brands=[${productManufacturerId}]${str}`;
-	}, [path, productManufacturerId, searchParams]);
-
-	return manufacturerPath;
 }
 
 export function ProductCardSkeleton() {

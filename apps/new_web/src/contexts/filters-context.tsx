@@ -37,6 +37,9 @@ type FiltersValue = {
 		filterId: number | string,
 		valueId: number,
 	) => void;
+
+	// Utils
+	newPathFrom: (values: Record<string, FilterValue>) => string;
 };
 
 const FiltersContext = React.createContext<FiltersValue | null>(null);
@@ -140,6 +143,37 @@ export function FiltersProvider({
 		[newFilters],
 	);
 
+	const newPathFrom = React.useCallback(
+		(values: Record<string, FilterValue>) => {
+			const combinedFilters = combineObjects(newFilters, values);
+			const searchParams = new Map<string, string>();
+
+			// 1. Fill map with old filters
+			for (const [key, value] of Object.entries(filters)) {
+				searchParams.set(key, stringifyValue(value));
+			}
+
+			// 2. Fill map with new filters with comparison
+			for (const [key, value] of Object.entries(combinedFilters)) {
+				if (isNothing(value)) {
+					searchParams.delete(key);
+					continue;
+				}
+
+				searchParams.set(key, stringifyValue(value));
+			}
+
+			// 3. Convert map to array of query params and replace the route
+			const searchParamsArray = [];
+			for (const [key, value] of searchParams) {
+				searchParamsArray.push(`${key}=${value}`);
+			}
+
+			return `${path}?${searchParamsArray.join("&")}`;
+		},
+		[filters, newFilters, path],
+	);
+
 	return (
 		<FiltersContext.Provider
 			value={{
@@ -150,6 +184,7 @@ export function FiltersProvider({
 				updateFilters,
 				handleFilterChange,
 				handleCheckFilterChange,
+				newPathFrom,
 			}}
 		>
 			{children}
