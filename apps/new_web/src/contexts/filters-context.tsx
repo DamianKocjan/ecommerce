@@ -50,6 +50,12 @@ export function FiltersProvider({
 	filters: Filters;
 }) {
 	const [newFilters, setNewFilters] = React.useState(filters);
+
+	// Sync filters with the URL
+	React.useEffect(() => {
+		setNewFilters(filters);
+	}, [filters]);
+
 	const router = useRouter();
 	const path = usePathname();
 
