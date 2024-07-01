@@ -1,6 +1,6 @@
 {
 	"editor.codeActionsOnSave": {
-		"source.fixAll.eslint": true
+		"source.fixAll.eslint": "always"
 	},
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"editor.formatOnSave": true,
@@ -18,5 +18,8 @@
 		"leaveFrom",
 		"leaveTo"
 	],
-	"typescript.tsdk": "node_modules/typescript/lib"
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"[prisma]": {
+		"editor.defaultFormatter": "Prisma.prisma"
+	}
 }
