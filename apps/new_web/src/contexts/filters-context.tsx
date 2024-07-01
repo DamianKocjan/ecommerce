@@ -1,3 +1,5 @@
+"use client";
+
 import type { CheckedState } from "@radix-ui/react-checkbox";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";

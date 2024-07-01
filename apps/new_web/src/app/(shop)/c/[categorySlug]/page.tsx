@@ -8,6 +8,7 @@ import {
 	ProductCard,
 	ProductCardSkeleton,
 } from "~/components/shop/product-card";
+import { FiltersProvider } from "~/contexts/filters-context";
 import { getFilters, getProducts } from "~/server/products";
 import { parseFilters } from "~/utils/product-filter";
 
@@ -17,11 +18,9 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-	const categorySlug = params.categorySlug;
-
 	const category = await prisma!.category.findUnique({
 		where: {
-			slug: categorySlug,
+			slug: params.categorySlug,
 		},
 		select: {
 			name: true,
@@ -60,24 +59,26 @@ export default async function Category({ searchParams, params }: Props) {
 				</div>
 			) : (
 				<div className="grid gap-4 md:grid-cols-5">
-					<Filters filters={filters} filtersData={filtersData} />
+					<FiltersProvider filters={filters}>
+						<Filters data={filtersData} />
 
-					<div className="col-span-4 flex flex-col gap-4">
-						<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-							{data.map((product) => (
-								<>
-									<ProductCard key={product.id} product={product} />
-									<ProductCardSkeleton key={product.id + 100} />
-								</>
-							))}
+						<div className="col-span-4 flex flex-col gap-4">
+							<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+								{data.map((product) => (
+									<>
+										<ProductCard key={product.id} product={product} />
+										<ProductCardSkeleton key={product.id + 100} />
+									</>
+								))}
+							</div>
+
+							<Pagination
+								currentPage={meta.currentPage}
+								hasNextPage={meta.next !== undefined}
+								hasPreviousPage={meta.prev !== meta.currentPage}
+							/>
 						</div>
-
-						<Pagination
-							currentPage={meta.currentPage}
-							hasNextPage={meta.next !== undefined}
-							hasPreviousPage={meta.prev !== meta.currentPage}
-						/>
-					</div>
+					</FiltersProvider>
 				</div>
 			)}
 		</div>

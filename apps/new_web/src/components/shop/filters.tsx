@@ -22,11 +22,9 @@ import {
 import { Separator } from "~/components/ui/separator";
 import { H3, Muted, Small, Ul } from "~/components/ui/typography";
 import {
-	FiltersProvider,
 	useFilters,
 	type FilterValue,
 	type FilterValues,
-	type Filters as FiltersType,
 } from "~/contexts/filters-context";
 import type { getFilters } from "~/server/products";
 import type { AsyncReturnType, Maybe } from "~/utils/primitives";
@@ -37,36 +35,25 @@ type FilterValueData =
 	| FiltersData["filters"][number]["values"][number]
 	| FiltersData["manufacturers"][number];
 
-export function Filters({
-	filters,
-	filtersData,
-}: {
-	filters: FiltersType;
-	filtersData: FiltersData;
-}) {
+export function Filters({ data }: { data: FiltersData }) {
 	return (
-		<FiltersProvider filters={filters}>
-			<div className="relative hidden gap-4 md:grid">
-				<OrderByFilter />
-				<Separator />
+		<div className="relative hidden gap-4 md:grid">
+			<OrderByFilter />
+			<Separator />
 
-				<ManufacturersFilter manufacturers={filtersData.manufacturers} />
-				<Separator />
+			<ManufacturersFilter manufacturers={data.manufacturers} />
+			<Separator />
 
-				<SeasonFilter />
-				<Separator />
+			<SeasonFilter />
+			<Separator />
 
-				<PriceFilter
-					min={filtersData.prices.min}
-					max={filtersData.prices.max}
-				/>
-				<Separator />
+			<PriceFilter min={data.prices.min} max={data.prices.max} />
+			<Separator />
 
-				<DynamicFilters data={filtersData.filters} />
+			<DynamicFilters data={data.filters} />
 
-				<FilterUserActions />
-			</div>
-		</FiltersProvider>
+			<FilterUserActions />
+		</div>
 	);
 }
 
