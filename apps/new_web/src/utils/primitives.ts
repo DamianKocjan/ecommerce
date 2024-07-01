@@ -86,3 +86,16 @@ export function cleanUpObject<T extends AnyObject>(obj: Partial<T>): T {
 
 	return newObj as T;
 }
+
+export function removeKeys<T extends AnyObject>(
+	obj: T,
+	keys: (keyof T)[],
+): Omit<T, keyof T> {
+	const clone = structuredClone(obj);
+
+	for (const key of keys) {
+		delete clone[key];
+	}
+
+	return clone;
+}

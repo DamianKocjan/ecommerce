@@ -6,6 +6,7 @@ import {
 	combineObjects,
 	deepCompare,
 	isNothing,
+	removeKeys,
 	stringifyValue,
 	type Arrayish,
 } from "~/utils/primitives";
@@ -51,7 +52,11 @@ export function FiltersProvider({
 	const path = usePathname();
 
 	const areFiltersEqual = React.useMemo(
-		() => deepCompare(filters, cleanUpObject(newFilters)),
+		() =>
+			deepCompare(
+				removeKeys(filters, IGNORED_FILTERS),
+				removeKeys(cleanUpObject(newFilters), IGNORED_FILTERS),
+			),
 		[filters, newFilters],
 	);
 	const noFilters = React.useMemo(

@@ -4,6 +4,7 @@ import {
 	deepCompare,
 	isNothing,
 	isNumber,
+	removeKeys,
 	stringifyValue,
 	tryToNumber,
 	type Arrayish,
@@ -120,6 +121,25 @@ describe("primitives", () => {
 			).toEqual({
 				a: [1, 2],
 				b: "a",
+			});
+		});
+	});
+
+	describe("removeKeys", () => {
+		it("should remove keys", () => {
+			expect(
+				removeKeys(
+					{
+						a: [1, 2],
+						b: "a",
+						c: [],
+						d: "",
+					},
+					["a", "b"],
+				),
+			).toEqual({
+				c: [],
+				d: "",
 			});
 		});
 	});
