@@ -62,10 +62,6 @@ export default {
 				md: "calc(var(--radius) - 2px)",
 				sm: "calc(var(--radius) - 4px)",
 			},
-			transitionProperty: {
-				abs: "top, right, bottom, left",
-				filter: "filter",
-			},
 			keyframes: {
 				"accordion-down": {
 					from: { height: "0" },
@@ -88,14 +84,6 @@ export default {
 					"0%": { transform: "translateY(0)" },
 					"100%": { transform: "translateY(-5px)" },
 				},
-				strikeThrough: {
-					"0%": {
-						transform: "translateY(-1rem)",
-						opacity: "0.3",
-					},
-					"50%": { opacity: "1" },
-					"100%": { transform: "translateY(0)" },
-				},
 			},
 			animation: {
 				"accordion-down": "accordion-down 0.2s ease-out",
@@ -105,7 +93,6 @@ export default {
 				// FIXME: stop `up` animation and end it when `shake` animation ends
 				upShake:
 					"up 75ms ease-in forwards, shake 300ms 75ms ease-in-out forwards",
-				strikeThrough: "strikeThrough 150ms ease-in-out forwards",
 			},
 		},
 	},
