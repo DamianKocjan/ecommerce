@@ -4,8 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-import { CartButton } from "~/components/shop/cart-button";
-import { WishlistButton } from "~/components/shop/wishlist-button";
+import { CartIconButton } from "~/components/shop/cart-button";
+import { WishlistIconButton } from "~/components/shop/wishlist-button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Skeleton } from "~/components/ui/skeleton";
 import { Large, Muted } from "~/components/ui/typography";
@@ -87,8 +87,8 @@ export function ProductCard({ product }: Props) {
 					<Large className="font-mono">{format(sku.price)}</Large>
 					<div className="mr-auto" />
 
-					<WishlistButton productSkuId={sku.id} />
-					<CartButton productSkuId={sku.id} />
+					<WishlistIconButton productSkuId={sku.id} />
+					<CartIconButton productSkuId={sku.id} />
 				</div>
 			</CardContent>
 		</Card>

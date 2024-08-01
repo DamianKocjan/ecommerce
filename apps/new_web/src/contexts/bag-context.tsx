@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { z } from "zod";
 
@@ -16,6 +18,7 @@ type BagAction =
 	| {
 			type: "ADD_TO_BAG";
 			productSkuId: number;
+			quantity: number;
 	  }
 	| {
 			type: "REMOVE_FROM_BAG";
@@ -80,7 +83,7 @@ const reducer = (state: BagContextValue, action: BagAction) => {
 				products: [
 					...new Set([
 						...state.products,
-						{ id: action.productSkuId, quantity: 1 },
+						{ id: action.productSkuId, quantity: action.quantity },
 					]),
 				],
 			};
