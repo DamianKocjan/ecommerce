@@ -16,7 +16,10 @@
 		"enterTo",
 		"leave",
 		"leaveFrom",
-		"leaveTo"
+		"leaveTo",
+		"withCn",
+		"cn",
+		"wrapperClass"
 	],
 	"typescript.tsdk": "node_modules/typescript/lib",
 	"[prisma]": {
