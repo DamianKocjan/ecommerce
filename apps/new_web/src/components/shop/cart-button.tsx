@@ -7,9 +7,14 @@ import { Button } from "../ui/button";
 type Props = {
 	productSkuId: number;
 	quantity?: number;
+	disabled?: boolean;
 };
 
-export function CartIconButton({ productSkuId, quantity = 1 }: Props) {
+export function CartIconButton({
+	productSkuId,
+	quantity = 1,
+	disabled,
+}: Props) {
 	const { isInBag } = useBagForProduct(productSkuId);
 	const dispatch = useBagDispatch();
 
@@ -36,7 +41,13 @@ export function CartIconButton({ productSkuId, quantity = 1 }: Props) {
 	};
 
 	return (
-		<Button variant="ghost" size="icon" type="button" onClick={handleBagAction}>
+		<Button
+			variant="ghost"
+			size="icon"
+			type="button"
+			onClick={handleBagAction}
+			disabled={disabled}
+		>
 			<span className="sr-only">
 				{isInBag ? "Remove from bag" : "Add to bag"}
 			</span>
@@ -49,7 +60,7 @@ export function CartIconButton({ productSkuId, quantity = 1 }: Props) {
 	);
 }
 
-export function CartButton({ productSkuId, quantity = 1 }: Props) {
+export function CartButton({ productSkuId, quantity = 1, disabled }: Props) {
 	const { isInBag } = useBagForProduct(productSkuId);
 	const dispatch = useBagDispatch();
 
@@ -76,7 +87,12 @@ export function CartButton({ productSkuId, quantity = 1 }: Props) {
 	};
 
 	return (
-		<Button variant="outline" type="button" onClick={handleBagAction}>
+		<Button
+			variant="outline"
+			type="button"
+			onClick={handleBagAction}
+			disabled={disabled}
+		>
 			<ShoppingCartSimple
 				className="mr-2 h-4 w-4"
 				aria-hidden="true"
