@@ -44,14 +44,6 @@ type Props = {
 
 export function ProductCard({ product }: Props) {
 	const { format } = useCurrencyFormatter();
-	const { newPathFrom } = useFilters();
-	const path = React.useMemo(
-		() =>
-			newPathFrom({
-				brands: [product.manufacturer.id],
-			}),
-		[newPathFrom, product.manufacturer.id],
-	);
 
 	const sku = product.skus[DEFAULT_SKU_INDEX]!;
 	const onlyOneVariant = product.skus.length === 1;
@@ -79,9 +71,10 @@ export function ProductCard({ product }: Props) {
 					</CardTitle>
 				</div>
 
-				<Muted>
-					<Link href={path}>{product.manufacturer.name}</Link>
-				</Muted>
+				<ProductManufacturer
+					manufacturerId={product.manufacturer.id}
+					manufacturerName={product.manufacturer.name}
+				/>
 
 				<div className="mt-4 flex items-center gap-2">
 					<Large className="font-mono">{format(sku.price)}</Large>
@@ -92,6 +85,29 @@ export function ProductCard({ product }: Props) {
 				</div>
 			</CardContent>
 		</Card>
+	);
+}
+
+function ProductManufacturer({
+	manufacturerId,
+	manufacturerName,
+}: {
+	manufacturerId: number;
+	manufacturerName: string;
+}) {
+	const { newPathFrom } = useFilters();
+	const path = React.useMemo(
+		() =>
+			newPathFrom({
+				brands: [manufacturerId],
+			}),
+		[newPathFrom, manufacturerId],
+	);
+
+	return (
+		<Muted>
+			<Link href={path}>{manufacturerName}</Link>
+		</Muted>
 	);
 }
 
