@@ -40,9 +40,10 @@ type Product = {
 
 type Props = {
 	product: Product;
+	withoutFiltersProvider?: boolean;
 };
 
-export function ProductCard({ product }: Props) {
+export function ProductCard({ product, withoutFiltersProvider }: Props) {
 	const { format } = useCurrencyFormatter();
 
 	const sku = product.skus[DEFAULT_SKU_INDEX]!;
@@ -71,10 +72,18 @@ export function ProductCard({ product }: Props) {
 					</CardTitle>
 				</div>
 
-				<ProductManufacturer
-					manufacturerId={product.manufacturer.id}
-					manufacturerName={product.manufacturer.name}
-				/>
+				{withoutFiltersProvider ? (
+					<Muted>
+						<Link href={`/catalog?brands=[${product.manufacturer.id}]`}>
+							{product.manufacturer.name}
+						</Link>
+					</Muted>
+				) : (
+					<ProductManufacturer
+						manufacturerId={product.manufacturer.id}
+						manufacturerName={product.manufacturer.name}
+					/>
+				)}
 
 				<div className="mt-4 flex items-center gap-2">
 					<Large className="font-mono">{format(sku.price)}</Large>

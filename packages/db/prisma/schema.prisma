@@ -168,6 +168,7 @@ model Product {
   // Relations
   skus             ProductVariant[]
   categories       Category[]
+  reviews          Review[]
   manufacturerId   Int
   manufacturer     Manufacturer     @relation(fields: [manufacturerId], references: [id], onDelete: Cascade)
   deliveryOptionId String
@@ -182,6 +183,7 @@ model ProductVariant {
   multiPack         Boolean  @default(false)
   multiPackQuantity Int      @default(1)
   thumbnailImage    Int
+  stock             Int      @default(0)
 
   // Timestamps
   createdAt DateTime @default(now())
@@ -192,7 +194,6 @@ model ProductVariant {
   product    Product          @relation(fields: [productId], references: [id], onDelete: Cascade)
   images     Image[]
   attributes AttributeValue[]
-  reviews    Review[]
   wishlist   Wishlist[]
   views      View[]
   orders     OrderItem[]
@@ -242,9 +243,9 @@ model Review {
 
   // Relations
   productId Int
-  product   ProductVariant @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product   Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
   userId    String
-  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   likes     ReviewLike[]
 }
 

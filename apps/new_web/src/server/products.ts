@@ -303,3 +303,82 @@ export async function getFilters(categories: Maybe<Arrayish<string>>) {
 		manufacturers,
 	};
 }
+
+export async function getProduct(slug: string, sku: string) {
+	const [product, rating] = await prisma!.$transaction([
+		prisma!.product.findUnique({
+			where: {
+				slug,
+				skus: {
+					some: {
+						sku,
+					},
+				},
+			},
+			select: {
+				id: true,
+				slug: true,
+				title: true,
+				shortDescription: true,
+				description: true,
+				manufacturer: {
+					select: {
+						id: true,
+						name: true,
+					},
+				},
+				skus: {
+					select: {
+						id: true,
+						sku: true,
+						thumbnailImage: true,
+						images: {
+							select: {
+								url: true,
+							},
+						},
+						price: true,
+						discount: true,
+						stock: true,
+						attributes: {
+							select: {
+								id: true,
+								value: true,
+								attribute: {
+									select: {
+										id: true,
+										name: true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		}),
+		prisma!.review.aggregate({
+			where: {
+				product: {
+					slug,
+				},
+			},
+			_avg: {
+				rating: true,
+			},
+		}),
+	]);
+
+	if (!product) {
+		return null;
+	}
+
+	return {
+		...product,
+		skus: product.skus.map((sku) => ({
+			...sku,
+			price: sku.price.toNumber(),
+			discount: sku.discount?.toNumber(),
+		})),
+		rating: rating._avg.rating || 0,
+	};
+}

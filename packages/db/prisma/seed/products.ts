@@ -73,6 +73,7 @@ export async function seedProducts(prisma: PrismaClient): Promise<void> {
 					multiPack: variantData.multiPack,
 					multiPackQuantity: variantData.multiPackQuantity,
 					thumbnailImage: variantData.thumbnailImage,
+					stock: variantData.stock,
 					product: {
 						connect: product,
 					},
@@ -239,6 +240,7 @@ function generateProductData(index: number, attributes: Attribute[]) {
 			multiPackQuantity: multiPack ? faker.number.int({ min: 1, max: 5 }) : 1,
 			thumbnailImage: 0,
 			images,
+			stock: faker.number.int({ min: 0, max: 100 }),
 			attributes: faker.helpers
 				.shuffle(attributes)
 				.slice(0, faker.number.int({ min: 2, max: 5 }))
@@ -254,8 +256,12 @@ function generateProductData(index: number, attributes: Attribute[]) {
 
 	return {
 		title: faker.commerce.productName() + " " + index,
-		description: faker.commerce.productDescription(),
-		shortDescription: faker.lorem.sentence(),
+		description:
+			`<p>${faker.commerce.productDescription()}</p>` +
+			Array.from({ length: faker.number.int({ min: 3, max: 7 }) })
+				.map(() => `<p>${faker.lorem.paragraph({ min: 3, max: 5 })}</p>`)
+				.join(""),
+		shortDescription: faker.commerce.productDescription(),
 		season: faker.helpers.arrayElement([
 			"SUMMER",
 			"WINTER",

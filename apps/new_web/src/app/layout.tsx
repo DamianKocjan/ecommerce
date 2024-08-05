@@ -41,6 +41,17 @@ export const metadata: Metadata = {
 		card: "summary",
 		creator: "@vercel",
 		site: "@vercel",
+		images: [
+			// TODO: Add images
+			{
+				url: `${
+					process.env.NEXT_PUBLIC_VERCEL_URL ?? "http://localhost:3000"
+				}/logo.png`,
+				width: 800,
+				height: 600,
+				alt: "Ecommerce",
+			},
+		],
 	},
 };
 
