@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import type { PrismaClient, Season } from "../..";
-import { randomElement, randomInt, slugify } from "./utils";
+import { slugify } from "./utils";
 
 const NUMBER_OF_PRODUCTS = 2000;
 const MAX_NUMBER_OF_CATEGORIES = 5;
@@ -51,7 +51,7 @@ export async function seedProducts(prisma: PrismaClient): Promise<void> {
 					connect: deliveryOption,
 				},
 				manufacturer: {
-					connect: randomElement(manufacturers),
+					connect: faker.helpers.arrayElement(manufacturers),
 				},
 				categories: {
 					connect: categoriesForProduct,
@@ -180,7 +180,7 @@ async function generateAttributes(
 			data: {
 				name: attributeData.name,
 				category: {
-					connect: randomElement(categories),
+					connect: faker.helpers.arrayElement(categories),
 				},
 			},
 			select: {
@@ -240,15 +240,11 @@ function generateProductData(index: number, attributes: Attribute[]) {
 			images,
 			stock: faker.number.int({ min: 0, max: 100 }),
 			attributes: faker.helpers
-				.shuffle(attributes)
-				.slice(0, faker.number.int({ min: 2, max: 5 }))
-				.map(
-					(attr) =>
-						faker.helpers
-							.shuffle(attr.values)
-							.slice(0, 1)
-							.map((v) => v.id)[0]!,
-				),
+				.arrayElements(attributes, {
+					min: 2,
+					max: 5,
+				})
+				.map((attr) => faker.helpers.arrayElement(attr.values).id),
 		});
 	}
 
