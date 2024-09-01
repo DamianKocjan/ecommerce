@@ -35,12 +35,10 @@ export async function seedProducts(prisma: PrismaClient): Promise<void> {
 	);
 
 	for (const [index, productData] of productsData.entries()) {
-		// FIXME: Improve offset calculation
-		const categoryOffset = randomInt(0, categories.length - 1);
-		const categoriesForProduct = categories.slice(
-			categoryOffset,
-			categoryOffset + randomInt(1, MAX_NUMBER_OF_CATEGORIES),
-		);
+		const categoriesForProduct = faker.helpers.arrayElements(categories, {
+			min: 1,
+			max: MAX_NUMBER_OF_CATEGORIES,
+		});
 
 		const product = await prisma.product.create({
 			data: {
