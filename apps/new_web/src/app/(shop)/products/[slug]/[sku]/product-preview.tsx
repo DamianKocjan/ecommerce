@@ -43,21 +43,23 @@ export function ProductPreview({ images, thumbnailImage }: Props) {
 	return (
 		<div className="px-12">
 			<Carousel className="grid gap-4 md:gap-8" setApi={setApi}>
-				<CarouselContent>
-					{images.map((image, index) => (
-						<CarouselItem key={index}>
-							<Image
-								src={image.url}
-								alt="Product Image"
-								width={600}
-								height={900}
-								className="h-auto w-full overflow-hidden rounded-lg border object-cover"
-							/>
-						</CarouselItem>
-					))}
-				</CarouselContent>
-				<CarouselPrevious />
-				<CarouselNext />
+				<div className="relative">
+					<CarouselContent>
+						{images.map((image, index) => (
+							<CarouselItem key={index}>
+								<Image
+									src={image.url}
+									alt="Product Image"
+									width={600}
+									height={900}
+									className="h-auto w-full overflow-hidden rounded-lg border object-cover"
+								/>
+							</CarouselItem>
+						))}
+					</CarouselContent>
+					<CarouselPrevious />
+					<CarouselNext />
+				</div>
 
 				<div className="hidden items-start gap-4 md:flex">
 					{images.map((image, index) => (
